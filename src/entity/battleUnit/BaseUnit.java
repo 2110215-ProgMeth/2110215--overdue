@@ -1,4 +1,4 @@
-package baseUnit;
+package entity.battleUnit;
 
 import entity.combatMove.BaseMove;
 import interfaces.IRenderable;
@@ -44,8 +44,18 @@ public abstract class BaseUnit implements IRenderable {
         return isProtected;
     }
 
+    public void addMove(BaseMove move, int index) {
+        moveSet[index]= move;
+    }
+
+    public String toString() {
+        return this.name;
+    }
+
 
     // getter & setter
+    public abstract void setMoveSet();
+
     public void setName(String name){
         this.name = name;
     }
@@ -135,5 +145,14 @@ public abstract class BaseUnit implements IRenderable {
 
     public int getBaseDefense() {
         return baseDefense;
+    }
+
+    public BaseMove getMove(int index) {
+        return moveSet[index];
+    }
+
+    @Override
+    public int getZ() {
+        return 0;
     }
 }
