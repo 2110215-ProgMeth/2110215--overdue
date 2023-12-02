@@ -4,15 +4,16 @@ import entity.battleUnit.BaseUnit;
 
 public abstract class BaseMove {
     protected String name;
-    protected int percentDamage;
     protected int mpConsume;
     protected BaseUnit owner;
     protected BaseUnit target;
+    protected String description;
+
+    protected boolean isUsable;
 
     //constructor
-    public BaseMove(String name,int percentDamage,int mpConsume,BaseUnit owner){
+    public BaseMove(String name,int mpConsume,BaseUnit owner){
         setName(name);
-        setDamage(percentDamage);
         setMpConsume(mpConsume);
         setOwner(owner);
     }
@@ -25,9 +26,6 @@ public abstract class BaseMove {
     //getter setter
     public String getName() {
         return name;
-    }
-    public int getDamage() {
-        return percentDamage;
     }
 
     public int getMpConsume() {
@@ -42,12 +40,16 @@ public abstract class BaseMove {
         return target;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDecription() {
+        return this.description;
     }
 
-    public void setDamage(int damage) {
-        this.percentDamage = damage;
+    public boolean isUsable() {
+        return this.isUsable;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setMpConsume(int mpConsume){
@@ -59,5 +61,12 @@ public abstract class BaseMove {
     }
     public void setTarget(BaseUnit target){
         this.target = target;
+    }
+
+    public abstract void setDescription();
+
+    public void setUsable(boolean usable) {
+        if (owner.getMp() < mpConsume) this.isUsable = false;
+        else this.isUsable = usable;
     }
 }

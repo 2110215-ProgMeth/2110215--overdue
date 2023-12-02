@@ -61,9 +61,9 @@ public abstract class BaseUnit implements IRenderable {
     }
 
     public void setHp(int hp){
-        if (hp < 0) hp = 0;
-        if (getBaseHp() < hp) hp = getBaseHp();
-        this.hp = hp;
+        if (hp <= 0)  this.isAlive = false;
+        else  if (getBaseHp() < hp) hp = getBaseHp();
+        else this.hp = hp;
     }
 
     public void setBaseHp(int baseHp){
