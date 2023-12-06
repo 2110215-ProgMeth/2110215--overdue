@@ -1,6 +1,7 @@
 package display;
 
-import Tile.TileManager;
+import sound.Sound;
+import tile.TileManager;
 import worldObject.AssetObject;
 import worldObject.BaseObject;
 import worldObject.CollisionChecker;
@@ -13,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.canvas.Canvas;
 import control.InputUtility;
 import logic.GameLogic;
-import display.ScreenUtil;
 
 public class GameScreen extends Canvas implements Runnable{
     Thread gameThread;
@@ -25,6 +25,8 @@ public class GameScreen extends Canvas implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);
     public BaseObject object[] = new BaseObject[10];
     public AssetObject assetObject = new AssetObject(this);
+    Sound sound = new Sound();
+    Sound se = new Sound();
 
     // constructor
     public GameScreen() {
@@ -96,7 +98,6 @@ public class GameScreen extends Canvas implements Runnable{
                 object[i].draw(gc, this);
             }
         }
-
         // PLAYER
         player.draw(gc);
 
@@ -115,6 +116,8 @@ public class GameScreen extends Canvas implements Runnable{
 
     public void setupGame() {
         assetObject.setObject();
+        playMusic(1);
+        setMusicVolume(0.2);
     }
 
     public void update() {
@@ -147,4 +150,20 @@ public class GameScreen extends Canvas implements Runnable{
             }
         }
     }
+    public void playMusic(int i){
+            sound.setClip(i);
+            sound.play();
+            sound.loop();
+    }
+    public void stopMusic(){
+        sound.stop();
+    }
+    public void playSE(int i){
+        sound.setClip(i);
+        sound.play();
+    }
+    public void setMusicVolume(double i){
+        sound.getClip().setVolume(i);
+    }
+
 }
