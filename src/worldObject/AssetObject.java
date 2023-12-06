@@ -1,6 +1,7 @@
 package worldObject;
 
 import display.GameScreen;
+import display.ScreenUtil;
 
 public class AssetObject {
     GameScreen gameScreen;
@@ -10,8 +11,8 @@ public class AssetObject {
     }
 
     public void setObject() {
-        gameScreen.object[0] = new Key(25 * gameScreen.tileSize,25 * gameScreen.tileSize);
-        gameScreen.object[1] = new Key(25 * gameScreen.tileSize, 35 * gameScreen.tileSize);
+        gameScreen.object[0] = new Key(25 * ScreenUtil.tileSize,25 * ScreenUtil.tileSize);
+        gameScreen.object[1] = new Key(25 * ScreenUtil.tileSize, 35 * ScreenUtil.tileSize);
 
     }
 

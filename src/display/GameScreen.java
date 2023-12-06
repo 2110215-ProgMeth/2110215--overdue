@@ -13,24 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.canvas.Canvas;
 import control.InputUtility;
 import logic.GameLogic;
+import display.ScreenUtil;
 
 public class GameScreen extends Canvas implements Runnable{
-
-    // SCREEN SETTINGS
-    final int originalTileSize = 16; // 16 x 16 tile
-    public final int scale = 3;
-    public final int tileSize = originalTileSize * scale; // 48 x 48 tiles
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
-
-    //WORLD SETTING
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
-
     Thread gameThread;
     int FPS = 55;
 
@@ -44,8 +29,8 @@ public class GameScreen extends Canvas implements Runnable{
     // constructor
     public GameScreen() {
         super();
-        this.setWidth(screenWidth);
-        this.setHeight(screenHeight);
+        this.setWidth(ScreenUtil.screenWidth);
+        this.setHeight(ScreenUtil.screenHeight);
         this.setVisible(true);
         this.requestFocus();
         this.setFocused(true);
@@ -99,7 +84,7 @@ public class GameScreen extends Canvas implements Runnable{
     public void paintComponent() {  // method for drawing on our canvas
         //System.out.println("paintComponent update called");
         GraphicsContext gc = this.getGraphicsContext2D();
-        gc.clearRect(0,0,screenWidth,screenHeight);
+        gc.clearRect(0,0,ScreenUtil.screenWidth,ScreenUtil.screenHeight);
         gc.setFill(Color.WHITE);
 
         // TILE

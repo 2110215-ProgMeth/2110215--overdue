@@ -1,6 +1,7 @@
 package worldObject;
 
 import display.GameScreen;
+import display.ScreenUtil;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -19,11 +20,11 @@ public class BaseObject {
     public void draw(GraphicsContext gc, GameScreen gameScreen){
         int screenX = worldX - gameScreen.player.WorldX + gameScreen.player.screenX;
         int screenY = worldY - gameScreen.player.WorldY + gameScreen.player.screenY;
-        if (worldX + gameScreen.tileSize > gameScreen.player.WorldX - gameScreen.player.screenX &&
-                worldX - gameScreen.tileSize < gameScreen.player.WorldX + gameScreen.player.screenX &&
-                worldY + gameScreen.tileSize > gameScreen.player.WorldY - gameScreen.player.screenY &&
-                worldY - gameScreen.tileSize < gameScreen.player.WorldY + gameScreen.player.screenY){
-            gc.drawImage(image,screenX,screenY,gameScreen.tileSize,gameScreen.tileSize);
+        if (worldX + ScreenUtil.tileSize > gameScreen.player.WorldX - gameScreen.player.screenX &&
+                worldX - ScreenUtil.tileSize < gameScreen.player.WorldX + gameScreen.player.screenX &&
+                worldY + ScreenUtil.tileSize > gameScreen.player.WorldY - gameScreen.player.screenY &&
+                worldY - ScreenUtil.tileSize < gameScreen.player.WorldY + gameScreen.player.screenY){
+            gc.drawImage(image,screenX,screenY,ScreenUtil.tileSize,ScreenUtil.tileSize);
         }
 
     }

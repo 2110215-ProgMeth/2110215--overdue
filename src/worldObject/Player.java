@@ -2,6 +2,7 @@ package worldObject;
 
 import control.InputUtility;
 import display.GameScreen;
+import display.ScreenUtil;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -9,11 +10,11 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Player extends Entity {
-    private GameScreen gp;
     public final int screenX;
     public final int screenY;
     public int spriteCounter = 0;
     public int spriteNum = 0;
+    public GameScreen gameScreen;
     //Animation Character
     public Image up0 = new Image("/playerImage/up0.png");
     public Image up1 = new Image("/playerImage/up1.png");
@@ -28,23 +29,23 @@ public class Player extends Entity {
     public Image right1 = new Image("/playerImage/right1.png");
     public Image right2 = new Image("/playerImage/right2.png");
 
-    public Player(GameScreen gp){
-        this.gp = gp;
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+    public Player(GameScreen gameScreen){
+        this.gameScreen = gameScreen;
+        screenX = ScreenUtil.screenWidth/2 - (ScreenUtil.tileSize/2);
+        screenY = ScreenUtil.screenHeight/2 - (ScreenUtil.tileSize/2);
         solidArea = new Rectangle();
-        solidArea.setX((double) gp.tileSize / 6);
-        solidArea.setY((double) (gp.tileSize * 2) / 6);
-        solidArea.setHeight((double)  (gp.tileSize * 2) / 3);
-        solidArea.setWidth((double)  (gp.tileSize * 2) / 3);
+        solidArea.setX((double) ScreenUtil.tileSize / 6);
+        solidArea.setY((double) (ScreenUtil.tileSize * 2) / 6);
+        solidArea.setHeight((double)  (ScreenUtil.tileSize * 2) / 3);
+        solidArea.setWidth((double)  (ScreenUtil.tileSize * 2) / 3);
         //solidArea = new Rectangle(8,16,32,32);
         setDefaultValues();
     }
     public void setDefaultValues(){
-        WorldX = gp.tileSize * 24;
-        WorldY = gp.tileSize * 24;
+        WorldX = ScreenUtil.tileSize * 24;
+        WorldY = ScreenUtil.tileSize * 24;
         direction = "down";
-        speed = gp.scale;
+        speed = ScreenUtil.scale;
     }
     //method
     private void up(){
@@ -78,7 +79,7 @@ public class Player extends Entity {
             }
             //CHECK TILE COLLISION
             collisionOn = false;
-            gp.cChecker.checkTile(this);
+            gameScreen.cChecker.checkTile(this);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn){
@@ -156,6 +157,6 @@ public class Player extends Entity {
                 }
                 break;
         }
-        gc.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize);
+        gc.drawImage(image,screenX,screenY,ScreenUtil.tileSize,ScreenUtil.tileSize);
     }
 }
