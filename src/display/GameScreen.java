@@ -2,9 +2,9 @@ package display;
 
 import sound.Sound;
 import tile.TileManager;
-import worldObject.AssetObject;
+/*import worldObject.AssetObject;*/
 import worldObject.BaseObject;
-import worldObject.CollisionChecker;
+/*import worldObject.CollisionChecker;*/
 import worldObject.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -16,17 +16,6 @@ import control.InputUtility;
 import logic.GameLogic;
 
 public class GameScreen extends Canvas implements Runnable{
-    Thread gameThread;
-    int FPS = 55;
-
-    GameLogic logic = new GameLogic();
-    public Player player = new Player(this);
-    public TileManager tileM = new TileManager(this);
-    public CollisionChecker cChecker = new CollisionChecker(this);
-    public BaseObject object[] = new BaseObject[10];
-    public AssetObject assetObject = new AssetObject(this);
-    Sound sound = new Sound();
-    Sound se = new Sound();
 
     // constructor
     public GameScreen() {
@@ -90,56 +79,36 @@ public class GameScreen extends Canvas implements Runnable{
         gc.setFill(Color.WHITE);
 
         // TILE
-        tileM.createMap(gc);
+        GameLogic.getTilemanager().createMap(gc);
 
         // OBJECT
-        for (int i = 0; i < object.length; i++ ) {
-            if (object[i] != null) {
-                object[i].draw(gc, this);
+        for (int i = 0; i < GameLogic.getBaseObject().length; i++ ) {
+            if (GameLogic.getBaseObject()[i] != null) {
+                GameLogic.getBaseObject()[i].draw(gc, this);
             }
         }
+
         // PLAYER
-        player.draw(gc);
-
-        /*for (IRenderable entity : RenderableHolder.getInstance().getEntities()) {
-        //            if (!entity.isDestroyed()) {
-        //                entity.draw(gc);
-        //            }
-        //        }*/
-        //        //*** BELOW WILL BE DELETED LATER***//
+        GameLogic.getPlayer().draw(gc);
     }
 
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
-
-    public void setupGame() {
-        assetObject.setObject();
-        playMusic(1);
-        setMusicVolume(0.2);
-    }
-
-    public void update() {
-        player.update();
-    }
 
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = 1000000000/GameLogic.getFPS();
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
         int drawCount = 0;
 
-        while(gameThread != null){
+        while(GameLogic.getGameThread() != null){
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
             if (delta >= 1){
-                update();
+                GameLogic.logicUpdate();
                 paintComponent();
                 delta--;
                 drawCount++;
@@ -149,21 +118,6 @@ public class GameScreen extends Canvas implements Runnable{
                 timer = 0;
             }
         }
-    }
-    public void playMusic(int i){
-            sound.setClip(i);
-            sound.play();
-            sound.loop();
-    }
-    public void stopMusic(){
-        sound.stop();
-    }
-    public void playSE(int i){
-        sound.setClip(i);
-        sound.play();
-    }
-    public void setMusicVolume(double i){
-        sound.getClip().setVolume(i);
     }
 
 }

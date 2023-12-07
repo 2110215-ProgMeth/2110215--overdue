@@ -4,6 +4,7 @@ import display.GameScreen;
 import display.ScreenUtil;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import logic.GameLogic;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -11,10 +12,8 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     public Tile[] tile;
-    GameScreen gameScreen;
     public int mapTileNum[][];
-    public TileManager(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+    public TileManager(){
         tile = new Tile[10];
         mapTileNum = new int[ScreenUtil.maxWorldCol][ScreenUtil.maxWorldRow];
         tile[0] = new Tile();
@@ -68,12 +67,12 @@ public class TileManager {
 
             int worldX = worldCol * ScreenUtil.tileSize;
             int worldY = worldRow * ScreenUtil.tileSize;
-            int screenX = worldX - gameScreen.player.WorldX + gameScreen.player.screenX;
-            int screenY = worldY - gameScreen.player.WorldY + gameScreen.player.screenY;
-            if (worldX + ScreenUtil.tileSize > gameScreen.player.WorldX - gameScreen.player.screenX &&
-                worldX - ScreenUtil.tileSize < gameScreen.player.WorldX + gameScreen.player.screenX &&
-                worldY + ScreenUtil.tileSize > gameScreen.player.WorldY - gameScreen.player.screenY &&
-                worldY - ScreenUtil.tileSize < gameScreen.player.WorldY + gameScreen.player.screenY){
+            int screenX = worldX - GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX;
+            int screenY = worldY - GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY;
+            if (worldX + ScreenUtil.tileSize > GameLogic.getPlayer().WorldX - GameLogic.getPlayer().screenX &&
+                worldX - ScreenUtil.tileSize < GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX &&
+                worldY + ScreenUtil.tileSize > GameLogic.getPlayer().WorldY - GameLogic.getPlayer().screenY &&
+                worldY - ScreenUtil.tileSize < GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY){
                 gc.drawImage(tile[tileNum].image ,screenX ,screenY ,ScreenUtil.tileSize ,ScreenUtil.tileSize);
             }
 

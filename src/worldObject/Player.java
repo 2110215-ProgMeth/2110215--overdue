@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
+import logic.GameLogic;
 
 
 public class Player extends Entity {
@@ -14,7 +15,6 @@ public class Player extends Entity {
     public final int screenY;
     public int spriteCounter = 0;
     public int spriteNum = 0;
-    public GameScreen gameScreen;
     //Animation Character
     public Image up0 = new Image("/playerImage/up0.png");
     public Image up1 = new Image("/playerImage/up1.png");
@@ -29,8 +29,7 @@ public class Player extends Entity {
     public Image right1 = new Image("/playerImage/right1.png");
     public Image right2 = new Image("/playerImage/right2.png");
 
-    public Player(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+    public Player() {
         screenX = ScreenUtil.screenWidth/2 - (ScreenUtil.tileSize/2);
         screenY = ScreenUtil.screenHeight/2 - (ScreenUtil.tileSize/2);
         solidArea = new Rectangle();
@@ -60,6 +59,7 @@ public class Player extends Entity {
     private void right(){
         this.WorldX += speed;
     }
+
     public void update(){
         //System.out.println("Player update called");
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
@@ -79,7 +79,7 @@ public class Player extends Entity {
             }
             //CHECK TILE COLLISION
             collisionOn = false;
-            gameScreen.cChecker.checkTile(this);
+            GameLogic.checkTile(this);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn){

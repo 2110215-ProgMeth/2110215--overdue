@@ -4,6 +4,7 @@ import display.GameScreen;
 import display.ScreenUtil;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import logic.GameLogic;
 
 public class BaseObject {
     public Image image;
@@ -18,12 +19,12 @@ public class BaseObject {
     }
 
     public void draw(GraphicsContext gc, GameScreen gameScreen){
-        int screenX = worldX - gameScreen.player.WorldX + gameScreen.player.screenX;
-        int screenY = worldY - gameScreen.player.WorldY + gameScreen.player.screenY;
-        if (worldX + ScreenUtil.tileSize > gameScreen.player.WorldX - gameScreen.player.screenX &&
-                worldX - ScreenUtil.tileSize < gameScreen.player.WorldX + gameScreen.player.screenX &&
-                worldY + ScreenUtil.tileSize > gameScreen.player.WorldY - gameScreen.player.screenY &&
-                worldY - ScreenUtil.tileSize < gameScreen.player.WorldY + gameScreen.player.screenY){
+        int screenX = worldX - GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX;
+        int screenY = worldY - GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY;
+        if (worldX + ScreenUtil.tileSize > GameLogic.getPlayer().WorldX - GameLogic.getPlayer().screenX &&
+                worldX - ScreenUtil.tileSize < GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX &&
+                worldY + ScreenUtil.tileSize > GameLogic.getPlayer().WorldY - GameLogic.getPlayer().screenY &&
+                worldY - ScreenUtil.tileSize < GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY){
             gc.drawImage(image,screenX,screenY,ScreenUtil.tileSize,ScreenUtil.tileSize);
         }
 
