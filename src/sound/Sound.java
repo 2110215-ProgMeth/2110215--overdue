@@ -2,6 +2,8 @@ package sound;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import logic.GameLogic;
+import sharedObject.RenderableHolder;
 
 
 public class Sound {
@@ -9,10 +11,10 @@ public class Sound {
     Media sound[] = new Media[30];
     MediaPlayer soundPlayer;
     public Sound() {
-        sound[0] = new Media((getPath("sound/opening.mp3")));
-        sound[1] = new Media(getPath("sound/town.mp3"));
-        sound[2] = new Media(getPath("sound/forest.mp3"));
-        sound[3] = new Media(getPath("sound/battle.mp3"));
+        sound[0] = new Media(RenderableHolder.getPath("sound/opening.mp3"));
+        sound[1] = new Media(RenderableHolder.getPath("sound/town.mp3"));
+        sound[2] = new Media(RenderableHolder.getPath("sound/forest.mp3"));
+        sound[3] = new Media(RenderableHolder.getPath("sound/battle.mp3"));
     }
 
     public void setClip(int i) {
@@ -34,7 +36,4 @@ public class Sound {
         return this.soundPlayer;
     }
 
-    public static String getPath(String url) {
-        return ClassLoader.getSystemResource(url).toString();
-    }
 }

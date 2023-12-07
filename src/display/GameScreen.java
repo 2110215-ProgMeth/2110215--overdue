@@ -1,5 +1,7 @@
 package display;
 
+import interfaces.IRenderable;
+import sharedObject.RenderableHolder;
 import sound.Sound;
 import tile.TileManager;
 /*import worldObject.AssetObject;*/
@@ -76,20 +78,26 @@ public class GameScreen extends Canvas implements Runnable{
         //System.out.println("paintComponent update called");
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.clearRect(0,0,ScreenUtil.screenWidth,ScreenUtil.screenHeight);
-        gc.setFill(Color.WHITE);
 
         // TILE
         GameLogic.getTilemanager().createMap(gc);
 
         // OBJECT
-        for (int i = 0; i < GameLogic.getBaseObject().length; i++ ) {
+        /*for (int i = 0; i < GameLogic.getBaseObject().length; i++ ) {
             if (GameLogic.getBaseObject()[i] != null) {
-                GameLogic.getBaseObject()[i].draw(gc, this);
+                GameLogic.getBaseObject()[i].draw(gc);
             }
         }
 
         // PLAYER
-        GameLogic.getPlayer().draw(gc);
+        GameLogic.getPlayer().draw(gc);*/
+
+        for (IRenderable entity : RenderableHolder.townEntities){
+            if (!entity.isDestroyed()) {
+                entity.draw(gc);
+            }
+        }
+
     }
 
 
@@ -109,6 +117,7 @@ public class GameScreen extends Canvas implements Runnable{
             lastTime = currentTime;
             if (delta >= 1){
                 GameLogic.logicUpdate();
+                RenderableHolder.update(RenderableHolder.townEntities);
                 paintComponent();
                 delta--;
                 drawCount++;

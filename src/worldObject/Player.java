@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 import logic.GameLogic;
+import org.ietf.jgss.GSSManager;
+import sharedObject.RenderableHolder;
 
 
 public class Player extends Entity {
@@ -15,6 +17,7 @@ public class Player extends Entity {
     public final int screenY;
     public int spriteCounter = 0;
     public int spriteNum = 0;
+    public boolean front = false;
     //Animation Character
     public Image up0 = new Image("/playerImage/up0.png");
     public Image up1 = new Image("/playerImage/up1.png");
@@ -35,14 +38,17 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.setX((double) ScreenUtil.tileSize / 6);
         solidArea.setY((double) (ScreenUtil.tileSize * 2) / 6);
+        solidAreaDefaultX = (int) solidArea.getX();
+        solidAreaDefaultY = (int) solidArea.getY();
         solidArea.setHeight((double)  (ScreenUtil.tileSize * 2) / 3);
         solidArea.setWidth((double)  (ScreenUtil.tileSize * 2) / 3);
+        sprite = new Rectangle(0,0,ScreenUtil.tileSize,ScreenUtil.tileSize-10);
         //solidArea = new Rectangle(8,16,32,32);
         setDefaultValues();
     }
     public void setDefaultValues(){
-        WorldX = ScreenUtil.tileSize * 24;
-        WorldY = ScreenUtil.tileSize * 24;
+        WorldX = ScreenUtil.tileSize * 30;
+        WorldY = ScreenUtil.tileSize * 29;
         direction = "down";
         speed = ScreenUtil.scale;
     }
@@ -77,10 +83,38 @@ public class Player extends Entity {
             if (InputUtility.getKeyPressed(KeyCode.D)) {
                 direction = "right";
             }
+
+            if (InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
+                if (GameLogic.getGameState() == GameLogic.worldState) {
+                    GameLogic.setGameState(GameLogic.pauseState);
+                } else if (GameLogic.getGameState() == GameLogic.pauseState) {
+                    GameLogic.setGameState(GameLogic.worldState);
+                }
+            }
+
             //CHECK TILE COLLISION
             collisionOn = false;
             GameLogic.checkTile(this);
+            int i = GameLogic.isFront(this);
+            if (i !=999){
+                if (!front) {
+                    System.out.println("Player is infront of the object");
+                    RenderableHolder.townEntities.remove(this);
+                    RenderableHolder.townEntities.add(RenderableHolder.townEntities.size(), this);
+                    front = true;
+                }
+            }else{
+                if (front) {
+                    System.out.println("Player is behind the object");
+                    RenderableHolder.townEntities.remove(this);
+                    RenderableHolder.townEntities.add(0,this);
+                    front = false;
+                }
+            }
 
+            //CHECK OBJECT COLLISION
+            int objIndex = GameLogic.checkObject(this,true);
+            interactObject(objIndex);
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn){
                 switch(direction){
@@ -115,6 +149,17 @@ public class Player extends Entity {
             }
         }else{
             spriteNum = 0;
+        }
+    }
+    public void interactObject(int i){
+        if (i != 999){
+            String objName = GameLogic.getBaseObject()[i].getName();
+
+            switch ((objName)){
+                case "Key":
+                    System.out.println("FOUND KEY");
+                    break;
+            }
         }
     }
     public void draw(GraphicsContext gc) {
@@ -158,5 +203,10 @@ public class Player extends Entity {
                 break;
         }
         gc.drawImage(image,screenX,screenY,ScreenUtil.tileSize,ScreenUtil.tileSize);
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
     }
 }

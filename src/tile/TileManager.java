@@ -4,6 +4,7 @@ import display.GameScreen;
 import display.ScreenUtil;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import logic.GameLogic;
 
 import java.io.BufferedReader;
@@ -16,21 +17,22 @@ public class TileManager {
     public TileManager(){
         tile = new Tile[10];
         mapTileNum = new int[ScreenUtil.maxWorldCol][ScreenUtil.maxWorldRow];
+        Image i = new Image("/tile/trippleTile.jpg");
         tile[0] = new Tile();
-        tile[0].setImage(new Image("/tile/grass00.png"));
-        tile[1] = new Tile();
-        tile[1].setImage(new Image("/tile/grass01.png"));
+        tile[0].setImage(new WritableImage(i.getPixelReader(), 400, 40, 319, 319)); // ground
+        tile[1] = new Tile(); // x1 = 40; y1 = 40, x2 = 360, y2 = 360
+        tile[1].setImage(new WritableImage(i.getPixelReader(), 40, 40, 319, 319)); // grass
         tile[2] = new Tile();
-        tile[2].setImage(new Image("/tile/Tree.png"));
+        tile[2].setImage(new WritableImage(i.getPixelReader(), 760, 40, 319, 319)); // stone
         tile[2].setCollision(true);
         tile[3] = new Tile();
         tile[3].setImage(new Image("/tile/Water01.png"));
         tile[3].setCollision(true);
-        loadMap();
+        loadMap("/map/townMap.txt");
     }
-    public void loadMap(){
+    public void loadMap(String filename){
         try{
-            InputStream is = getClass().getResourceAsStream("/map/WorldV1.txt");
+            InputStream is = getClass().getResourceAsStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
