@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import logic.GameLogic;
 import sharedObject.RenderableHolder;
 import sound.Sound;
@@ -18,9 +20,13 @@ public class PauseMenuController implements Initializable {
     @FXML
     private StackPane continueButton;
     @FXML
+    private Text cont;
+    @FXML
     private StackPane optionButton;
     @FXML
     private StackPane exitButton;
+    @FXML
+    private Text exit;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,9 +36,28 @@ public class PauseMenuController implements Initializable {
     public void initializeButtons() {
         ArrayList<Rectangle> buttons= new ArrayList<>();
 
+        continueButton.setOnMouseEntered(event -> {
+            cont.setFill(Color.WHITE);
+            RenderableHolder.hoverSound.play();
+        });
+
         continueButton.setOnMouseClicked(event -> {
             RenderableHolder.confirmSound.play();
             GameLogic.continueGame();
+        });
+
+        continueButton.setOnMouseExited(event -> {
+            cont.setFill(Color.LIGHTGRAY);
+        });
+
+
+        exitButton.setOnMouseEntered(event -> {
+            exit.setFill(Color.WHITE);
+            RenderableHolder.hoverSound.play();
+        });
+
+        exitButton.setOnMouseExited(event -> {
+            exit.setFill(Color.LIGHTGRAY);
         });
 
         exitButton.setOnMouseClicked(event -> {

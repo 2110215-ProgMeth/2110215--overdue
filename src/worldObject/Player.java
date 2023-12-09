@@ -45,12 +45,12 @@ public class Player extends Entity {
         sprite = new Rectangle(0,0,ScreenUtil.tileSize,ScreenUtil.tileSize-10);
         //solidArea = new Rectangle(8,16,32,32);
         setDefaultValues();
+        speed = ScreenUtil.scale;
     }
     public void setDefaultValues(){
         WorldX = ScreenUtil.tileSize * 26; // 25
         WorldY = ScreenUtil.tileSize * 28; // 27
         direction = "down";
-        speed = ScreenUtil.scale;
     }
     //method
     private void up(){
@@ -68,9 +68,10 @@ public class Player extends Entity {
 
     public void update(){
         //System.out.println("Player update called");
+      //   System.out.println();
+      //  System.out.println(ScreenUtil.getFPS());
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
-         ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)
-         || InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
+         ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)) {
             if (GameLogic.getGameState() != GameLogic.pauseState) {
                 //SET DIRECTION
                 if (InputUtility.getKeyPressed(KeyCode.W)) {

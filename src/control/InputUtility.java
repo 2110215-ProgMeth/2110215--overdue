@@ -3,6 +3,7 @@ package control;
 import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
+import logic.GameLogic;
 
 import java.util.ArrayList;
 
@@ -18,14 +19,17 @@ public class InputUtility {
         return keyPressed.contains(keycode);
     }
     public static void setKeyPressed(KeyCode keycode,boolean pressed) {
-        if(pressed){
-            if(!keyPressed.contains(keycode)){
-                keyPressed.add(keycode);
+            if (pressed) {
+                if (!keyPressed.contains(keycode)) {
+                    if (GameLogic.getGameState() != GameLogic.pauseState){
+                        keyPressed.add(keycode);
+                    }
+                }
+            } else {
+                keyPressed.remove(keycode);
             }
-        }else{
-            keyPressed.remove(keycode);
-        }
-         System.out.println(keyPressed);
+            System.out.println(keyPressed);
+
     }
 
     public static void mouseLeftDown(){

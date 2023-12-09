@@ -24,7 +24,7 @@ public class GameLogic {
     private static Scene scene;
     private static GameScreen gameScreen;
     private static Thread gameThread;
-    private static int FPS = 45;
+    private static int FPS = ScreenUtil.getFPS();
     private static Player player;
     private static TileManager tilemanager;
     private static FontManager fontManager;
@@ -43,8 +43,8 @@ public class GameLogic {
         scene = new Scene(root);*/
  /*       gameScreen = new GameScreen();*/
 
-        player = new Player();
-        addNewObject(player);
+        /*player = new Player();
+        addNewObject(player);*/
         tilemanager = new TileManager();
         fontManager = new FontManager();
 
@@ -53,6 +53,7 @@ public class GameLogic {
         sound = new Sound();
         playMusic(0);
 
+        player = new Player();
         root = new RootPane();
         scene = new Scene(root);
         root.requestFocus();
@@ -73,6 +74,8 @@ public class GameLogic {
         setMusicVolume(0.2);
         setGameState(worldState);
 
+        player.setDefaultValues();
+        addNewObject(player);
         getRoot().getChildren().clear();
         gameScreen = new GameScreen();
         getRoot().getChildren().add(gameScreen);
@@ -98,13 +101,11 @@ public class GameLogic {
     }
 
     public static void logicUpdate(){
-        //System.out.println("GameLogic update called");
+        //System.out.println("GameLogic update called");InputUtility.getKeyPressed(KeyCode.ESCAPE)
         if (InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
             if (GameLogic.getGameState() == GameLogic.worldState) {
                 GameLogic.setGameState(GameLogic.pauseState);
                 GameLogic.pauseGame();
-            } else if (GameLogic.getGameState() == GameLogic.pauseState) {
-                GameLogic.setGameState(GameLogic.worldState);
             }
         }
         player.update();
@@ -321,8 +322,10 @@ public class GameLogic {
 
     public static void continueGame() {
         Platform.runLater(() -> {
-            if (getRoot().getChildren().contains(getRoot().getPauseMenu())) {
-                getRoot().getChildren().remove(getRoot().getPauseMenu());
+            synchronized (gameThread) {
+                if (getRoot().getChildren().contains(getRoot().getPauseMenu())) {
+                    getRoot().getChildren().remove(getRoot().getPauseMenu());
+                }
             }
         });
 
@@ -333,30 +336,13 @@ public class GameLogic {
     public static void pauseGame() {
     //    getRoot().getChildren().add(getRoot().getPauseMenu());
         Platform.runLater(() -> {
-            if (!getRoot().getChildren().contains(getRoot().getPauseMenu())); {
-                getRoot().getChildren().add(getRoot().getPauseMenu());
+            synchronized (gameThread) {
+                if (!getRoot().getChildren().contains(getRoot().getPauseMenu())) {
+                    getRoot().getChildren().add(getRoot().getPauseMenu());
+                }
             }
         });
-        setGameState(pauseState);
-       /* Platform.runLater(() -> {
-            try {
-                synchronized (gameThread) {
-                    // Check if the game is paused
-                    while (gameState == pauseState) {
-                        gameThread.wait(); // Wait until notified
-                    }
-                }
-
-                // Game logic processing goes here
-
-                // Adjust the sleep time to control the frame rate
-                Thread.sleep(1000 / FPS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            gameThread.start();
-        });*/
-
+        //setGameState(pauseState);
     }
 
 

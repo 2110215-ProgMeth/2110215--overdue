@@ -66,8 +66,11 @@ public class RenderableHolder {
 
     public static void loadSound() {
         hoverSound = new AudioClip(getPath("effect/001_Hover_01.wav"));
+        hoverSound.setVolume(0.4);
         confirmSound = new AudioClip(getPath("effect/013_Confirm_03.wav"));
+        confirmSound.setVolume(0.4);
         declineSound = new AudioClip(getPath("effect/029_Decline_09.wav"));
+        declineSound.setVolume(0.4);
     }
 
     public static void loadImage() {

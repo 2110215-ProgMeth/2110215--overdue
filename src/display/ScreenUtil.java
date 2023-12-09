@@ -15,7 +15,11 @@ public class ScreenUtil {
     public static final int maxWorldRow = 50;
     public static final int worldWidth = tileSize * maxWorldCol;
     public static final int worldHeight = tileSize * maxWorldRow;
-    public static int FPS;
+    public static int FPS = 45;
+
+    public static int getFPS() {
+        return FPS;
+    }
 
 
 }

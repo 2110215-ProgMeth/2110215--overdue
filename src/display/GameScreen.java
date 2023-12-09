@@ -33,14 +33,15 @@ public class GameScreen extends Canvas implements Runnable {
 
     }
     public void addListerner() {
-        this.setOnKeyPressed((KeyEvent event) -> {
-            InputUtility.setKeyPressed(event.getCode(), true);
-        });
+        if (GameLogic.getGameState() != GameLogic.pauseState) {
+            this.setOnKeyPressed((KeyEvent event) -> {
+                InputUtility.setKeyPressed(event.getCode(), true);
+            });
 
-        this.setOnKeyReleased((KeyEvent event) -> {
-            InputUtility.setKeyPressed(event.getCode(), false);
-        });
-
+            this.setOnKeyReleased((KeyEvent event) -> {
+                InputUtility.setKeyPressed(event.getCode(), false);
+            });
+        }
         this.setOnMousePressed((MouseEvent event) -> {
             if (event.getButton() == MouseButton.PRIMARY)
                 InputUtility.mouseLeftDown();
@@ -123,11 +124,11 @@ public class GameScreen extends Canvas implements Runnable {
                     case GameLogic.worldState:
                         break;
                     case GameLogic.pauseState:
-                        try {
+                        /*try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                            Thread.currentThread().interrupt();
+                        }*/
                         break;
                 }
                 RenderableHolder.update(RenderableHolder.townEntities);
@@ -141,7 +142,7 @@ public class GameScreen extends Canvas implements Runnable {
             }
 
            // System.out.println(GameLogic.getRoot().getChildren().contains(GameLogic.getRoot().getPauseMenu()));
-
+            // System.out.println(GameLogic.getRoot().getChildren().size());
         }
 
     }
