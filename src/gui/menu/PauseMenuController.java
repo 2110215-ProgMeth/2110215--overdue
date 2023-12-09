@@ -1,13 +1,60 @@
 package gui.menu;
 
+import display.ScreenUtil;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import logic.GameLogic;
+import sharedObject.RenderableHolder;
+import sound.Sound;
 
+import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PauseMenuController implements Initializable {
+    @FXML
+    private StackPane continueButton;
+    @FXML
+    private StackPane optionButton;
+    @FXML
+    private StackPane exitButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeButtons();
+    }
+
+    public void initializeButtons() {
+        ArrayList<Rectangle> buttons= new ArrayList<>();
+
+        continueButton.setOnMouseClicked(event -> {
+            RenderableHolder.confirmSound.play();
+            GameLogic.continueGame();
+        });
+
+        exitButton.setOnMouseClicked(event -> {
+            RenderableHolder.confirmSound.play();
+            ImageView mainMenuBackground = RenderableHolder.mainMenuBackground;
+            mainMenuBackground.setFitHeight(ScreenUtil.screenHeight);
+            mainMenuBackground.setFitWidth(ScreenUtil.screenWidth);
+            GameLogic.getScene().setOnKeyPressed(null);
+          //  RenderableHolder.getBattleEntities().clear();
+          //  RenderableHolder.getForestEntities().clear();
+            RenderableHolder.getTownEntities().clear();
+            GameLogic.getRoot().getChildren().clear();
+            GameLogic.getRoot().getChildren().addAll(mainMenuBackground, GameLogic.getRoot().getMainMenu());
+            GameLogic.getRoot().requestFocus();
+            GameLogic.stopMusic();
+            GameLogic.setGameState(GameLogic.worldState);
+            GameLogic.playMusic(0);
+        });
+
+
 
     }
+
+
 }

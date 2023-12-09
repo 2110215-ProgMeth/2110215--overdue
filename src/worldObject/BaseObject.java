@@ -12,7 +12,7 @@ public abstract class BaseObject extends Entity implements IRenderable {
     public Image image;
     public String name;
     public boolean collision = false;
-    public int WorldX,WorldY;
+    public double WorldX,WorldY;
     public Rectangle solidArea;
     public double solidAreaDefaultX = 0;
     public double solidAreaDefaultY = 0;
@@ -20,15 +20,15 @@ public abstract class BaseObject extends Entity implements IRenderable {
     public boolean destroyed;
     public int z = 1;
     // constructor
-    public BaseObject(int WorldX, int WorldY) {
-        setWorldX(WorldX * ScreenUtil.tileSize);
-        setWorldY(WorldY * ScreenUtil.tileSize);
+    public BaseObject(double WorldX, double WorldY) {
+        setWorldX((int) (WorldX * ScreenUtil.tileSize));
+        setWorldY((int) (WorldY * ScreenUtil.tileSize));
         setScale(1,1);
         solidArea = new Rectangle(0,0,ScreenUtil.tileSize,ScreenUtil.tileSize);
     }
-    public BaseObject(int WorldX, int WorldY, double scaleX, double scaleY,double solidX,double solidY,double solidW,double solidH){
-        setWorldX(WorldX * ScreenUtil.tileSize);
-        setWorldY(WorldY * ScreenUtil.tileSize);
+    public BaseObject(double WorldX, double WorldY, double scaleX, double scaleY,double solidX,double solidY,double solidW,double solidH){
+        setWorldX((int) (WorldX * ScreenUtil.tileSize));
+        setWorldY((int) (WorldY * ScreenUtil.tileSize));
         setScale(scaleX,scaleY);
         solidAreaDefaultX =  solidX * ScreenUtil.tileSize;
         solidAreaDefaultY =  solidY * ScreenUtil.tileSize;
@@ -36,8 +36,8 @@ public abstract class BaseObject extends Entity implements IRenderable {
     }
 
     public void draw(GraphicsContext gc){
-        int screenX = WorldX - GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX;
-        int screenY = WorldY - GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY;
+        double screenX = WorldX - GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX;
+        double screenY = WorldY - GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY;
         if (WorldX + scaleX * ScreenUtil.tileSize > GameLogic.getPlayer().WorldX - GameLogic.getPlayer().screenX &&
                 WorldX - scaleX * ScreenUtil.tileSize < GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX &&
                 WorldY + scaleY * ScreenUtil.tileSize > GameLogic.getPlayer().WorldY - GameLogic.getPlayer().screenY &&

@@ -47,8 +47,8 @@ public class Player extends Entity {
         setDefaultValues();
     }
     public void setDefaultValues(){
-        WorldX = ScreenUtil.tileSize * 30;
-        WorldY = ScreenUtil.tileSize * 29;
+        WorldX = ScreenUtil.tileSize * 26; // 25
+        WorldY = ScreenUtil.tileSize * 28; // 27
         direction = "down";
         speed = ScreenUtil.scale;
     }
@@ -69,83 +69,80 @@ public class Player extends Entity {
     public void update(){
         //System.out.println("Player update called");
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
-         ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)) {
-            //SET DIRECTION
-            if (InputUtility.getKeyPressed(KeyCode.W)) {
-                direction = "up";
-            }
-            if (InputUtility.getKeyPressed(KeyCode.S)) {
-                direction = "down";
-            }
-            if (InputUtility.getKeyPressed(KeyCode.A)) {
-                direction = "left";
-            }
-            if (InputUtility.getKeyPressed(KeyCode.D)) {
-                direction = "right";
-            }
+         ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)
+         || InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
+            if (GameLogic.getGameState() != GameLogic.pauseState) {
+                //SET DIRECTION
+                if (InputUtility.getKeyPressed(KeyCode.W)) {
+                    direction = "up";
+                }
+                if (InputUtility.getKeyPressed(KeyCode.S)) {
+                    direction = "down";
+                }
+                if (InputUtility.getKeyPressed(KeyCode.A)) {
+                    direction = "left";
+                }
+                if (InputUtility.getKeyPressed(KeyCode.D)) {
+                    direction = "right";
+                }
 
-            if (InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
-                if (GameLogic.getGameState() == GameLogic.worldState) {
-                    GameLogic.setGameState(GameLogic.pauseState);
-                } else if (GameLogic.getGameState() == GameLogic.pauseState) {
-                    GameLogic.setGameState(GameLogic.worldState);
-                }
-            }
 
-            //CHECK TILE COLLISION
-            collisionOn = false;
-            GameLogic.checkTile(this);
-            int i = GameLogic.isFront(this);
-            if (i !=999){
-                if (!front) {
-                    System.out.println("Player is infront of the object");
-                    RenderableHolder.townEntities.remove(this);
-                    RenderableHolder.townEntities.add(RenderableHolder.townEntities.size(), this);
-                    front = true;
+                //CHECK TILE COLLISION
+                collisionOn = false;
+                GameLogic.checkTile(this);
+                int i = GameLogic.isFront(this);
+                if (i != 999) {
+                    if (!front) {
+                        System.out.println("Player is infront of the object");
+                        RenderableHolder.townEntities.remove(this);
+                        RenderableHolder.townEntities.add(RenderableHolder.townEntities.size(), this);
+                        front = true;
+                    }
+                } else {
+                    if (front) {
+                        System.out.println("Player is behind the object");
+                        RenderableHolder.townEntities.remove(this);
+                        RenderableHolder.townEntities.add(0, this);
+                        front = false;
+                    }
                 }
-            }else{
-                if (front) {
-                    System.out.println("Player is behind the object");
-                    RenderableHolder.townEntities.remove(this);
-                    RenderableHolder.townEntities.add(0,this);
-                    front = false;
-                }
-            }
 
-            //CHECK OBJECT COLLISION
-            int objIndex = GameLogic.checkObject(this,true);
-            interactObject(objIndex);
-            // IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(!collisionOn){
-                switch(direction){
-                    case "up":
-                        up();
-                        break;
-                    case "down":
-                        down();
-                        break;
-                    case "left":
-                        left();
-                        break;
-                    case "right":
-                        right();
-                        break;
-                }
-            }
+                //CHECK OBJECT COLLISION
+                int objIndex = GameLogic.checkObject(this, true);
+                interactObject(objIndex);
 
-            //SWITCH CHARACTER MOVEMENT
-            spriteCounter++;
-            if (spriteCounter > 12) {
-                if (spriteNum == 0) {
-                    spriteNum = 1;
-                } else if (spriteNum == 1) {
-                    spriteNum = -1;
-                }else if (spriteNum == -1){
-                    spriteNum = 2;
-                }else if (spriteNum == 2){
-                    spriteNum = 0;
+                // IF COLLISION IS FALSE, PLAYER CAN MOVE
+                if (!collisionOn && GameLogic.getGameState() != GameLogic.pauseState) {
+                    switch (direction) {
+                        case "up":
+                            up();
+                            break;
+                        case "down":
+                            down();
+                            break;
+                        case "left":
+                            left();
+                            break;
+                        case "right":
+                            right();
+                            break;
+                    }
                 }
-                spriteCounter = 0;
+
+                //SWITCH CHARACTER MOVEMENT
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    if (spriteNum == 0) {
+                        spriteNum = 1;
+                    } else if (spriteNum == 1) {
+                        spriteNum = -1;
+                    } else if (spriteNum == -1) {
+                        spriteNum = 2;
+                    } else if (spriteNum == 2) {
+                        spriteNum = 0;
+                    }
+                    spriteCounter = 0;
+                }
             }
         }else{
             spriteNum = 0;
@@ -208,5 +205,9 @@ public class Player extends Entity {
     @Override
     public boolean isDestroyed() {
         return false;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

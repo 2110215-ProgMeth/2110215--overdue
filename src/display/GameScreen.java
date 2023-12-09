@@ -17,7 +17,7 @@ import javafx.scene.canvas.Canvas;
 import control.InputUtility;
 import logic.GameLogic;
 
-public class GameScreen extends Canvas implements Runnable{
+public class GameScreen extends Canvas implements Runnable {
 
     // constructor
     public GameScreen() {
@@ -29,6 +29,7 @@ public class GameScreen extends Canvas implements Runnable{
         this.setFocused(true);
 
         addListerner();
+
 
     }
     public void addListerner() {
@@ -115,8 +116,20 @@ public class GameScreen extends Canvas implements Runnable{
             delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
+
             if (delta >= 1){
                 GameLogic.logicUpdate();
+                switch(GameLogic.getGameState()){
+                    case GameLogic.worldState:
+                        break;
+                    case GameLogic.pauseState:
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                }
                 RenderableHolder.update(RenderableHolder.townEntities);
                 paintComponent();
                 delta--;
@@ -126,7 +139,11 @@ public class GameScreen extends Canvas implements Runnable{
                 drawCount = 0;
                 timer = 0;
             }
+
+           // System.out.println(GameLogic.getRoot().getChildren().contains(GameLogic.getRoot().getPauseMenu()));
+
         }
+
     }
 
 }

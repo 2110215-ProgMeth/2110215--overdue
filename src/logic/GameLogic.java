@@ -1,27 +1,33 @@
 package logic;
 
+import control.InputUtility;
 import display.GameScreen;
 import display.ScreenUtil;
+import font.FontManager;
+import gui.menu.RootPane;
 import interfaces.IRenderable;
+import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyCode;
 import sharedObject.RenderableHolder;
 import sound.Sound;
 import tile.TileManager;
 import worldObject.*;
 import worldObject.buildings.*;
-import worldObject.tree.LightTree;
-import worldObject.tree.NormalTree;
+import worldObject.forest.*;
+
+import java.io.IOException;
 
 public class GameLogic {
     //private static ArrayList<IRenderable> gameObjectContainer;
-    private static StackPane root;
+    private static RootPane root;
     private static Scene scene;
     private static GameScreen gameScreen;
     private static Thread gameThread;
-    private static int FPS = 50;
+    private static int FPS = 45;
     private static Player player;
     private static TileManager tilemanager;
+    private static FontManager fontManager;
     private static BaseObject baseObject[];
     private static Sound sound;
     private static int gameState;
@@ -30,68 +36,91 @@ public class GameLogic {
     public static final int pauseState = 2;
 
 
-    public GameLogic() {
-        //this.gameObjectContainer = new ArrayList<IRenderable>();
-        root = new StackPane();
-        scene = new Scene(root);
 
-        gameScreen = new GameScreen();
+    public GameLogic() throws IOException {
+        //this.gameObjectContainer = new ArrayList<IRenderable>();
+ /*       root = new RootPane();
+        scene = new Scene(root);*/
+ /*       gameScreen = new GameScreen();*/
 
         player = new Player();
         addNewObject(player);
         tilemanager = new TileManager();
+        fontManager = new FontManager();
 
         baseObject = new BaseObject[20];
 
         sound = new Sound();
+        playMusic(0);
 
+        root = new RootPane();
+        scene = new Scene(root);
+        root.requestFocus();
+
+  /*      gameScreen = new GameScreen();
         getRoot().getChildren().add(gameScreen);
-        gameScreen.requestFocus();
+        gameScreen.requestFocus();*/
 
-        setupGame();
-        startGameThread();
+/*        setupGame();
+        startGameThread();*/
     }
 
     // methods
-    public void setupGame() {
-        setObject();
+    public static void setupGame() {
+        stopMusic();
+        setTownObject();
         playMusic(1);
         setMusicVolume(0.2);
         setGameState(worldState);
+
+        getRoot().getChildren().clear();
+        gameScreen = new GameScreen();
+        getRoot().getChildren().add(gameScreen);
+        gameScreen.requestFocus();
     }
 
-    public void startGameThread() {
+    public static void startGameThread() {
         gameThread = new Thread(gameScreen);
         gameThread.start();
+
+        /*gameThread = new Thread(() -> {
+            gameScreen.paintComponent();
+            player.update();
+        });
+        gameThread.start();*/
+
+
     }
 
-    protected void addNewObject(IRenderable entity){
+    protected static void addNewObject(IRenderable entity){
         //gameObjectContainer.add(entity);
         RenderableHolder.getInstance().add(RenderableHolder.townEntities,entity);
     }
 
     public static void logicUpdate(){
         //System.out.println("GameLogic update called");
-        if (gameState == worldState) {
-            player.update();
+        if (InputUtility.getKeyPressed(KeyCode.ESCAPE)) {
+            if (GameLogic.getGameState() == GameLogic.worldState) {
+                GameLogic.setGameState(GameLogic.pauseState);
+                GameLogic.pauseGame();
+            } else if (GameLogic.getGameState() == GameLogic.pauseState) {
+                GameLogic.setGameState(GameLogic.worldState);
+            }
         }
-        if (gameState == pauseState) {
-
-        }
+        player.update();
     }
 
 
 
     // initialize world object
-    public void setObject() {
+    public static void setTownObject() {
         baseObject[2] = new House(27, 18,6,6,0,3,6,3);
-        baseObject[3] = new NormalTree(18, 20, 4, 4, 1, 3.5, 2, 0.5);
-        baseObject[4] = new LightTree(13, 20, 4, 4, 1.5, 3, 1, 0.5);
         baseObject[5] = new ChimneyHouse(34, 18, 6, 6, 0, 3, 6, 3);
         baseObject[6] = new LongHouse(41, 18, 10.25, 6, 0, 3, 6, 3);
         baseObject[7] = new TallHouse(18, 27, 6, 10, 0, 3, 6, 3);
         baseObject[8] = new Guild(18, 9, 10.25, 10, 0, 7, 10.25, 3);
         baseObject[9] = new NormalTree(18, 50, 7, 7, 2, 3.5, 2, 0.5);
+        baseObject[10] = new Statue(25.0,23.0,2,4,0,3,2,1);
 
         for(int i=0 ; i < baseObject.length ;i++){
             if (baseObject[i] != null) {
@@ -274,7 +303,7 @@ public class GameLogic {
     }
 
     //Sound
-    public void playMusic(int i){
+    public static void playMusic(int i){
         sound.setClip(i);
         sound.play();
         sound.loop();
@@ -289,11 +318,54 @@ public class GameLogic {
     public static void setMusicVolume(double i){
         sound.getClip().setVolume(i);
     }
+
+    public static void continueGame() {
+        Platform.runLater(() -> {
+            if (getRoot().getChildren().contains(getRoot().getPauseMenu())) {
+                getRoot().getChildren().remove(getRoot().getPauseMenu());
+            }
+        });
+
+        // gameThread.start();
+        setGameState(worldState);
+    }
+
+    public static void pauseGame() {
+    //    getRoot().getChildren().add(getRoot().getPauseMenu());
+        Platform.runLater(() -> {
+            if (!getRoot().getChildren().contains(getRoot().getPauseMenu())); {
+                getRoot().getChildren().add(getRoot().getPauseMenu());
+            }
+        });
+        setGameState(pauseState);
+       /* Platform.runLater(() -> {
+            try {
+                synchronized (gameThread) {
+                    // Check if the game is paused
+                    while (gameState == pauseState) {
+                        gameThread.wait(); // Wait until notified
+                    }
+                }
+
+                // Game logic processing goes here
+
+                // Adjust the sleep time to control the frame rate
+                Thread.sleep(1000 / FPS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameThread.start();
+        });*/
+
+    }
+
+
+
     public static Scene getScene() {
         return scene;
     }
 
-    public static StackPane getRoot() {
+    public static RootPane getRoot() {
         return root;
     }
 
@@ -319,6 +391,10 @@ public class GameLogic {
 
     public static int getGameState() {
         return gameState;
+    }
+
+    public static FontManager getFontManager() {
+        return fontManager;
     }
 
 /*    public static ArrayList<IRenderable> getGameObjectContainer() {

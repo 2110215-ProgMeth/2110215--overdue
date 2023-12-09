@@ -16,7 +16,7 @@ public class Main extends Application {
 
         GameLogic gameLogic = new GameLogic();
         stage.setScene(GameLogic.getScene());
-        stage.setTitle("Progmeth Project"); // Title will be edited later
+        stage.setTitle("Tales of Elpiz"); // Title will be edited later
         stage.setResizable(false);
 
         stage.show();

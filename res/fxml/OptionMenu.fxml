@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DisplacementMap?>
+<?import javafx.scene.effect.FloatMap?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.menu.OptionMenuController">
+	<children>
+		<Pane layoutX="355.0" layoutY="120.0" prefHeight="420.0" prefWidth="392.0">
+			<children>
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="344.0" layoutX="-8.0" layoutY="21.0" stroke="BLACK" strokeType="INSIDE" width="410.0" />
+				<Rectangle arcHeight="10.0" arcWidth="10.0" height="324.0" layoutX="1.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="392.0" />
+      				<StackPane layoutX="96.0" layoutY="73.0" prefHeight="36.0" prefWidth="200.0">
+               <children>
+            						<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="SETTING" textAlignment="CENTER">
+            							<font>
+            								<Font name="Final Fantasy Regular" size="27.0" />
+            							</font>
+            						</Text>
+               </children>
+            </StackPane>
+				<Text fill="#ffeb00" layoutX="45.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player speed">
+					<font>
+						<Font name="Final Fantasy Regular" size="20.0" />
+					</font>
+				</Text>
+				<Text fill="#ffeb00" layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Music">
+					<font>
+						<Font name="Final Fantasy Regular" size="20.0" />
+					</font>
+				</Text>
+				<StackPane fx:id="musicBarRoot" alignment="CENTER_LEFT" layoutX="45.0" layoutY="277.0" prefHeight="36.0" prefWidth="258.0">
+					<children>
+						<Line endX="159.2928924560547" endY="0.1857254058122635" fill="#ffffff00" startX="-100.0" />
+      						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0" />
+      						<Rectangle fx:id="musicBar" arcHeight="5.0" arcWidth="5.0" fill="#eaff00" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0" />
+					</children>
+				</StackPane>
+				<StackPane fx:id="speedBarRoot" alignment="CENTER_LEFT" layoutX="44.0" layoutY="185.0" prefHeight="36.0" prefWidth="258.0">
+					<children>
+						<Line endX="159.2928924560547" endY="0.1857254058122635" fill="#ffffff00" startX="-100.0" />
+      						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="33.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0" />
+      						<Rectangle fx:id="speedBar" arcHeight="5.0" arcWidth="5.0" fill="#ebff39" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0">
+      							<effect>
+      								<DisplacementMap>
+      									<mapData>
+      										<FloatMap />
+      									</mapData>
+      								</DisplacementMap>
+      							</effect>
+      						</Rectangle>
+					</children>
+				</StackPane>
+			</children>
+		</Pane>
+	</children>
+</Pane>

@@ -9,7 +9,8 @@ import sharedObject.RenderableHolder;
 public class Sound {
     private Media clip;
     Media sound[] = new Media[30];
-    MediaPlayer soundPlayer;
+    public static MediaPlayer soundPlayer;
+    public static double volume;
     public Sound() {
         sound[0] = new Media(RenderableHolder.getPath("sound/opening.mp3"));
         sound[1] = new Media(RenderableHolder.getPath("sound/town.mp3"));
@@ -32,8 +33,8 @@ public class Sound {
         this.soundPlayer.stop();
     }
 
-    public MediaPlayer getClip() {
-        return this.soundPlayer;
+    public static MediaPlayer getClip() {
+        return soundPlayer;
     }
 
 }

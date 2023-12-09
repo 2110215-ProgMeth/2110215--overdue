@@ -1,6 +1,7 @@
 package sharedObject;
 
 import interfaces.IRenderable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
@@ -11,15 +12,20 @@ import java.util.List;
 
 public class RenderableHolder {
     private static final RenderableHolder instance = new RenderableHolder();
-    public static AudioClip mouseHoverSound;
-    public static AudioClip mouseClickedSound;
+    public static AudioClip hoverSound;
+    public static AudioClip confirmSound;
+    public static AudioClip declineSound;
     public static ImageView mainMenuBackground;
-
+    public static ImageView darkWojak;
     public static List<IRenderable> townEntities;
     public static List<IRenderable> battleEntities;
     public static List<IRenderable> forestEntities;
 
     private static Comparator<IRenderable> comparator;
+    static {
+        loadSound();
+        loadImage();
+    }
 
     // constructor
     public RenderableHolder() {
@@ -57,4 +63,24 @@ public class RenderableHolder {
                 entities.remove(i);
         }
     }
+
+    public static void loadSound() {
+        hoverSound = new AudioClip(getPath("effect/001_Hover_01.wav"));
+        confirmSound = new AudioClip(getPath("effect/013_Confirm_03.wav"));
+        declineSound = new AudioClip(getPath("effect/029_Decline_09.wav"));
+    }
+
+    public static void loadImage() {
+        mainMenuBackground = new ImageView(new Image(getPath("menuImage/gameCover.png")));
+        darkWojak = new ImageView(new Image(getPath("menuImage/creditImage1.jpg")));
+
+
+    }
+
+    public static List<IRenderable> getTownEntities() {
+        return townEntities;
+    }
+
+
+
 }
