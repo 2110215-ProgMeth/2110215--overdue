@@ -3,6 +3,8 @@ package worldObject;
 import control.InputUtility;
 import display.GameScreen;
 import display.ScreenUtil;
+import interfaces.IRenderable;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -10,7 +12,7 @@ import javafx.scene.shape.Rectangle;
 import logic.GameLogic;
 import org.ietf.jgss.GSSManager;
 import sharedObject.RenderableHolder;
-
+import java.util.List;
 
 public class Player extends Entity {
     public final int screenX;
@@ -32,7 +34,7 @@ public class Player extends Entity {
     public Image right1 = new Image("/playerImage/right1.png");
     public Image right2 = new Image("/playerImage/right2.png");
 
-    public Player() {
+    public Player(int WorldX,int WorldY) {
         screenX = ScreenUtil.screenWidth/2 - (ScreenUtil.tileSize/2);
         screenY = ScreenUtil.screenHeight/2 - (ScreenUtil.tileSize/2);
         solidArea = new Rectangle();
@@ -43,14 +45,10 @@ public class Player extends Entity {
         solidArea.setHeight((double)  (ScreenUtil.tileSize * 2) / 3);
         solidArea.setWidth((double)  (ScreenUtil.tileSize * 2) / 3);
         sprite = new Rectangle(0,0,ScreenUtil.tileSize,ScreenUtil.tileSize-10);
-        //solidArea = new Rectangle(8,16,32,32);
-        setDefaultValues();
-        speed = ScreenUtil.scale;
-    }
-    public void setDefaultValues(){
-        WorldX = ScreenUtil.tileSize * 26; // 25
-        WorldY = ScreenUtil.tileSize * 28; // 27
+        this.WorldX = ScreenUtil.tileSize * WorldX; // 25
+        this.WorldY = ScreenUtil.tileSize * WorldY; // 27
         direction = "down";
+        speed = ScreenUtil.scale;
     }
     //method
     private void up(){
@@ -151,13 +149,36 @@ public class Player extends Entity {
     }
     public void interactObject(int i){
         if (i != 999){
-            String objName = GameLogic.getBaseObject()[i].getName();
-
-            switch ((objName)){
-                case "Key":
-                    System.out.println("FOUND KEY");
-                    break;
+            Player player;
+            List<IRenderable> holder;
+            if (GameLogic.getCurrentMap() == GameLogic.townMap){
+               holder = RenderableHolder.getTownEntities();
+            }else{
+                holder = RenderableHolder.getForestEntities();
             }
+            String objName = holder.get(i).getName();
+            Platform.runLater(() -> {
+                switch ((objName)){
+                    case "WARP_TO_FOREST":
+                        System.out.println("GO TO FOREST");
+                        GameLogic.setCurrentMap(GameLogic.forestMap);
+                        GameLogic.getPlayer().setWorldX(35);
+                        GameLogic.getPlayer().setWorldY(38);
+                        RenderableHolder.getTownEntities().clear();
+                        RenderableHolder.getForestEntities().clear();
+                        GameLogic.setupGame();
+                        break;
+                    case "WARP_TO_TOWN":
+                        System.out.println("GO TO TOWN");
+                        GameLogic.getPlayer().setWorldX(25);
+                        GameLogic.getPlayer().setWorldY(40);
+                        RenderableHolder.getTownEntities().clear();
+                        RenderableHolder.getForestEntities().clear();
+                        GameLogic.setCurrentMap(GameLogic.townMap);
+                        GameLogic.setupGame();
+                        break;
+                }
+            });
         }
     }
     public void draw(GraphicsContext gc) {

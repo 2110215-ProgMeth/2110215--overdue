@@ -25,14 +25,14 @@ public class MainMenu extends VBox {
      /*   this.setBorder(Border.stroke(Color.LIGHTGRAY));*/
         startButton = new MainMenuButton("START");
         optionButton = new MainMenuButton("OPTION");
-        helpButton = new MainMenuButton("HELP");
+        // helpButton = new MainMenuButton("HELP");
         creditButton = new MainMenuButton("CREDIT");
         exitButton = new MainMenuButton("EXIT");
         this.setPrefSize(ScreenUtil.screenWidth / (20 * ScreenUtil.scale), ScreenUtil.screenHeight / (3 * ScreenUtil.scale));
         this.setLayoutX(ScreenUtil.screenWidth / (3 * ScreenUtil.scale)); // 10 bigger number, closer to left
         this.setLayoutY(ScreenUtil.screenHeight / (0.75 * ScreenUtil.scale)); // 2.2 bigger number, higher it goes
 
-        this.getChildren().addAll(startButton, optionButton, helpButton, creditButton, exitButton);
+        this.getChildren().addAll(startButton, optionButton, /*helpButton,*/ creditButton, exitButton);
 
         startButton.setOnMouseClicked(event -> {
             GameLogic.setupGame();
@@ -43,9 +43,9 @@ public class MainMenu extends VBox {
             switchToOptionMenu();
         }));
 
-        helpButton.setOnMouseClicked(event -> {
+        /*helpButton.setOnMouseClicked(event -> {
             switchToHelpMenu();
-        });
+        });*/
 
         creditButton.setOnMouseClicked((event -> {
             switchToCreditMenu();

@@ -8,7 +8,7 @@ public class ChimneyHouse extends BaseObject {
     Image i = new Image("/object/House(Cropped).png");
     // x = 203 y = 7 x2 = 370  y2 = 211
     WritableImage image = new WritableImage(i.getPixelReader(),203,7,167,205);
-    public ChimneyHouse(int WorldX,int WorldY,double scaleX,double scaleY,double solidX,double solidY,double solidW,double solidH){
+    public ChimneyHouse(double WorldX,double WorldY,double scaleX,double scaleY,double solidX,double solidY,double solidW,double solidH){
         super(WorldX,WorldY,scaleX,scaleY,solidX,solidY,solidW,solidH);
         setName("Chimney House");
         setCollision(true);

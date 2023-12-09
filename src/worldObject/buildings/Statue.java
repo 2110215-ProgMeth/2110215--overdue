@@ -8,7 +8,7 @@ public class Statue extends BaseObject {
     Image i = new Image("/object/Statue.png");
     // x = 11 y = 239 x2 = 290  y2 = 433
     WritableImage image = new WritableImage(i.getPixelReader(),1,96,47,96);
-    public Statue(Double WorldX,Double WorldY,double scaleX,double scaleY,double solidX,double solidY,double solidW,double solidH){
+    public Statue(double WorldX,double WorldY,double scaleX,double scaleY,double solidX,double solidY,double solidW,double solidH){
         super(WorldX,WorldY,scaleX,scaleY,solidX,solidY,solidW,solidH);
         setName("Knight Statue");
         setCollision(true);

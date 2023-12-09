@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import logic.GameLogic;
+import sharedObject.RenderableHolder;
 
 public abstract class BaseObject extends Entity implements IRenderable {
     public Image image;
@@ -36,12 +37,18 @@ public abstract class BaseObject extends Entity implements IRenderable {
     }
 
     public void draw(GraphicsContext gc){
+        /*Player player;
+        if (GameLogic.getCurrentMap() == GameLogic.townMap){
+            player = RenderableHolder.player1;
+        }else {
+            player = RenderableHolder.player2;
+        }*/
         double screenX = WorldX - GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX;
         double screenY = WorldY - GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY;
         if (WorldX + scaleX * ScreenUtil.tileSize > GameLogic.getPlayer().WorldX - GameLogic.getPlayer().screenX &&
-                WorldX - scaleX * ScreenUtil.tileSize < GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX &&
-                WorldY + scaleY * ScreenUtil.tileSize > GameLogic.getPlayer().WorldY - GameLogic.getPlayer().screenY &&
-                WorldY - scaleY * ScreenUtil.tileSize < GameLogic.getPlayer().WorldY + GameLogic.getPlayer().screenY){
+                WorldX - scaleX * ScreenUtil.tileSize <  GameLogic.getPlayer().WorldX + GameLogic.getPlayer().screenX &&
+                WorldY + scaleY * ScreenUtil.tileSize >  GameLogic.getPlayer().WorldY -  GameLogic.getPlayer().screenY &&
+                WorldY - scaleY * ScreenUtil.tileSize <  GameLogic.getPlayer().WorldY +  GameLogic.getPlayer().screenY){
             gc.drawImage(image,screenX,screenY,scaleX * ScreenUtil.tileSize,scaleY * ScreenUtil.tileSize);
         }
 
@@ -67,9 +74,6 @@ public abstract class BaseObject extends Entity implements IRenderable {
         return name;
     }
 
-    public boolean isCollision() {
-        return collision;
-    }
 
     public void setWorldX(int worldX) {
         this.WorldX = worldX;

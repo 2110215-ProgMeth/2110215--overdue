@@ -7,6 +7,7 @@ import tile.TileManager;
 /*import worldObject.AssetObject;*/
 import worldObject.BaseObject;
 /*import worldObject.CollisionChecker;*/
+import worldObject.Entity;
 import worldObject.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -93,13 +94,19 @@ public class GameScreen extends Canvas implements Runnable {
 
         // PLAYER
         GameLogic.getPlayer().draw(gc);*/
-
-        for (IRenderable entity : RenderableHolder.townEntities){
-            if (!entity.isDestroyed()) {
-                entity.draw(gc);
+        if (GameLogic.getCurrentMap() == GameLogic.townMap) {
+            for (IRenderable entity : RenderableHolder.townEntities) {
+                if (!entity.isDestroyed()) {
+                    entity.draw(gc);
+                }
+            }
+        } else if (GameLogic.getCurrentMap() == GameLogic.forestMap){
+             for (IRenderable entity : RenderableHolder.forestEntities) {
+                if (!entity.isDestroyed()) {
+                    entity.draw(gc);
+                }
             }
         }
-
     }
 
 

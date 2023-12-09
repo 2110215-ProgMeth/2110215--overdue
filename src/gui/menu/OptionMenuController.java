@@ -29,7 +29,12 @@ public class OptionMenuController implements Initializable {
     public void initializeSpeedBar() {
         speedBar.widthProperty().bind(speedBarRoot.widthProperty().multiply(0));
         speedBarRoot.setOnMouseDragged(event -> {
-
+            /*Player player;
+            if (GameLogic.getCurrentMap() == GameLogic.townMap) {
+                player = RenderableHolder.player1;
+            } else {
+                player = RenderableHolder.player2;
+            }*/
             double mouseX = event.getX(); // X position
             double barLength = 258;
             int speed = (int) Math.min(10, ((mouseX + 77.4) / barLength) * 10);

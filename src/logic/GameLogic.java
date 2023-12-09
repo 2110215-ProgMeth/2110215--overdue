@@ -15,7 +15,10 @@ import tile.TileManager;
 import worldObject.*;
 import worldObject.buildings.*;
 import worldObject.forest.*;
-
+import worldObject.npc.Lady;
+import worldObject.npc.Man1Left;
+import worldObject.npc.Merchant;
+import java.util.List;
 import java.io.IOException;
 
 public class GameLogic {
@@ -25,42 +28,39 @@ public class GameLogic {
     private static GameScreen gameScreen;
     private static Thread gameThread;
     private static int FPS = ScreenUtil.getFPS();
-    private static Player player;
     private static TileManager tilemanager;
     private static FontManager fontManager;
     private static BaseObject baseObject[];
     private static Sound sound;
+    private static Player player;
     private static int gameState;
     public static final int worldState = 0;
-    public static final int battleState = 1;
     public static final int pauseState = 2;
+    public static final int battleState = 3;
+    public static int currentMap = 0;
+    public static final int townMap = 0;
+    public static final int forestMap = 1;
     public static boolean threadActive = false;
 
-
-
     public GameLogic() throws IOException {
-        //this.gameObjectContainer = new ArrayList<IRenderable>();
- /*       root = new RootPane();
-        scene = new Scene(root);*/
- /*       gameScreen = new GameScreen();*/
-
-        /*player = new Player();
-        addNewObject(player);*/
         tilemanager = new TileManager();
         fontManager = new FontManager();
-
-        baseObject = new BaseObject[20];
-
         sound = new Sound();
-        playMusic(0);
 
-        player = new Player();
+        playMusic(0);
+        setGameState(GameLogic.townMap);
+        player = new Player(26, 28);
         root = new RootPane();
         scene = new Scene(root);
         root.requestFocus();
 
+        //setupgame
+     //   setTownObject();
+     //   setForestObject();
+
         gameScreen = new GameScreen();
         gameThread = new Thread(gameScreen);
+
         while (!threadActive) {
             try {
                 Thread.sleep(200);
@@ -69,27 +69,32 @@ public class GameLogic {
             }
             break;
         }
-      /*  getRoot().getChildren().add(gameScreen);
-        gameScreen.requestFocus();*/
 
-/*        setupGame();
-        startGameThread();*/
     }
 
     // methods
     public static void setupGame() {
         stopMusic();
-        setTownObject();
-        playMusic(1);
-        setMusicVolume(0.2);
-        setGameState(worldState);
+        if (getCurrentMap() == GameLogic.townMap){
+            playMusic(1);
+            tilemanager.loadMap("/map/townMap.txt");
+            player.setWorldX(26);
+            player.setWorldY(28);
+            RenderableHolder.getTownEntities().add(player);
+            RenderableHolder.setTownEntities();
 
-        player.setDefaultValues();
-        addNewObject(player);
+        } else if (getCurrentMap() == GameLogic.forestMap){
+            playMusic(2);
+            tilemanager.loadMap("/map/forestMap.txt");
+            player.setWorldX(40);
+            player.setWorldY(45);
+            RenderableHolder.getForestEntities().add(player);
+            RenderableHolder.setForestEntities();
+        }
+        setMusicVolume(0.2);
         getRoot().getChildren().clear();
         getRoot().getChildren().add(gameScreen);
         gameScreen.requestFocus();
-   //     gameThread = new Thread(gameScreen);
     }
 
     public static void startGameThread() {
@@ -98,19 +103,16 @@ public class GameLogic {
             gameThread.start();
         }
 
-        /*gameThread = new Thread(() -> {
-            gameScreen.paintComponent();
-            player.update();
-        });
-        gameThread.start();*/
-
-
     }
 
-    protected static void addNewObject(IRenderable entity){
-        //gameObjectContainer.add(entity);
-        RenderableHolder.getInstance().add(RenderableHolder.townEntities,entity);
-    }
+    /*protected static void addNewObject(Entity entity){
+        if (currentMap == townMap){
+            RenderableHolder.add(RenderableHolder.townEntities,entity);
+        }
+        else if(currentMap == forestMap){
+            RenderableHolder.getInstance().add(RenderableHolder.forestEntities,entity);
+        }
+    }*/
 
     public static void logicUpdate(){
         //System.out.println("GameLogic update called");InputUtility.getKeyPressed(KeyCode.ESCAPE)
@@ -120,27 +122,80 @@ public class GameLogic {
                 GameLogic.pauseGame();
             }
         }
+        /*if (GameLogic.getCurrentMap() == GameLogic.townMap) {
+            RenderableHolder.player1.update();
+        }else if(GameLogic.getCurrentMap() == GameLogic.forestMap) {
+            RenderableHolder.player2.update();
+        }*/
         player.update();
     }
 
-
+    public static Player getPlayer() {
+        return player;
+    }
 
     // initialize world object
-    public static void setTownObject() {
-        baseObject[2] = new House(27, 18,6,6,0,3,6,3);
-        baseObject[5] = new ChimneyHouse(34, 18, 6, 6, 0, 3, 6, 3);
-        baseObject[6] = new LongHouse(41, 18, 10.25, 6, 0, 3, 6, 3);
-        baseObject[7] = new TallHouse(18, 27, 6, 10, 0, 3, 6, 3);
-        baseObject[8] = new Guild(18, 9, 10.25, 10, 0, 7, 10.25, 3);
-        baseObject[9] = new NormalTree(18, 50, 7, 7, 2, 3.5, 2, 0.5);
-        baseObject[10] = new Statue(25.0,23.0,2,4,0,3,2,1);
+    /*public static void setTownObject() {
+        player = new Player(26,28);
+        addNewObject(player);
+        baseObject = new BaseObject[30];
+        baseObject[0] = new Guild(20,0,12,8,0,4,12,5);
+        baseObject[1] = new NormalTree(20,18.5, 4, 4, 1, 3.5, 2, 0.5);
+        baseObject[2] = new NormalTree(28,18.5, 4, 4, 1, 3.5, 2, 0.5);
+        baseObject[3] = new Statue(25.0,23.0,2,4,0,3,2,1);
+        baseObject[4] = new ChimneyHouse(13,18,6, 6, 0, 3.5, 6, 2.5);
+        baseObject[5] = new House(32,18,5,6,0,3.5,5,2.5);
+        baseObject[6] = new LongHouse(12,8,10.25, 6, 0, 4, 10.25, 2);
+        baseObject[7] = new TallHouse(32.5,4,6, 10, 0, 8, 6, 2);
+        baseObject[8] = new NormalTree(15,28.5, 4, 4, 1, 3.25, 2, 0.25);
+        baseObject[9] = new NormalTree(33,28.5, 4, 4, 1, 3.25, 2, 0.25);
+        baseObject[10] = new NormalTree(15,4, 4, 4, 1, 3.25, 2, 0.25);
+        baseObject[11] = new NormalTree(8,9, 4, 4, 1, 3.25, 2, 0.25);
+        baseObject[12] = new Warp(25,40);
+        baseObject[12].setName("WARP_TO_FOREST");
+        baseObject[13] = new Warp(26,40);
+        baseObject[13].setName("WARP_TO_FOREST");
+        baseObject[16] = new Warp(23,39);
+        baseObject[16].setName("WARP_TO_FOREST");
+        baseObject[17] = new Warp(24,39);
+        baseObject[17].setName("WARP_TO_FOREST");
+        baseObject[18] = new Warp(28,39);
+        baseObject[18].setName("WARP_TO_FOREST");
+        baseObject[19] = new Warp(27,39);
+        baseObject[19].setName("WARP_TO_FOREST");
+        baseObject[14] = new Merchant(20, 24, 1, 1, 0, 0.5, 1, 0.5);
+        baseObject[15] = new Man1Left(20, 26, 1, 1, 0, 0.5 ,1, 0.5);
+        baseObject[16] = new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5);
 
         for(int i=0 ; i < baseObject.length ;i++){
             if (baseObject[i] != null) {
                 addNewObject(baseObject[i]);
             }
         }
-    }
+    }*/
+    /*public static void setForestObject(){
+        baseObject = new BaseObject[20];
+        baseObject[0] = new Warp(38,38);
+        baseObject[0].setName("WARP_TO_TOWN");
+        baseObject[1] = new Warp(38,39);
+        baseObject[1].setName("WARP_TO_TOWN");
+        baseObject[2] = new ForestTreeB(32,38,4, 4, 1.25, 3, 1.75, 0.5);
+        //baseObject[1] = new ForestTreeS(34,39,2, 2, 0.5, 1.5, 1, 0.25);
+        baseObject[3] = new ForestTreeB(25,32.75,4, 4, 1.25, 3, 1.75, 0.5);
+        baseObject[4] = new ForestTreeB(10.5,27,4, 4, 1.25, 3, 1.75, 0.5);
+        baseObject[5] = new DeadTreeB(23.5,21,4, 4, 1, 3.5, 1.5, 0.5);
+        baseObject[6] = new DeadTreeB(13,23,4, 4, 1, 3.5, 1.5, 0.5);
+        baseObject[7] = new DeadTreeB(10,19,4, 4, 1, 3.5, 1.5, 0.5);
+        baseObject[8] = new DeadTreeB(23.5,13,4, 4, 1, 3.5, 1.5, 0.5);
+        baseObject[9] = new DeadTreeB(13.5,11.5,4, 4, 1, 3.5, 1.5, 0.5);
+
+
+        for(int i=0 ; i < baseObject.length ;i++){
+            if (baseObject[i] != null) {
+                addNewObject(baseObject[i]);
+            }
+        }
+    }*/
 
     // collision checker
     public static void checkTile(Entity entity){
@@ -191,22 +246,36 @@ public class GameLogic {
         }
     }
 
+    public List<IRenderable> mapList(){
+        if (currentMap == GameLogic.townMap){
+            return RenderableHolder.getTownEntities();
+        }else{
+            return RenderableHolder.getForestEntities();
+        }
+    }
+
     public static int checkObject(Entity entity,boolean player){
+        List<IRenderable> holder = RenderableHolder.getTownEntities();;
+        if (currentMap == GameLogic.townMap){
+             holder = RenderableHolder.getTownEntities();
+        }else{
+            holder = RenderableHolder.getForestEntities();
+        }
         int index = 999;
-        for(int i = 0 ; i < baseObject.length ; i++){
-            if(baseObject[i] != null){
+        for(int i = 0 ; i < holder.size() ; i++){
+            if(!(holder.get(i) instanceof Player) && (BaseObject) holder.get(i) != null) {
                 //Entity's solid area position
                 entity.solidArea.setX(entity.solidArea.getX() + entity.WorldX);
                 entity.solidArea.setY(entity.solidArea.getY() + entity.WorldY);
                 //Object's solid area position
-                baseObject[i].solidArea.setX(baseObject[i].solidArea.getX() + baseObject[i].WorldX);
-                baseObject[i].solidArea.setY(baseObject[i].solidArea.getY() + baseObject[i].WorldY);
+                ((BaseObject) holder.get(i)).solidArea.setX(((BaseObject) holder.get(i)).solidArea.getX() + ((BaseObject) holder.get(i)).WorldX);
+                ((BaseObject) holder.get(i)).solidArea.setY(((BaseObject) holder.get(i)).solidArea.getY() + ((BaseObject) holder.get(i)).WorldY);
 
                 switch ((entity.direction)){
                     case "up":
                         entity.solidArea.setY(entity.solidArea.getY() - entity.speed);
-                        if (entity.solidArea.intersects(baseObject[i].solidArea.getBoundsInLocal())){
-                            if (baseObject[i].isCollision()){
+                        if (entity.solidArea.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())){
+                            if (holder.get(i).isCollision()){
                                 entity.collisionOn = true ;
                             }
                             if(player){
@@ -216,8 +285,8 @@ public class GameLogic {
                         break;
                     case "down":
                         entity.solidArea.setY(entity.solidArea.getY() + entity.speed);
-                        if (entity.solidArea.intersects(baseObject[i].solidArea.getBoundsInLocal())){
-                            if (baseObject[i].isCollision()){
+                        if (entity.solidArea.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())){
+                            if (holder.get(i).isCollision()){
                                 entity.collisionOn = true ;
                             }
                             if(player){
@@ -227,8 +296,8 @@ public class GameLogic {
                         break;
                     case "left":
                         entity.solidArea.setX(entity.solidArea.getX() - entity.speed);
-                        if (entity.solidArea.intersects(baseObject[i].solidArea.getBoundsInLocal())){
-                            if (baseObject[i].isCollision()){
+                        if (entity.solidArea.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())){
+                            if (holder.get(i).isCollision()){
                                 entity.collisionOn = true ;
                             }
                             if(player){
@@ -238,8 +307,8 @@ public class GameLogic {
                         break;
                     case "right":
                         entity.solidArea.setX(entity.solidArea.getX() + entity.speed);
-                        if (entity.solidArea.intersects(baseObject[i].solidArea.getBoundsInLocal())){
-                            if (baseObject[i].isCollision()){
+                        if (entity.solidArea.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())){
+                            if (holder.get(i).isCollision()){
                                 entity.collisionOn = true ;
                             }
                             if(player){
@@ -250,8 +319,8 @@ public class GameLogic {
                 }
                 entity.solidArea.setX(entity.solidAreaDefaultX);
                 entity.solidArea.setY(entity.solidAreaDefaultY);
-                baseObject[i].solidArea.setX(baseObject[i].solidAreaDefaultX);
-                baseObject[i].solidArea.setY(baseObject[i].solidAreaDefaultY);
+                ((BaseObject) holder.get(i)).solidArea.setX(((BaseObject) holder.get(i)).solidAreaDefaultX);
+                ((BaseObject) holder.get(i)).solidArea.setY(((BaseObject) holder.get(i)).solidAreaDefaultY);
             }
         }
 
@@ -259,37 +328,43 @@ public class GameLogic {
     }
 
     public static int isFront(Entity entity) {
+        List<IRenderable> holder;
+        if (currentMap == GameLogic.townMap) {
+            holder = RenderableHolder.getTownEntities();
+        }else {
+            holder = RenderableHolder.getForestEntities();
+        }
         int isfront = 999;
-        for (int i = 0; i < baseObject.length; i++) {
-            if (baseObject[i] != null) {
+        for (int i = 0; i < holder.size(); i++) {
+            if (!(holder.get(i) instanceof Player) && holder.get(i) != null) {
                 //Entity's solid area position
                 entity.sprite.setX(entity.sprite.getX() + entity.WorldX);
                 entity.sprite.setY(entity.sprite.getY() + entity.WorldY);
                 //Object's solid area position
-                baseObject[i].solidArea.setX(baseObject[i].solidArea.getX() + baseObject[i].WorldX);
-                baseObject[i].solidArea.setY(baseObject[i].solidArea.getY() + baseObject[i].WorldY);
+                ((BaseObject) holder.get(i)).solidArea.setX(((BaseObject) holder.get(i)).solidArea.getX() + ((BaseObject) holder.get(i)).WorldX);
+                ((BaseObject) holder.get(i)).solidArea.setY(((BaseObject) holder.get(i)).solidArea.getY() + ((BaseObject) holder.get(i)).WorldY);
 
                 switch ((entity.direction)) {
                     case "up":
                         entity.sprite.setY(entity.sprite.getY() - entity.speed);
-                        if (entity.sprite.intersects(baseObject[i].solidArea.getBoundsInLocal())) {
-                            if (baseObject[i].isCollision()) {
+                        if (entity.sprite.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())) {
+                            if (holder.get(i).isCollision()) {
                                 isfront = i;
                             }
                         }
                         break;
                     case "down":
                         entity.sprite.setY(entity.sprite.getY() + entity.speed);
-                        if (entity.sprite.intersects(baseObject[i].solidArea.getBoundsInLocal())) {
-                            if (baseObject[i].isCollision()) {
+                        if (entity.sprite.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())) {
+                            if (holder.get(i).isCollision()) {
                                 isfront = i;
                             }
                         }
                         break;
                     case "left":
                         entity.sprite.setX(entity.sprite.getX() - entity.speed);
-                        if (entity.sprite.intersects(baseObject[i].solidArea.getBoundsInLocal())) {
-                            if (baseObject[i].isCollision()) {
+                        if (entity.sprite.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())) {
+                            if (holder.get(i).isCollision()) {
                                 isfront = i;
                                 ;
                             }
@@ -297,8 +372,8 @@ public class GameLogic {
                         break;
                     case "right":
                         entity.sprite.setX(entity.sprite.getX() + entity.speed);
-                        if (entity.sprite.intersects(baseObject[i].solidArea.getBoundsInLocal())) {
-                            if (baseObject[i].isCollision()) {
+                        if (entity.sprite.intersects(((BaseObject) holder.get(i)).solidArea.getBoundsInLocal())) {
+                            if (holder.get(i).isCollision()) {
                                 isfront = i;
                                 ;
                             }
@@ -308,8 +383,8 @@ public class GameLogic {
 
                 entity.sprite.setX(0);
                 entity.sprite.setY(0);
-                baseObject[i].solidArea.setX(baseObject[i].solidAreaDefaultX);
-                baseObject[i].solidArea.setY(baseObject[i].solidAreaDefaultY);
+                ((BaseObject) holder.get(i)).solidArea.setX(((BaseObject) holder.get(i)).solidAreaDefaultX);
+                ((BaseObject) holder.get(i)).solidArea.setY(((BaseObject) holder.get(i)).solidAreaDefaultY);
             }
         }
         return isfront;
@@ -371,9 +446,6 @@ public class GameLogic {
         return gameThread;
     }
 
-    public static Player getPlayer() {
-        return player;
-    }
 
     public static TileManager getTilemanager() {
         return tilemanager;
@@ -395,12 +467,16 @@ public class GameLogic {
         return fontManager;
     }
 
-/*    public static ArrayList<IRenderable> getGameObjectContainer() {
-        return gameObjectContainer;
-    }*/
+    public static int getCurrentMap() {
+        return currentMap;
+    }
 
     public static void setGameState(int state) {
         gameState = state;
+    }
+
+    public static void setCurrentMap(int map) {
+        currentMap = map;
     }
 
 
