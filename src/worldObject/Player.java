@@ -69,7 +69,7 @@ public class Player extends Entity {
     public void update(){
         //System.out.println("Player update called");
       //   System.out.println();
-      //  System.out.println(ScreenUtil.getFPS());
+     //   System.out.println(ScreenUtil.getFPS());
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
          ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)) {
             if (GameLogic.getGameState() != GameLogic.pauseState) {

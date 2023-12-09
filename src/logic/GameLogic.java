@@ -34,6 +34,7 @@ public class GameLogic {
     public static final int worldState = 0;
     public static final int battleState = 1;
     public static final int pauseState = 2;
+    public static boolean threadActive = false;
 
 
 
@@ -58,8 +59,17 @@ public class GameLogic {
         scene = new Scene(root);
         root.requestFocus();
 
-  /*      gameScreen = new GameScreen();
-        getRoot().getChildren().add(gameScreen);
+        gameScreen = new GameScreen();
+        gameThread = new Thread(gameScreen);
+        while (!threadActive) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                //
+            }
+            break;
+        }
+      /*  getRoot().getChildren().add(gameScreen);
         gameScreen.requestFocus();*/
 
 /*        setupGame();
@@ -77,14 +87,16 @@ public class GameLogic {
         player.setDefaultValues();
         addNewObject(player);
         getRoot().getChildren().clear();
-        gameScreen = new GameScreen();
         getRoot().getChildren().add(gameScreen);
         gameScreen.requestFocus();
+   //     gameThread = new Thread(gameScreen);
     }
 
     public static void startGameThread() {
-        gameThread = new Thread(gameScreen);
-        gameThread.start();
+        if (!threadActive) {
+            threadActive = true;
+            gameThread.start();
+        }
 
         /*gameThread = new Thread(() -> {
             gameScreen.paintComponent();

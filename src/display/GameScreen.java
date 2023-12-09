@@ -120,17 +120,6 @@ public class GameScreen extends Canvas implements Runnable {
 
             if (delta >= 1){
                 GameLogic.logicUpdate();
-                switch(GameLogic.getGameState()){
-                    case GameLogic.worldState:
-                        break;
-                    case GameLogic.pauseState:
-                        /*try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                        }*/
-                        break;
-                }
                 RenderableHolder.update(RenderableHolder.townEntities);
                 paintComponent();
                 delta--;
@@ -143,6 +132,7 @@ public class GameScreen extends Canvas implements Runnable {
 
            // System.out.println(GameLogic.getRoot().getChildren().contains(GameLogic.getRoot().getPauseMenu()));
             // System.out.println(GameLogic.getRoot().getChildren().size());
+
         }
 
     }

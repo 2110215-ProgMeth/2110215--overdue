@@ -68,6 +68,7 @@ public class PauseMenuController implements Initializable {
             GameLogic.getScene().setOnKeyPressed(null);
           //  RenderableHolder.getBattleEntities().clear();
           //  RenderableHolder.getForestEntities().clear();
+            GameLogic.getGameThread().interrupt();
             RenderableHolder.getTownEntities().clear();
             GameLogic.getRoot().getChildren().clear();
             GameLogic.getRoot().getChildren().addAll(mainMenuBackground, GameLogic.getRoot().getMainMenu());
