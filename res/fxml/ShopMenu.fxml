@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ShopMenuController">
+	<children>
+      <StackPane layoutX="202.0" layoutY="75.0" prefHeight="340.0" prefWidth="700.0">
+         <children>
+            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="440.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
+            <Rectangle arcHeight="40.0" arcWidth="40.0" height="420.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="680.0" />
+         </children>
+      </StackPane>
+				<Text fill="WHITE" layoutX="465.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop">
+					<font>
+						<Font name="Final Fantasy Regular" size="52.0" />
+					</font>
+				</Text>
+      <Text fx:id="exitButton" fill="#bfbfbf" layoutX="805.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit">
+         <font>
+            <Font name="Final Fantasy Regular" size="20.0" />
+         </font>
+      </Text>
+      <StackPane layoutX="280.0" layoutY="248.0" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="220.0" stroke="BLACK" strokeType="INSIDE" width="220.0" />
+            <Rectangle arcHeight="40.0" arcWidth="40.0" height="205.0" stroke="BLACK" strokeType="INSIDE" width="205.0" />
+            <VBox alignment="CENTER" prefHeight="115.0" prefWidth="108.0" spacing="20.0">
+               <children>
+                  <Text fx:id="healthPotion" fill="#bfbfbf" layoutX="125.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health potion  5G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="manaPotion" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana potion  8G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="strengthPotion" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" text="Strength potion  4G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="defensePotion" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" text="Defense potion  4G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+      <StackPane layoutX="600.0" layoutY="248.0" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="220.0" stroke="BLACK" strokeType="INSIDE" width="220.0" />
+            <Rectangle arcHeight="40.0" arcWidth="40.0" height="205.0" stroke="BLACK" strokeType="INSIDE" width="205.0" />
+            <VBox alignment="CENTER" prefHeight="115.0" prefWidth="108.0" spacing="20.0">
+               <children>
+                  <Text fx:id="throwingKnife" fill="#bfbfbf" layoutX="125.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Throwing knife  7G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="bomb" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" text="Bomb  10G">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </StackPane>
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Potions" x="325.0" y="230.0">
+         <font>
+            <Font name="Final Fantasy Regular" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="643.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weapons">
+         <font>
+            <Font name="Final Fantasy Regular" size="24.0" />
+         </font>
+      </Text>
+      <StackPane layoutX="924.0" layoutY="317.0" prefHeight="0.0" prefWidth="0.0">
+         <children>
+            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="150.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
+            <Rectangle arcHeight="40.0" arcWidth="40.0" height="135.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <VBox alignment="CENTER" prefHeight="0.0" prefWidth="0.0" spacing="8.0">
+               <children>
+                  <Text fill="WHITE" layoutX="125.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Money">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="money" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </StackPane>
+	</children>
+</Pane>

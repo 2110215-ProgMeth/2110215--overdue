@@ -13,6 +13,6 @@ public interface IRenderable {
     public String getName();
     public void setName(String name);
 
-    boolean isCollision();
+   //boolean isCollision();
 
 }

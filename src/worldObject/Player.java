@@ -4,6 +4,8 @@ import control.InputUtility;
 import display.GameScreen;
 import display.ScreenUtil;
 import interfaces.IRenderable;
+import interfaces.Moveable;
+import items.*;
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -12,14 +14,23 @@ import javafx.scene.shape.Rectangle;
 import logic.GameLogic;
 import org.ietf.jgss.GSSManager;
 import sharedObject.RenderableHolder;
-import java.util.List;
 
-public class Player extends Entity {
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Player extends Entity implements Moveable {
     public final int screenX;
     public final int screenY;
     public int spriteCounter = 0;
     public int spriteNum = 0;
     public boolean front = false;
+    public boolean trade = false;
+    public Rectangle tradeBox;
+    public static int currentMoney;
+    public static HashMap<String, Integer> playerInventory;
+
     //Animation Character
     public Image up0 = new Image("/playerImage/up0.png");
     public Image up1 = new Image("/playerImage/up1.png");
@@ -49,6 +60,14 @@ public class Player extends Entity {
         this.WorldY = ScreenUtil.tileSize * WorldY; // 27
         direction = "down";
         speed = ScreenUtil.scale;
+        playerInventory = new HashMap<String, Integer>();
+        playerInventory.put("Health potion", 1);
+        playerInventory.put("Mana potion", 1);
+        playerInventory.put("Strength potion", 0);
+        playerInventory.put("Defense potion", 0);
+        playerInventory.put("Throwing knife", 0);
+        playerInventory.put("Bomb", 0);
+        setMoney(10);
     }
     //method
     private void up(){
@@ -56,6 +75,7 @@ public class Player extends Entity {
     }
     private void down(){
         this.WorldY += speed;
+        System.out.println("DOWN!!");
     }
     private void left(){
         this.WorldX -= speed;
@@ -64,13 +84,14 @@ public class Player extends Entity {
         this.WorldX += speed;
     }
 
-    public void update(){
+    @Override
+    public void updateCoordinate() {
         //System.out.println("Player update called");
       //   System.out.println();
-     //   System.out.println(ScreenUtil.getFPS());
+      //  System.out.println(GameLogic.getGameState());
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
          ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)) {
-            if (GameLogic.getGameState() != GameLogic.pauseState) {
+            if (GameLogic.getGameState() == GameLogic.worldState) {
                 //SET DIRECTION
                 if (InputUtility.getKeyPressed(KeyCode.W)) {
                     direction = "up";
@@ -87,21 +108,23 @@ public class Player extends Entity {
 
 
                 //CHECK TILE COLLISION
-                collisionOn = false;
+                trade = false;
+                collisionOn = false; ///***
                 GameLogic.checkTile(this);
                 int i = GameLogic.isFront(this);
+
                 if (i != 999) {
                     if (!front) {
                         System.out.println("Player is infront of the object");
-                        RenderableHolder.townEntities.remove(this);
-                        RenderableHolder.townEntities.add(RenderableHolder.townEntities.size(), this);
+                        RenderableHolder.getCurrentEntities().remove(this);
+                        RenderableHolder.getCurrentEntities().add(RenderableHolder.townEntities.size(), this);
                         front = true;
                     }
                 } else {
                     if (front) {
                         System.out.println("Player is behind the object");
-                        RenderableHolder.townEntities.remove(this);
-                        RenderableHolder.townEntities.add(0, this);
+                        RenderableHolder.getCurrentEntities().remove(this);
+                        RenderableHolder.getCurrentEntities().add(0, this);
                         front = false;
                     }
                 }
@@ -110,8 +133,9 @@ public class Player extends Entity {
                 int objIndex = GameLogic.checkObject(this, true);
                 interactObject(objIndex);
 
+                }
                 // IF COLLISION IS FALSE, PLAYER CAN MOVE
-                if (!collisionOn && GameLogic.getGameState() != GameLogic.pauseState) {
+                if (!collisionOn && GameLogic.getGameState() == GameLogic.worldState) {
                     switch (direction) {
                         case "up":
                             up();
@@ -142,23 +166,19 @@ public class Player extends Entity {
                     }
                     spriteCounter = 0;
                 }
-            }
+
         }else{
             spriteNum = 0;
+            int objIndex = GameLogic.checkObject(this, true);
+            interactObject(objIndex);
         }
     }
     public void interactObject(int i){
-        if (i != 999){
-            Player player;
-            List<IRenderable> holder;
-            if (GameLogic.getCurrentMap() == GameLogic.townMap){
-               holder = RenderableHolder.getTownEntities();
-            }else{
-                holder = RenderableHolder.getForestEntities();
-            }
-            String objName = holder.get(i).getName();
+        if (i != 999) {
+
+            String objName = GameLogic.getBaseObject()[i].getName();
             Platform.runLater(() -> {
-                switch ((objName)){
+                switch ((objName)) {
                     case "WARP_TO_FOREST":
                         System.out.println("GO TO FOREST");
                         GameLogic.setCurrentMap(GameLogic.forestMap);
@@ -177,9 +197,18 @@ public class Player extends Entity {
                         GameLogic.setCurrentMap(GameLogic.townMap);
                         GameLogic.setupGame();
                         break;
+                    case "Merchant":
+                        System.out.println("LET'S BUY !!!");
+                        if(InputUtility.getKeyPressed(KeyCode.J)){
+                            System.out.println("TRADE !!!");
+                            GameLogic.setGameState(GameLogic.buyState);
+                            GameLogic.openShop();
+                        }
+                        break;
                 }
             });
         }
+
     }
     public void draw(GraphicsContext gc) {
         Image image = null;
@@ -232,4 +261,15 @@ public class Player extends Entity {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public static void setMoney(int money) {
+        currentMoney = money;
+    }
+    public static int getMoney() {
+        return currentMoney;
+    }
+    public static HashMap<String, Integer> getPlayerInventory() {
+        return playerInventory;
+    }
+
 }

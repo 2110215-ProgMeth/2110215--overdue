@@ -21,7 +21,7 @@ public class InputUtility {
     public static void setKeyPressed(KeyCode keycode,boolean pressed) {
             if (pressed) {
                 if (!keyPressed.contains(keycode)) {
-                    if (GameLogic.getGameState() != GameLogic.pauseState){
+                    if (GameLogic.getGameState() == GameLogic.worldState) {
                         keyPressed.add(keycode);
                     }
                 }

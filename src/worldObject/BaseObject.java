@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 import logic.GameLogic;
 import sharedObject.RenderableHolder;
 
-public abstract class BaseObject extends Entity implements IRenderable {
+public abstract class BaseObject extends Entity {
     public Image image;
     public String name;
     public boolean collision = false;
@@ -95,6 +95,10 @@ public abstract class BaseObject extends Entity implements IRenderable {
         this.image = image;
     }
 
+    @Override
+    public boolean isCollision(){
+        return collision;
+    }
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }

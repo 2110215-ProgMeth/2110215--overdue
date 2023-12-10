@@ -2,28 +2,40 @@ package worldObject;
 
 import display.ScreenUtil;
 import interfaces.IRenderable;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Entity implements IRenderable {
+public class Entity implements IRenderable {
 
-    public static int WorldX,WorldY;
-    public static int speed;
-    public static String direction;
-    public static Rectangle solidArea;
-    public static Rectangle sprite;
-    public static int solidAreaDefaultX, solidAreaDefaultY;
-    public static boolean collisionOn = false;
+    public int WorldX,WorldY;
+    public int speed;
+    public String direction;
+    public Rectangle solidArea;
+    public Rectangle sprite;
+    public int solidAreaDefaultX, solidAreaDefaultY;
+    public boolean collisionOn = false;
     private int z = 0;
 
     public int getZ(){
         return z;
     }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
+
     public void setZ(int z){
         this.z = z;
     }
     public String name;
     //Method
-    public abstract void update();
+   /* public void update();*/
     public boolean isCollision(){
         return collisionOn;
     }

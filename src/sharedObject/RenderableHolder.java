@@ -4,6 +4,7 @@ import interfaces.IRenderable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import logic.GameLogic;
 import worldObject.BaseObject;
 import worldObject.Player;
 import worldObject.Warp;
@@ -12,6 +13,7 @@ import worldObject.forest.DeadTreeB;
 import worldObject.forest.ForestTreeB;
 import worldObject.forest.NormalTree;
 import worldObject.npc.Lady;
+import worldObject.npc.Man1;
 import worldObject.npc.Man1Left;
 import worldObject.npc.Merchant;
 
@@ -27,9 +29,9 @@ public class RenderableHolder {
     public static AudioClip declineSound;
     public static ImageView mainMenuBackground;
     public static ImageView darkWojak;
-    public static List<IRenderable> townEntities;
-    public static List<IRenderable> battleEntities;
-    public static List<IRenderable> forestEntities;
+    public static ArrayList<IRenderable> townEntities;
+    public static ArrayList<IRenderable> battleEntities;
+    public static ArrayList<IRenderable> forestEntities;
  /*   public static Player player1;
     public static Player player2;*/
     private static Comparator<IRenderable> comparator;
@@ -123,28 +125,34 @@ public class RenderableHolder {
         townEntities.get(17).setName("WARP_TO_FOREST");
         townEntities.add(new Warp(27,39));
         townEntities.get(18).setName("WARP_TO_FOREST");
-        townEntities.add(new Merchant(20, 24, 1, 1, 0, 0.5, 1, 0.5));
-        townEntities.add(new Man1Left(20, 26, 1, 1, 0, 0.5 ,1, 0.5));
+        townEntities.add(new Merchant(17, 24, 1, 1, 0, 0.5, 1, 0.5));
+        townEntities.add(new Man1Left(27.85, 25.5, 1, 1, 0, 0.5 ,1, 0.5));
         townEntities.add(new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5));
+        townEntities.add(new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5));
     }
 
     public static void setForestEntities() {
-  //      player2 = new Player(40, 45);
-  //      forestEntities.add(player2);
-        forestEntities.add(new Warp(38,38));
+        //      player2 = new Player(40, 45);
+        //      forestEntities.add(player2);
+        forestEntities.add(new Warp(38, 38));
         forestEntities.get(1).setName("WARP_TO_TOWN");
-        forestEntities.add(new Warp(38,39));
+        forestEntities.add(new Warp(38, 39));
         forestEntities.get(2).setName("WARP_TO_TOWN");
-        forestEntities.add(new ForestTreeB(32,38,4, 4, 1.25, 3, 1.75, 0.5));
+        forestEntities.add(new ForestTreeB(32, 38, 4, 4, 1.25, 3, 1.75, 0.5));
         //forestEntities[1] = new ForestTreeS(34,39,2, 2, 0.5, 1.5, 1, 0.25);
-        forestEntities.add(new ForestTreeB(25,32.75,4, 4, 1.25, 3, 1.75, 0.5));
-        forestEntities.add(new ForestTreeB(10.5,27,4, 4, 1.25, 3, 1.75, 0.5));
-        forestEntities.add(new DeadTreeB(23.5,21,4, 4, 1, 3.5, 1.5, 0.5));
-        forestEntities.add(new DeadTreeB(13,23,4, 4, 1, 3.5, 1.5, 0.5));
-        forestEntities.add(new DeadTreeB(10,19,4, 4, 1, 3.5, 1.5, 0.5));
-        forestEntities.add(new DeadTreeB(23.5,13,4, 4, 1, 3.5, 1.5, 0.5));
-        forestEntities.add(new DeadTreeB(13.5,11.5,4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new ForestTreeB(25, 32.75, 4, 4, 1.25, 3, 1.75, 0.5));
+        forestEntities.add(new ForestTreeB(10.5, 27, 4, 4, 1.25, 3, 1.75, 0.5));
+        forestEntities.add(new DeadTreeB(23.5, 21, 4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new DeadTreeB(13, 23, 4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new DeadTreeB(10, 19, 4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new DeadTreeB(23.5, 13, 4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new DeadTreeB(13.5, 11.5, 4, 4, 1, 3.5, 1.5, 0.5));
 
     }
-
+    public static ArrayList<IRenderable> getCurrentEntities(){
+        if (GameLogic.getCurrentMap() == GameLogic.townMap){
+            return townEntities;
+        }
+        return forestEntities;
+    }
 }
