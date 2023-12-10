@@ -9,7 +9,7 @@ public class SupportMove extends BaseMove{
     }
 
     @Override
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
     }
 
     @Override

@@ -15,7 +15,7 @@ public abstract class BaseMove {
         setOwner(owner);
     }
     //method
-    public abstract void performEffect();
+    public abstract void performEffect(BaseUnit target);
 
     @Override
     public abstract String toString();

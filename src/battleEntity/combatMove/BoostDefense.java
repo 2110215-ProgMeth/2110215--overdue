@@ -4,8 +4,8 @@ import battleEntity.battleUnit.BaseUnit;
 
 public class BoostDefense extends Buff{
     private double boost;
-    public BoostDefense(BaseUnit owner, int defaultCount, double boost){
-        super(owner,defaultCount);
+    public BoostDefense(String name,BaseUnit owner, int defaultCount, double boost){
+        super(name,owner,defaultCount);
         this.boost = boost;
         performBuff();
     }

@@ -1,6 +1,8 @@
 package items;
 
+import battleEntity.battleUnit.BaseUnit;
 import interfaces.Consumable;
+import worldObject.Player;
 
 public class StrengthPotion extends BaseItem implements Consumable {
     public StrengthPotion() {
@@ -10,7 +12,9 @@ public class StrengthPotion extends BaseItem implements Consumable {
     }
 
     @Override
-    public void use() {
-
+    public void use(BaseUnit target) {
+        if (Player.getPlayerInventory().get(this.getName()) > 0 && !target.isDestroyed()) {
+            target.setAttack((int) (1.20 * target.getHp()));
+        }
     }
 }

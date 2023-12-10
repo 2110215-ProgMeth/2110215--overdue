@@ -1,5 +1,6 @@
 package battleEntity.battleUnit;
 
+import battleEntity.combatMove.*;
 import javafx.scene.canvas.GraphicsContext;
 
 public class WhiteMage extends BaseUnit {
@@ -11,7 +12,14 @@ public class WhiteMage extends BaseUnit {
 
     @Override
     public void setMoveSet() {
-
+        AttackMove basicAttack = new BasicAttack("",this);
+        SupportMove heal = new Heal(this);
+        AttackMove holyLight = new HolyLight(this);
+        SupportMove blessingOfGod = new BlessingOfGod(this);
+        moveSet[0] = basicAttack;
+        moveSet[1] = heal;
+        moveSet[2] = holyLight;
+        moveSet[3] = blessingOfGod;
     }
 
     @Override

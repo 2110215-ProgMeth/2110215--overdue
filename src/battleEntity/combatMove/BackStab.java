@@ -8,23 +8,18 @@ public class BackStab extends AttackMove{
         setName("BackStab");
         setPercentDamage(1.5);
         setMpConsume(15);
-        setDescription("The user attacks target from behind. Deals ");
+        setDescription("The user attacks target from behind.\nIgnore target defense by 50%");
     }
 
     @Override
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
+        setTarget(target);
         if (!this.getOwner().isDestroyed() && !this.getTarget().isDestroyed()) {
             //String text = this.toString();
-            int Damage = (int) getPercentDamage() * getOwner().getAttack() - (int) (getTarget().getDefense() * 0.4);
+            int Damage = (int) getPercentDamage() * getOwner().getAttack() - (int) (getTarget().getDefense() * 0.5);
             getOwner().setMp(getOwner().getMp() - getMpConsume());
             getTarget().setHp(getTarget().getHp() - Damage);
         }
     }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
 
 }

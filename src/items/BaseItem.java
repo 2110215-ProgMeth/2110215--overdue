@@ -1,21 +1,16 @@
 package items;
 
-public class BaseItem {
-    public String name;
-    public String description;
-    public int amount;
-    public int price;
+import battleEntity.battleUnit.BaseUnit;
 
-    public BaseItem() {
-        setDescription("");
-    }
+public class BaseItem {
+    protected String name;
+    protected String description;
+    protected int price;
+    protected BaseUnit target;
+    protected boolean allTarget = false;
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public void setDescription(String description) {
@@ -24,13 +19,15 @@ public class BaseItem {
     public void setPrice(int price) {
         this.price = price;
     }
+    public void setTarget(BaseUnit target) {
+        this.target = target;
+    }
+    public void setAllTarget(boolean allTarget) {
+        this.allTarget = allTarget;
+    }
 
     public String getName() {
         return this.name;
-    }
-
-    public int getAmount() {
-        return this.amount;
     }
 
     public String getDescription() {

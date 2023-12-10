@@ -6,6 +6,8 @@ import interfaces.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import battleEntity.combatMove.Buff;
+import sharedObject.RenderableHolder;
+
 import java.util.ArrayList;
 
 public abstract class BaseUnit implements IRenderable {
@@ -22,7 +24,7 @@ public abstract class BaseUnit implements IRenderable {
     protected boolean isProtected;
     protected boolean isAlive;
     // Array for storing moveSet
-    protected BaseMove[] moveSet;
+    protected BaseMove[] moveSet = new BaseMove[4];
     // Array for storing Buff
     protected ArrayList<Buff> buffers;
     //for Animation
@@ -168,7 +170,12 @@ public abstract class BaseUnit implements IRenderable {
         this.x = x;
         this.y = y;
     }
-    public abstract void update();
+    public void update(){ //everyone always update alive
+        updateAnimation();
+        if (this.getHp() <= 0){
+            this.setAlive(false);
+        }
+    }
     public void updateAnimation(){
         spriteCounter++;
         if (spriteCounter > 12) {

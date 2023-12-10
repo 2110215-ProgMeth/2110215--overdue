@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="624.0" fitWidth="1104.0" pickOnBounds="true">
+         <image>
+            <Image url="@../menuImage/forestBackground.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER_LEFT" layoutY="473.0" prefHeight="80.0" prefWidth="461.0">
+         <children>
+            <StackPane prefHeight="100.0" prefWidth="400.0">
+               <children>
+                  <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#fafafa" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
+                  <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
+                  <VBox alignment="CENTER" prefHeight="130.0" prefWidth="230.0" spacing="15.0">
+                     <children>
+                        <Text fx:id="monster1Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="monster2Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="monster3Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="400.0">
+               <children>
+                  <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
+                  <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="15.0" StackPane.alignment="CENTER">
+                     <children>
+                        <Text fx:id="fightButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Fight">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="SkillButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="itemsButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="runButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Run">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </HBox>
+      <StackPane layoutX="874.0" layoutY="474.0" prefHeight="150.0" prefWidth="230.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
+               <children>
+                  <Text fx:id="warriorStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char1">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="assassinStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char2">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="blackmageStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char3">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="whitemageStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char4">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+      <StackPane fx:id="descriptionPane" layoutX="461.0" layoutY="474.0" prefHeight="150.0" prefWidth="413.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="413.0" StackPane.alignment="CENTER" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="398.0" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <Text fx:id="mpCost" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MP cost ">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="moveDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="35.0" />
+               </padding>
+            </VBox>
+         </children>
+      </StackPane>
+      <StackPane fx:id="skillPane" alignment="BOTTOM_CENTER" layoutX="410.0" layoutY="354.0" prefHeight="135.0" prefWidth="230.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="265.0" StackPane.alignment="BOTTOM_LEFT" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="120.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="250.0" StackPane.alignment="CENTER" />
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
+               <children>
+                  <Text fx:id="skillButton1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill1">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="skillButton2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill2">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="skillButton3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill3">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="skillButton4" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill4">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+      <StackPane fx:id="itemPane" alignment="BOTTOM_CENTER" layoutX="420.0" layoutY="364.0" prefHeight="135.0" prefWidth="230.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="265.0" StackPane.alignment="BOTTOM_LEFT" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="120.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="250.0" StackPane.alignment="CENTER" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
+                     <children>
+                        <Text fx:id="hPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Health potion">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="mPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana potion">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="sPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Strength potion">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="dPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Defense potion">
+                           <font>
+                              <Font name="Final Fantasy Regular" size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+   </children>
+</Pane>

@@ -7,7 +7,8 @@ public abstract class Buff {
     private int count = 0;
     private String name;
     private BaseUnit owner;
-    public Buff(BaseUnit owner,int defaultCount){
+    public Buff(String name,BaseUnit owner,int defaultCount){
+        setName(name);
         setDefaultCount(defaultCount);
         setOwner(owner);
     }

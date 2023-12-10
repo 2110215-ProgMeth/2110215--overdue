@@ -4,8 +4,8 @@ import battleEntity.battleUnit.BaseUnit;
 
 public class DOT extends Buff{
     private double percentDamage;
-    public DOT(BaseUnit owner, int defaultCount, double percentDamage){
-        super(owner,defaultCount);
+    public DOT(String name ,BaseUnit owner, int defaultCount, double percentDamage){
+        super(name,owner,defaultCount);
         this.percentDamage = percentDamage;
     }
     @Override

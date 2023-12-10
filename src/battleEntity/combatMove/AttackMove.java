@@ -10,7 +10,8 @@ public abstract class AttackMove extends BaseMove{
     }
 
     @Override
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
+        setTarget(target);
         if (!this.getOwner().isDestroyed()&& !this.getTarget().isDestroyed()) {
             //String text = this.toString();
             int Damage = (int) getPercentDamage() * getOwner().getAttack() - getTarget().getDefense();

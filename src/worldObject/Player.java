@@ -88,7 +88,7 @@ public class Player extends Entity implements Moveable {
     public void updateCoordinate() {
         //System.out.println("Player update called");
       //   System.out.println();
-      //  System.out.println(GameLogic.getGameState());
+      //  System.out.println(Player.getPlayerInventory().get("Health potion"));
         if (InputUtility.getKeyPressed(KeyCode.W) || InputUtility.getKeyPressed(KeyCode.A)
          ||InputUtility.getKeyPressed(KeyCode.S) || InputUtility.getKeyPressed(KeyCode.D)) {
             if (GameLogic.getGameState() == GameLogic.worldState) {

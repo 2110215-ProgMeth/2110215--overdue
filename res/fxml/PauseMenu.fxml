@@ -8,6 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PauseMenuController">
 	<children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="624.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="1104.0" />
       <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="340.0" layoutX="337.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
       <Rectangle arcHeight="40.0" arcWidth="40.0" height="320.0" layoutX="347.0" layoutY="110.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="410.0" />
 				<Text fill="WHITE" layoutX="465.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause">

@@ -9,6 +9,7 @@
 
 <Pane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InventoryMenuController">
 	<children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="624.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="1104.0" />
       <StackPane layoutX="202.0" layoutY="45.0" prefHeight="330.0" prefWidth="700.0">
          <children>
             <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
@@ -99,25 +100,5 @@
             <Font name="Final Fantasy Regular" size="18.0" />
          </font>
       </Text>
-      <StackPane fx:id="userPane" layoutX="202.0" layoutY="472.0" prefHeight="150.0" prefWidth="200.0">
-         <children>
-            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="90.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
-            <Rectangle arcHeight="40.0" arcWidth="40.0" height="80.0" stroke="BLACK" strokeType="INSIDE" width="690.0" />
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" StackPane.alignment="CENTER">
-               <children>
-                  <Text fx:id="usedText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Player used.">
-                     <font>
-                        <Font name="Final Fantasy Regular" size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="itemDes" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Description">
-                     <font>
-                        <Font name="Final Fantasy Regular" size="15.0" />
-                     </font>
-                  </Text>
-               </children>
-            </VBox>
-         </children>
-      </StackPane>
 	</children>
 </Pane>

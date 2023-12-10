@@ -12,7 +12,6 @@ public interface IRenderable {
     public boolean isDestroyed();// Check if exists
     public String getName();
     public void setName(String name);
-
    //boolean isCollision();
 
 }

@@ -4,8 +4,8 @@ import battleEntity.battleUnit.BaseUnit;
 
 public class DebuffDefense extends Buff {
     private double reduce;
-    public DebuffDefense(BaseUnit owner, int defaultCount, double reduce){
-        super(owner,defaultCount);
+    public DebuffDefense(String name,BaseUnit owner, int defaultCount, double reduce){
+        super(name,owner,defaultCount);
         this.reduce = reduce;
         performBuff();
     }

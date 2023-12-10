@@ -16,6 +16,7 @@ import worldObject.*;
 import worldObject.buildings.*;
 import worldObject.forest.*;
 import worldObject.npc.Lady;
+import worldObject.npc.Man1;
 import worldObject.npc.Man1Left;
 import worldObject.npc.Merchant;
 import java.util.ArrayList;
@@ -139,8 +140,9 @@ public class GameLogic {
         baseObjectTown[17] = new Warp(27,39);
         baseObjectTown[17].setName("WARP_TO_FOREST");
         baseObjectTown[18] = new Merchant(17, 24, 1, 1, 0, 0.5, 1, 0.5);
-        baseObjectTown[19] = new Man1Left(27.75, 25.5, 1, 1, 0, 0.5 ,1, 0.5);
+        baseObjectTown[19] = new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5);
         baseObjectTown[20] = new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5);
+        baseObjectTown[21] = new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5);
     }
 
     /*protected static void addNewObject(Entity entity){
@@ -165,6 +167,11 @@ public class GameLogic {
         } else if (InputUtility.getKeyPressed(KeyCode.I)){
             if (GameLogic.getGameState() == GameLogic.worldState){
                 GameLogic.setGameState(GameLogic.inventoryState);
+                try {
+                    GameLogic.getRoot().initializeInventoryMenu();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 GameLogic.openInventory();
             }
         }

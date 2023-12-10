@@ -44,7 +44,7 @@ public class ShopMenuController implements Initializable {
         items.add(throwingKnife);
         items.add(bomb);
 
-        money.setText(Integer.toString(Player.getMoney()));
+        money.setText(Integer.toString(Player.getMoney()) + " G");
 
         for (Text item : items) {
             item.setOnMouseEntered(mouseEvent -> {
@@ -67,7 +67,8 @@ public class ShopMenuController implements Initializable {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 5) {
                 Player.setMoney(Player.getMoney() - 5);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Health potion", Player.getPlayerInventory().get("Health potion") + 1);
             } else RenderableHolder.declineSound.play();
         });
 
@@ -75,7 +76,8 @@ public class ShopMenuController implements Initializable {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 8) {
                 Player.setMoney(Player.getMoney() - 8);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Mana potion", Player.getPlayerInventory().get("Mana potion") + 1);
             } else RenderableHolder.declineSound.play();
         });
 
@@ -83,7 +85,8 @@ public class ShopMenuController implements Initializable {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 4) {
                 Player.setMoney(Player.getMoney() - 4);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Strength potion", Player.getPlayerInventory().get("Strength potion") + 1);
             } else RenderableHolder.declineSound.play();
         });
 
@@ -91,7 +94,8 @@ public class ShopMenuController implements Initializable {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 4) {
                 Player.setMoney(Player.getMoney() - 4);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Defense potion", Player.getPlayerInventory().get("Defense potion") + 1);
             } else RenderableHolder.declineSound.play();
         });
 
@@ -99,15 +103,17 @@ public class ShopMenuController implements Initializable {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 7) {
                 Player.setMoney(Player.getMoney() - 7);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Throwing knife", Player.getPlayerInventory().get("Throwing knife") + 1);
             } else RenderableHolder.declineSound.play();
         });
 
-        defensePotion.setOnMouseClicked(event -> {
+        bomb.setOnMouseClicked(event -> {
             RenderableHolder.confirmSound.play();
             if (Player.getMoney() >= 10) {
                 Player.setMoney(Player.getMoney() - 10);
-                money.setText(Integer.toString(Player.getMoney()));
+                money.setText(Integer.toString(Player.getMoney()) + " G");
+                Player.getPlayerInventory().put("Bomb", Player.getPlayerInventory().get("Bomb") + 1);
             } else RenderableHolder.declineSound.play();
         });
 

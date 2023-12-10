@@ -1,6 +1,8 @@
 package items;
 
+import battleEntity.battleUnit.BaseUnit;
 import interfaces.Consumable;
+import worldObject.Player;
 
 public class ManaPotion extends BaseItem implements Consumable {
 
@@ -11,7 +13,9 @@ public class ManaPotion extends BaseItem implements Consumable {
     }
 
     @Override
-    public void use() {
-
+    public void use(BaseUnit target) {
+        if (Player.getPlayerInventory().get(this.getName()) > 0 && !target.isDestroyed()) {
+            target.setMp((int) (1.35 * target.getHp()));
+        }
     }
 }

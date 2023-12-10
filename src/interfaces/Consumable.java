@@ -1,5 +1,7 @@
 package interfaces;
 
+import battleEntity.battleUnit.BaseUnit;
+
 public interface Consumable {
-    public void use();
+    public void use(BaseUnit target);
 }

@@ -3,8 +3,8 @@ package battleEntity.combatMove;
 import battleEntity.battleUnit.BaseUnit;
 
 public class Barrier extends Buff{
-    public Barrier(BaseUnit owner,int defaultCount){
-        super(owner,1);
+    public Barrier(String name,BaseUnit owner,int defaultCount){
+        super(name,owner,defaultCount);
         performBuff();
     }
     public void performBuff(){

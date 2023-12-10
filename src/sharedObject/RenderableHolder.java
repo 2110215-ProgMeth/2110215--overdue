@@ -29,6 +29,7 @@ public class RenderableHolder {
     public static AudioClip declineSound;
     public static ImageView mainMenuBackground;
     public static ImageView darkWojak;
+    public static ImageView battleBackground;
     public static ArrayList<IRenderable> townEntities;
     public static ArrayList<IRenderable> battleEntities;
     public static ArrayList<IRenderable> forestEntities;
@@ -86,17 +87,17 @@ public class RenderableHolder {
     public static void loadImage() {
         mainMenuBackground = new ImageView(new Image(getPath("menuImage/gameCover.png")));
         darkWojak = new ImageView(new Image(getPath("menuImage/creditImage1.jpg")));
-
-
+        battleBackground = new ImageView(new Image(getPath("menuImage/forestBackground.png")));
     }
 
-    public static List<IRenderable> getTownEntities() {
+    public static ArrayList<IRenderable> getTownEntities() {
         return townEntities;
     }
 
-    public static List<IRenderable> getForestEntities() {
+    public static ArrayList<IRenderable> getForestEntities() {
         return forestEntities;
     }
+    public static ArrayList<IRenderable> getBattleEntities(){return battleEntities;}
 
     public static void setTownEntities() {
     //    player1 = new Player(26,28);
@@ -126,7 +127,7 @@ public class RenderableHolder {
         townEntities.add(new Warp(27,39));
         townEntities.get(18).setName("WARP_TO_FOREST");
         townEntities.add(new Merchant(17, 24, 1, 1, 0, 0.5, 1, 0.5));
-        townEntities.add(new Man1Left(27.85, 25.5, 1, 1, 0, 0.5 ,1, 0.5));
+        townEntities.add(new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5));
         townEntities.add(new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5));
         townEntities.add(new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5));
     }
