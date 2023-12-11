@@ -23,6 +23,7 @@ import tile.TileManager;
 import worldObject.*;
 import worldObject.buildings.*;
 import worldObject.forest.*;
+import worldObject.npc.Chimera;
 import worldObject.npc.Lady;
 import worldObject.npc.Man1;
 import worldObject.npc.Man1Left;
@@ -68,7 +69,7 @@ public class GameLogic {
     public static BlackMage blackMage;
     public static WhiteMage whiteMage;
     public static BaseUnit[] enemyUnit;
-    public static ArrayList<BaseMove> movesContainer;
+    public static ArrayList<BaseMove> movesContainer = new ArrayList<>();
     //
     public static int stateInBattle = 0;
     static Thread thread;
@@ -194,8 +195,8 @@ public class GameLogic {
         baseObjectTown[19] = new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5);
         baseObjectTown[20] = new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5);
         baseObjectTown[21] = new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5);
-        baseObjectTown[22] = new Warp(26,35);
-        baseObjectTown[22].setName("WARP_TO_BATTLE");
+        /*baseObjectTown[22] = new Warp(26,35);
+        baseObjectTown[22].setName("WARP_TO_BATTLE");*/
     }
 
     /*protected static void addNewObject(Entity entity){
@@ -319,7 +320,6 @@ public class GameLogic {
                 break;
             case 5:
                 stateInBattle = 0;
-                performEntitiesMove();
                 for (BaseUnit enemy : getEnemiesUnits()) {
                     if (!enemy.isDestroyed()) {
                         BaseMove move = enemy.getMoveSet()[enemy.getCurrentLoop()];
@@ -416,16 +416,17 @@ public class GameLogic {
 
     public static void performEntitiesMove() {
         for (BaseMove eachMove : movesContainer) {
-            try {
+            eachMove.performEffect(eachMove.getTarget());
+            /*try {
                 thread.sleep(500);
-                eachMove.performEffect(eachMove.getTarget());
+
                 //battlePaneController.updateNameAndHp();
             } catch (Exception e) {
                 System.out.println(e);
             }
+        */
+            movesContainer.clear();
         }
-        movesContainer.clear();
-
     }
 
     public static void ItemUpdate(String item){
@@ -471,6 +472,9 @@ public class GameLogic {
         baseObjectForest[7] = new DeadTreeB(10, 19, 4, 4, 1, 3.5, 1.5, 0.5);
         baseObjectForest[8] = new DeadTreeB(23.5, 13, 4, 4, 1, 3.5, 1.5, 0.5);
         baseObjectForest[9] = new DeadTreeB(13.5, 11.5, 4, 4, 1, 3.5, 1.5, 0.5);
+        baseObjectForest[11] = new Chimera(18,18,4,4,0,2,4,2);
+        baseObjectForest[11].setName("WARP_TO_BATTLE");
+
     }
 
        /* for(int i=0 ; i < baseObject.length ;i++){

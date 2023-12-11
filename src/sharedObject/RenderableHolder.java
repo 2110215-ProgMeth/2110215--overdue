@@ -13,10 +13,7 @@ import worldObject.buildings.*;
 import worldObject.forest.DeadTreeB;
 import worldObject.forest.ForestTreeB;
 import worldObject.forest.NormalTree;
-import worldObject.npc.Lady;
-import worldObject.npc.Man1;
-import worldObject.npc.Man1Left;
-import worldObject.npc.Merchant;
+import worldObject.npc.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,7 +130,7 @@ public class RenderableHolder {
         townEntities.add(new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5));
         townEntities.add(new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5));
         townEntities.add(new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5));
-        townEntities.add(new Warp(26,35));
+        //townEntities.add(new Warp(26,35));
 
     }
 
@@ -153,6 +150,7 @@ public class RenderableHolder {
         forestEntities.add(new DeadTreeB(10, 19, 4, 4, 1, 3.5, 1.5, 0.5));
         forestEntities.add(new DeadTreeB(23.5, 13, 4, 4, 1, 3.5, 1.5, 0.5));
         forestEntities.add(new DeadTreeB(13.5, 11.5, 4, 4, 1, 3.5, 1.5, 0.5));
+        forestEntities.add(new Chimera(18,18,4,4,0,2,4,2));
 
     }
     public static ArrayList<IRenderable> getCurrentEntities(){

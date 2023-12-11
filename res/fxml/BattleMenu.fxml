@@ -27,13 +27,11 @@
       <ImageView fx:id="monster2" fitHeight="64.0" fitWidth="64.0" layoutX="379.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../monster/GreenNaga1.png" />
-         </image>
-      </ImageView>
+         </image></ImageView>
       <ImageView fx:id="monster3" fitHeight="64.0" fitWidth="64.0" layoutX="110.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../monster/GreenNaga1.png" />
-         </image>
-      </ImageView>
+         </image></ImageView>
       <ImageView fx:id="warrior" fitHeight="96.0" fitWidth="96.0" layoutX="758.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="assassin" fitHeight="96.0" fitWidth="96.0" layoutX="828.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="blackmage" fitHeight="96.0" fitWidth="96.0" layoutX="759.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />

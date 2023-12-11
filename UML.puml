@@ -1,0 +1,971 @@
+@startuml
+class worldObject.buildings.ChimneyHouse {
+~ Image i
+~ WritableImage image
++ <<Create>> ChimneyHouse(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.Judgement {
++ <<Create>> Judgement(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.npc.Merchant {
+~ Image i
+~ WritableImage image
++ <<Create>> Merchant(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class control.InputUtility {
++ {static} double mouseX
++ {static} boolean mouseOnScreen
+- {static} boolean isLeftDown
+- {static} boolean isLeftClickedLastTick
+- {static} ArrayList<KeyCode> keyPressed
++ {static} boolean getKeyPressed(KeyCode)
++ {static} void setKeyPressed(KeyCode,boolean)
++ {static} void mouseLeftDown()
++ {static} void mouseLeftRelease()
++ {static} boolean isLeftClickTriggered()
++ {static} void updateInputState()
+}
+class logic.GameLogic {
+- {static} RootPane root
+- {static} Scene scene
+- {static} GameScreen gameScreen
+- {static} Thread gameThread
+- {static} int FPS
+- {static} TileManager tilemanager
+- {static} FontManager fontManager
+- {static} BaseObject[] baseObjectTown
+- {static} BaseObject[] baseObjectForest
+- {static} Parent battleMenu
+- {static} BattleMenuController battleMenuController
+- {static} Sound sound
+- {static} Player player
+- {static} int gameState
++ {static} int worldState
++ {static} int pauseState
++ {static} int battleState
++ {static} int buyState
++ {static} int inventoryState
++ {static} int currentMap
++ {static} int townMap
++ {static} int forestMap
++ {static} boolean threadActive
++ {static} ArrayList<BaseUnit> alliesUnits
++ {static} ArrayList<BaseUnit> enemiesUnits
++ {static} Warrior warrior
++ {static} Assasssin assassin
++ {static} BlackMage blackMage
++ {static} WhiteMage whiteMage
++ {static} BaseUnit[] enemyUnit
++ {static} ArrayList<BaseMove> movesContainer
++ {static} int stateInBattle
+~ {static} Thread thread
+- {static} int delayDuration
++ <<Create>> GameLogic()
++ {static} void initializeBattlePane()
++ {static} void setupGame()
++ {static} void startGameThread()
++ {static} void initializeBattleMenu()
++ {static} void setBaseObjectTown()
++ {static} void logicUpdate()
++ {static} boolean loseBattle()
++ {static} boolean winBattle()
++ {static} int chooseTarget(ArrayList<BaseUnit>)
++ {static} void battle()
++ {static} void setLoseState()
++ {static} void setVictoryState()
++ {static} void showActionDisplayPane()
++ {static} void showTextInActionDisplayPane(String)
++ {static} void sleepThread(int)
++ {static} void performEntitiesMove()
++ {static} void ItemUpdate(String)
++ {static} Player getPlayer()
++ {static} void showBattlePane()
++ {static} void updateBuff(BaseUnit)
++ {static} void DestroyedBuff(BaseUnit)
++ {static} void setBaseObjectForest()
++ {static} void checkTile(Entity)
++ {static} BaseObject[] getBaseObject()
++ {static} int checkObject(Entity,boolean)
++ {static} int isFront(Entity)
++ {static} void playMusic(int)
++ {static} void stopMusic()
++ {static} void playSE(int)
++ {static} void setMusicVolume(double)
++ {static} void continueGame()
++ {static} void pauseGame()
++ {static} void openShop()
++ {static} void openInventory()
++ {static} void startBattle()
++ {static} void closeShop()
++ {static} void closeInventory()
++ {static} void exitBattle()
++ {static} Scene getScene()
++ {static} RootPane getRoot()
++ {static} Thread getGameThread()
++ {static} TileManager getTilemanager()
++ {static} int getFPS()
++ {static} int getGameState()
++ {static} ArrayList<BaseUnit> getAlliessUnits()
++ {static} ArrayList<BaseUnit> getEnemiesUnits()
++ {static} FontManager getFontManager()
++ {static} int getCurrentMap()
++ {static} void setGameState(int)
++ {static} void setCurrentMap(int)
+}
+abstract class battleEntity.battleUnit.BaseUnit {
+# String name
+# int hp
+# int baseHp
+# int mp
+# int baseMp
+# int attack
+# int baseAttack
+# int defense
+# int baseDefense
+# boolean isProtected
+# boolean isAlive
+# BaseMove[] moveSet
+# ArrayList<Buff> buffers
+# ArrayList<Integer> Loop
+# int currentLoop
+# WritableImage[] images
+# double x
+# int spriteCounter
+# int spriteNum
++ <<Create>> BaseUnit(String,int,int,int,int)
++ boolean isDestroyed()
++ boolean isProtected()
++ void addMove(BaseMove,int)
++ String toString()
++ void setStat()
++ {abstract}void setMoveSet()
++ void setName(String)
++ void setHp(int)
++ void setBaseHp(int)
++ void setMp(int)
++ void setBaseMp(int)
++ void setAttack(int)
++ void setBaseAttack(int)
++ void setDefense(int)
++ void setBaseDefense(int)
++ void setProtected(boolean)
++ void setAlive(boolean)
++ String getName()
++ int getHp()
++ int getBaseHp()
++ int getMp()
++ int getBaseMp()
++ int getAttack()
++ int getBaseAttack()
++ int getDefense()
++ int getBaseDefense()
++ ArrayList<Buff> getBuffers()
++ BaseMove getMove(int)
++ WritableImage[] getImages()
++ void setPosition(double,double)
++ int getCurrentLoop()
++ void setCurrentLoop(int)
++ BaseMove[] getMoveSet()
++ void update()
++ void updateAnimation()
++ int updateLoop()
++ int getZ()
++ void draw(GraphicsContext)
+}
+class battleEntity.combatMove.Berserk {
++ <<Create>> Berserk(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.CrossRipperSlasher {
++ <<Create>> CrossRipperSlasher(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.AttackMove {
+# double percentDamage
++ <<Create>> AttackMove(BaseUnit)
++ void performEffect(BaseUnit)
++ String toString()
++ void setPercentDamage(double)
++ double getPercentDamage()
++ void setDescription(String)
+}
+class items.Bomb {
++ <<Create>> Bomb()
++ void use(BaseUnit)
+}
+class battleEntity.monster.GelatinousCube {
++ <<Create>> GelatinousCube(String,int,int,int,int)
++ void setMoveSet()
+}
+class gui.PauseMenuController {
+- StackPane continueButton
+- Text cont
+- StackPane optionButton
+- StackPane exitButton
+- Text exit
++ void initialize(URL,ResourceBundle)
++ void initializeButtons()
+}
+class worldObject.npc.Man1 {
+~ Image i
+~ WritableImage image
++ <<Create>> Man1(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.DarkMagic {
++ <<Create>> DarkMagic(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.EnchantDeadlyPoison {
++ <<Create>> EnchantDeadlyPoison(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.DebuffAttack {
+- double reduce
++ <<Create>> DebuffAttack(String,BaseUnit,int,double)
++ void performBuff()
++ void destroyBuff()
+}
+class worldObject.Entity {
++ int WorldX
++ int speed
++ String direction
++ Rectangle solidArea
++ Rectangle sprite
++ int solidAreaDefaultX
++ boolean collisionOn
+- int z
++ String name
++ int getZ()
++ void draw(GraphicsContext)
++ boolean isDestroyed()
++ void setZ(int)
++ boolean isCollision()
++ void setName(String)
++ void setWorldX(int)
++ void setWorldY(int)
++ String getName()
+}
+class battleEntity.combatMove.RoarOfThunder {
++ <<Create>> RoarOfThunder(BaseUnit)
++ void performEffect()
+}
+class battleEntity.combatMove.Heal {
++ <<Create>> Heal(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.EarthShake {
++ <<Create>> EarthShake(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.BoostDefense {
+- double boost
++ <<Create>> BoostDefense(String,BaseUnit,int,double)
++ void performBuff()
++ void destroyBuff()
+}
+class application.Main {
++ void start(Stage)
++ {static} void main(String[])
+}
+class sound.Sound {
+- Media clip
+~ Media[] sound
++ {static} MediaPlayer soundPlayer
++ {static} double volume
++ <<Create>> Sound()
++ void setClip(int)
++ void play()
++ void loop()
++ void stop()
++ {static} MediaPlayer getClip()
+}
+interface interfaces.Moveable {
++ void updateCoordinate()
+}
+class sharedObject.RenderableHolder {
+- {static} RenderableHolder instance
++ {static} AudioClip hoverSound
++ {static} AudioClip confirmSound
++ {static} AudioClip declineSound
++ {static} ImageView mainMenuBackground
++ {static} ImageView darkWojak
++ {static} ImageView battleBackground
++ {static} Image unitImage
++ {static} ArrayList<IRenderable> townEntities
++ {static} ArrayList<IRenderable> battleEntities
++ {static} ArrayList<IRenderable> forestEntities
+- {static} Comparator<IRenderable> comparator
++ <<Create>> RenderableHolder()
++ {static} void add(List<IRenderable>,IRenderable)
++ {static} RenderableHolder getInstance()
++ {static} String getPath(String)
++ {static} void update(List<IRenderable>)
++ {static} void loadSound()
++ {static} void loadImage()
++ {static} ArrayList<IRenderable> getTownEntities()
++ {static} ArrayList<IRenderable> getForestEntities()
++ {static} ArrayList<IRenderable> getBattleEntities()
++ {static} void setTownEntities()
++ {static} void setForestEntities()
++ {static} ArrayList<IRenderable> getCurrentEntities()
+}
+class items.DefensePotion {
++ <<Create>> DefensePotion()
++ void use(BaseUnit)
+}
+class gui.MainMenu {
+- MainMenuButton startButton
+- MainMenuButton optionButton
+- MainMenuButton helpButton
+- MainMenuButton creditButton
+- MainMenuButton exitButton
++ <<Create>> MainMenu()
++ void switchToOptionMenu()
++ void switchToCreditMenu()
+}
+class battleEntity.battleUnit.Assasssin {
++ <<Create>> Assasssin(String,int,int,int,int)
++ void setMoveSet()
++ void draw(GraphicsContext)
++ void update()
+}
+class items.ManaPotion {
++ <<Create>> ManaPotion()
++ void use(BaseUnit)
+}
+class display.GameScreen {
++ <<Create>> GameScreen()
++ void addListerner()
++ void paintComponent()
++ void run()
+}
+class battleEntity.monster.StoneGolem {
++ <<Create>> StoneGolem(String,int,int,int,int)
++ void setMoveSet()
+}
+class items.ThrowingKnife {
++ <<Create>> ThrowingKnife()
++ void use(BaseUnit)
+}
+class battleEntity.combatMove.BasicAttack {
++ <<Create>> BasicAttack(String,BaseUnit)
++ void performEffect(BaseUnit)
++ String toString()
+}
+interface interfaces.Consumable {
++ void use(BaseUnit)
+}
+class battleEntity.monster.GreenNaga {
++ <<Create>> GreenNaga(String,int,int,int,int)
++ void setMoveSet()
++ void update()
+}
+interface interfaces.IRenderable {
++ int getZ()
++ void draw(GraphicsContext)
++ boolean isDestroyed()
++ String getName()
++ void setName(String)
+}
+class gui.RootPane {
+- MainMenu mainMenu
+- Parent creditMenu
+- CreditMenuController creditMenuController
+- Parent optionMenu
+- OptionMenuController optionMenuController
+- Parent pauseMenu
+- PauseMenuController pauseMenuController
+- Parent shopMenu
+- ShopMenuController shopMenuController
+- Parent inventoryMenu
+- InventoryMenuController inventoryMenuController
+- Parent battleMenu
+- BattleMenuController battleMenuController
+- ImageView mainMenuBackground
++ <<Create>> RootPane()
++ void initializeCreditMenu()
++ void initializePauseMenu()
++ void initializeOptionMenu()
++ void initializeShopMenu()
++ void initializeInventoryMenu()
++ void switchToMainMenu()
++ Parent getCreditMenu()
++ MainMenu getMainMenu()
++ Parent getOptionMenu()
++ Parent getPauseMenu()
++ Parent getShopMenu()
++ Parent getInventoryMenu()
++ Parent getBattleMenu()
++ CreditMenuController getCreditMenuController()
++ OptionMenuController getOptionMenuController()
++ PauseMenuController getPauseMenuController()
++ ShopMenuController getShopMenuController()
++ InventoryMenuController getInventoryMenuController()
++ void setOptionMenu(Parent)
++ void setPauseMenu(Parent)
+}
+class items.BaseItem {
+# String name
+# String description
+# int price
+# BaseUnit target
+# boolean allTarget
++ void setName(String)
++ void setDescription(String)
++ void setPrice(int)
++ void setTarget(BaseUnit)
++ void setAllTarget(boolean)
++ String getName()
++ String getDescription()
++ int getPrice()
+}
+class battleEntity.combatMove.Thundara {
++ <<Create>> Thundara(BaseUnit)
++ void performEffect()
+}
+class worldObject.npc.Lady {
+~ Image i
+~ WritableImage image
++ <<Create>> Lady(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.battleUnit.Warrior {
+- boolean taunt
++ <<Create>> Warrior(String,int,int,int,int)
++ void setMoveSet()
++ void draw(GraphicsContext)
++ void update()
++ void setTaunt(boolean)
++ boolean isTaunt()
+}
+class battleEntity.combatMove.Temper {
+- double boost
++ <<Create>> Temper(String,BaseUnit,int,double)
++ void performBuff()
++ void destroyBuff()
+}
+class battleEntity.combatMove.SoulEater {
++ <<Create>> SoulEater(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.Warp {
++ <<Create>> Warp(double,double)
++ boolean isDestroyed()
+}
+class gui.MainMenuButton {
+- Text text
+- Rectangle background
++ <<Create>> MainMenuButton(String)
+}
+class worldObject.buildings.LongHouse {
+~ Image i
+~ WritableImage image
++ <<Create>> LongHouse(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class worldObject.forest.NormalTree {
+~ Image i
+~ WritableImage image
++ <<Create>> NormalTree(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class gui.ShopMenuController {
+- Text healthPotion
+- Text manaPotion
+- Text strengthPotion
+- Text defensePotion
+- Text throwingKnife
+- Text bomb
+- Text exitButton
+- Text money
++ void initialize(URL,ResourceBundle)
++ void InitializeItems()
+}
+class battleEntity.combatMove.BackStab {
++ <<Create>> BackStab(BaseUnit)
++ void performEffect(BaseUnit)
+}
+abstract class battleEntity.combatMove.Buff {
+- int defaultCount
+- int count
+- String name
+- BaseUnit owner
++ <<Create>> Buff(String,BaseUnit,int)
++ {abstract}void performBuff()
++ {abstract}void destroyBuff()
++ void setOwner(BaseUnit)
++ void setName(String)
++ void setDefaultCount(int)
++ void setCount(int)
++ int getCount()
++ BaseUnit getOwner()
++ int getDefaultCount()
+}
+class battleEntity.battleUnit.WhiteMage {
++ <<Create>> WhiteMage(String,int,int,int,int)
++ void setMoveSet()
++ void draw(GraphicsContext)
++ void update()
+}
+class gui.BattleMenuController {
+- HBox battlePane
+- ImageView warrior
+- ImageView assassin
+- ImageView blackmage
+- ImageView whitemage
+- Text move1Text
+- Text move2Text
+- Text move3Text
+- Text move4Text
+- Text run
+- Text enemyTarget1
+- Text enemyTarget2
+- Text enemyTarget3
+- Text enemy1
+- Text enemy2
+- Text enemy3
+- Pane enemySelectPane
+- Text allyTarget1
+- Text allyTarget2
+- Text allyTarget3
+- Text allyTarget4
+- Text warriorStatus
+- Text assassinStatus
+- Text blackmageStatus
+- Text whitemageStatus
+- Pane parentPane
+- Pane allySelectPane
+- Pane movePane
+- Pane actionDisplayPane
+- Text actionDisplayText
+- Text enemyBack
+- Text allyBack
+- Text instructionPane
+- BaseMove choseMove
+- int chosenMove
+- ArrayList<String> items
+- ArrayList<Text> itemsButtonList
+- ArrayList<Text> skillButtonsList
+- ArrayList<Text> monsterList
++ void initialize(URL,ResourceBundle)
++ void initializeRunButton()
++ void initializeDefault()
++ {static} void setUpBattle()
++ void removeBattlePane()
++ void addBattlePane()
++ void removeActionDisplayPane()
++ void addActionDisplayPane()
++ void updateData()
++ void initializePaneAndLayout()
++ void initializeOnClicking()
++ void updateUserMovePane(BaseUnit)
++ void switchToSelectPane()
++ void initializeTargetSelectPane()
++ void setSelectButton(BaseUnit,Text)
++ void fillDisableButton(Text)
++ void switchToMovePane()
++ void updateMovePane(BaseUnit)
++ void showTextInDisplayPane(String)
++ void resetActionDisplayText()
++ BaseUnit getAllyUnit(int)
++ {static} BaseUnit getEnemyUnit(int)
+}
+class items.HealthPotion {
++ <<Create>> HealthPotion()
++ void use(BaseUnit)
+}
+class battleEntity.monster.AdeptNecromancer {
++ <<Create>> AdeptNecromancer(String,int,int,int,int)
++ void setMoveSet()
+}
+class worldObject.buildings.Guild {
+~ Image i
+~ WritableImage image
++ <<Create>> Guild(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.battleUnit.BlackMage {
++ <<Create>> BlackMage(String,int,int,int,int)
++ void setMoveSet()
++ void draw(GraphicsContext)
++ void update()
+}
+class display.ScreenUtil {
+~ {static} int originalTileSize
++ {static} int scale
++ {static} int tileSize
++ {static} int maxScreenCol
++ {static} int maxScreenRow
++ {static} int screenWidth
++ {static} int screenHeight
++ {static} int maxWorldCol
++ {static} int maxWorldRow
++ {static} int worldWidth
++ {static} int worldHeight
++ {static} int FPS
++ {static} int getFPS()
+}
+class worldObject.forest.ForestTreeB {
+~ Image i
+~ WritableImage image
++ <<Create>> ForestTreeB(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+abstract class battleEntity.combatMove.BaseMove {
+# String name
+# int mpConsume
+# BaseUnit owner
+# BaseUnit target
+# String description
+- boolean allTarget
++ <<Create>> BaseMove(BaseUnit)
++ {abstract}void performEffect(BaseUnit)
++ {abstract}String toString()
++ String getName()
++ int getMpConsume()
++ BaseUnit getOwner()
++ BaseUnit getTarget()
++ String getDescription()
++ boolean isAllTarget()
++ void setName(String)
++ void setMpConsume(int)
++ void setOwner(BaseUnit)
++ void setTarget(BaseUnit)
++ void setDescription(String)
++ boolean isUsable()
++ void setAllTarget(boolean)
+}
+class battleEntity.combatMove.HolyLight {
++ <<Create>> HolyLight(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.buildings.Statue {
+~ Image i
+~ WritableImage image
++ <<Create>> Statue(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.Unbreakable {
++ <<Create>> Unbreakable(BaseUnit)
++ void performEffect()
+}
+class worldObject.npc.Man1Left {
+~ Image i
+~ WritableImage image
++ <<Create>> Man1Left(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.Firaga {
++ <<Create>> Firaga(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.forest.LightTree {
+~ Image i
+~ WritableImage image
++ <<Create>> LightTree(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.RisingDragonStrike {
++ <<Create>> RisingDragonStrike(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.Poison {
++ <<Create>> Poison(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.forest.DeadTreeB {
+~ Image i
+~ WritableImage image
++ <<Create>> DeadTreeB(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class worldObject.forest.ForestTreeS {
+~ Image i
+~ WritableImage image
++ <<Create>> ForestTreeS(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class battleEntity.combatMove.DOT {
+- double percentDamage
++ <<Create>> DOT(String,BaseUnit,int,double)
++ void performBuff()
++ void destroyBuff()
+}
+class gui.OptionMenuController {
+- javafx.scene.shape.Rectangle speedBar
+- Rectangle musicBar
+- StackPane speedBarRoot
+- StackPane musicBarRoot
++ void initialize(URL,ResourceBundle)
++ void initializeSpeedBar()
++ void initializeMusicBar()
+}
+class gui.InventoryMenuController {
+- Text healthPotion
+- Text hPotionAmount
+- Text manaPotion
+- Text mPotionAmount
+- Text strengthPotion
+- Text sPotionAmount
+- Text defensePotion
+- Text dPotionAmount
+- Text throwingKnife
+- Text knifeAmount
+- Text bomb
+- Text bombAmount
+- Text exitButton
+- HashMap<Text,Text> itemLists
++ void initialize(URL,ResourceBundle)
++ void initializeItemAmount()
++ void initializeItemList()
+}
+class battleEntity.combatMove.SupportMove {
+# double percentHeal
++ <<Create>> SupportMove(BaseUnit)
++ void performEffect(BaseUnit)
++ String toString()
++ void setPercentHeal(double)
++ double getPercentHeal()
+}
+class battleEntity.combatMove.DrainLife {
++ <<Create>> DrainLife(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class worldObject.Player {
++ int screenX
++ int screenY
++ int spriteCounter
++ int spriteNum
++ boolean front
++ boolean trade
++ Rectangle tradeBox
++ {static} int currentMoney
++ {static} HashMap<String,Integer> playerInventory
++ Image up0
++ Image up1
++ Image up2
++ Image down0
++ Image down1
++ Image down2
++ Image left0
++ Image left1
++ Image left2
++ Image right0
++ Image right1
++ Image right2
++ <<Create>> Player(int,int)
+- void up()
+- void down()
+- void left()
+- void right()
++ void updateCoordinate()
++ void interactObject(int)
++ void draw(GraphicsContext)
++ boolean isDestroyed()
++ void setSpeed(int)
++ {static} void setMoney(int)
++ {static} int getMoney()
++ {static} HashMap<String,Integer> getPlayerInventory()
+}
+class battleEntity.combatMove.DemonBite {
++ <<Create>> DemonBite(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.monster.Chimera {
++ <<Create>> Chimera(String,int,int,int,int)
++ void setMoveSet()
+}
+class worldObject.buildings.House {
+~ Image i
+~ WritableImage image
++ <<Create>> House(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class tile.TileManager {
++ Tile[] tile
++ int[][] mapTileNum
++ <<Create>> TileManager()
++ void setTile(int,String)
++ void loadMap(String)
++ void createMap(GraphicsContext)
+}
+class battleEntity.monster.IronGolem {
++ <<Create>> IronGolem(String,int,int,int,int)
++ void setMoveSet()
+}
+class font.FontManager {
+- {static} Font dialogue
+- {static} Font title
+- String path
++ {static} Font getDialogue(double)
+}
+class worldObject.buildings.TallHouse {
+~ Image i
+~ WritableImage image
++ <<Create>> TallHouse(double,double,double,double,double,double,double,double)
++ boolean isDestroyed()
+}
+class tile.Tile {
++ Image image
++ boolean collision
++ void setCollision(boolean)
++ void setImage(Image)
+}
+class gui.CreditMenuController {
+- ImageView darkWojak
++ void initialize(URL,ResourceBundle)
+}
+interface interfaces.Usable {
++ void use(BaseUnit)
+}
+class battleEntity.combatMove.Taunt {
++ <<Create>> Taunt(Warrior)
++ void performEffect(BaseUnit)
+}
+class battleEntity.combatMove.BlessingOfGod {
++ <<Create>> BlessingOfGod(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class battleEntity.monster.GrandMasterWarlock {
++ <<Create>> GrandMasterWarlock(String,int,int,int,int)
++ void setMoveSet()
+}
+class battleEntity.combatMove.Barrier {
++ <<Create>> Barrier(String,BaseUnit,int)
++ void performBuff()
++ void destroyBuff()
+}
+class battleEntity.combatMove.DebuffDefense {
+- double reduce
++ <<Create>> DebuffDefense(String,BaseUnit,int,double)
++ void performBuff()
++ void destroyBuff()
+}
+abstract class worldObject.BaseObject {
++ Image image
++ String name
++ boolean collision
++ double WorldX
++ Rectangle solidArea
++ double solidAreaDefaultX
++ double solidAreaDefaultY
++ double scaleX
++ boolean destroyed
++ int z
++ <<Create>> BaseObject(double,double)
++ <<Create>> BaseObject(double,double,double,double,double,double,double,double)
++ void draw(GraphicsContext)
++ void setScale(double,double)
++ void update()
++ int getZ()
++ Image getImage()
++ String getName()
++ void setWorldX(int)
++ void setWorldY(int)
++ void setName(String)
++ void setCollision(Boolean)
++ void setImage(Image)
++ boolean isCollision()
++ void setDestroyed(boolean)
+}
+class battleEntity.combatMove.DarkHold {
++ <<Create>> DarkHold(BaseUnit)
++ void performEffect(BaseUnit)
+}
+class items.StrengthPotion {
++ <<Create>> StrengthPotion()
++ void use(BaseUnit)
+}
+
+
+worldObject.BaseObject <|-- worldObject.buildings.ChimneyHouse
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.Judgement
+worldObject.BaseObject <|-- worldObject.npc.Merchant
+interfaces.IRenderable <|.. battleEntity.battleUnit.BaseUnit
+battleEntity.combatMove.SupportMove <|-- battleEntity.combatMove.Berserk
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.CrossRipperSlasher
+battleEntity.combatMove.BaseMove <|-- battleEntity.combatMove.AttackMove
+interfaces.Usable <|.. items.Bomb
+items.BaseItem <|-- items.Bomb
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.GelatinousCube
+javafx.fxml.Initializable <|.. gui.PauseMenuController
+worldObject.BaseObject <|-- worldObject.npc.Man1
+battleEntity.combatMove.SupportMove <|-- battleEntity.combatMove.DarkMagic
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.EnchantDeadlyPoison
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.DebuffAttack
+interfaces.IRenderable <|.. worldObject.Entity
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.RoarOfThunder
+battleEntity.combatMove.SupportMove <|-- battleEntity.combatMove.Heal
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.EarthShake
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.BoostDefense
+javafx.application.Application <|-- application.Main
+interfaces.Consumable <|.. items.DefensePotion
+items.BaseItem <|-- items.DefensePotion
+javafx.scene.layout.VBox <|-- gui.MainMenu
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.battleUnit.Assasssin
+interfaces.Consumable <|.. items.ManaPotion
+items.BaseItem <|-- items.ManaPotion
+display.Runnable <|.. display.GameScreen
+javafx.scene.canvas.Canvas <|-- display.GameScreen
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.StoneGolem
+interfaces.Usable <|.. items.ThrowingKnife
+items.BaseItem <|-- items.ThrowingKnife
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.BasicAttack
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.GreenNaga
+javafx.scene.layout.Pane <|-- gui.RootPane
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.Thundara
+worldObject.BaseObject <|-- worldObject.npc.Lady
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.battleUnit.Warrior
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.Temper
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.SoulEater
+worldObject.BaseObject <|-- worldObject.Warp
+javafx.scene.layout.StackPane <|-- gui.MainMenuButton
+worldObject.BaseObject <|-- worldObject.buildings.LongHouse
+worldObject.BaseObject <|-- worldObject.forest.NormalTree
+javafx.fxml.Initializable <|.. gui.ShopMenuController
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.BackStab
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.battleUnit.WhiteMage
+javafx.fxml.Initializable <|.. gui.BattleMenuController
+interfaces.Consumable <|.. items.HealthPotion
+items.BaseItem <|-- items.HealthPotion
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.AdeptNecromancer
+worldObject.BaseObject <|-- worldObject.buildings.Guild
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.battleUnit.BlackMage
+worldObject.BaseObject <|-- worldObject.forest.ForestTreeB
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.HolyLight
+worldObject.BaseObject <|-- worldObject.buildings.Statue
+battleEntity.combatMove.SupportMove <|-- battleEntity.combatMove.Unbreakable
+worldObject.BaseObject <|-- worldObject.npc.Man1Left
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.Firaga
+worldObject.BaseObject <|-- worldObject.forest.LightTree
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.RisingDragonStrike
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.Poison
+worldObject.BaseObject <|-- worldObject.forest.DeadTreeB
+worldObject.BaseObject <|-- worldObject.forest.ForestTreeS
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.DOT
+javafx.fxml.Initializable <|.. gui.OptionMenuController
+javafx.fxml.Initializable <|.. gui.InventoryMenuController
+battleEntity.combatMove.BaseMove <|-- battleEntity.combatMove.SupportMove
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.DrainLife
+interfaces.Moveable <|.. worldObject.Player
+worldObject.Entity <|-- worldObject.Player
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.DemonBite
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.Chimera
+worldObject.BaseObject <|-- worldObject.buildings.House
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.IronGolem
+worldObject.BaseObject <|-- worldObject.buildings.TallHouse
+javafx.fxml.Initializable <|.. gui.CreditMenuController
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.Taunt
+battleEntity.combatMove.SupportMove <|-- battleEntity.combatMove.BlessingOfGod
+battleEntity.battleUnit.BaseUnit <|-- battleEntity.monster.GrandMasterWarlock
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.Barrier
+battleEntity.combatMove.Buff <|-- battleEntity.combatMove.DebuffDefense
+worldObject.Entity <|-- worldObject.BaseObject
+battleEntity.combatMove.AttackMove <|-- battleEntity.combatMove.DarkHold
+interfaces.Consumable <|.. items.StrengthPotion
+items.BaseItem <|-- items.StrengthPotion
+@enduml
