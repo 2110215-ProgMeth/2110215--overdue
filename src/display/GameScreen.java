@@ -81,32 +81,34 @@ public class GameScreen extends Canvas implements Runnable {
         //System.out.println("paintComponent update called");
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.clearRect(0,0,ScreenUtil.screenWidth,ScreenUtil.screenHeight);
+        if (GameLogic.getGameState() != GameLogic.battleState) {
+            // TILE
+            GameLogic.getTilemanager().createMap(gc);
 
-        // TILE
-        GameLogic.getTilemanager().createMap(gc);
+            // OBJECT
+            /*for (int i = 0; i < GameLogic.getBaseObject().length; i++ ) {
+                if (GameLogic.getBaseObject()[i] != null) {
+                    GameLogic.getBaseObject()[i].draw(gc);
+                }
+            }
 
-        // OBJECT
-        /*for (int i = 0; i < GameLogic.getBaseObject().length; i++ ) {
-            if (GameLogic.getBaseObject()[i] != null) {
-                GameLogic.getBaseObject()[i].draw(gc);
+            // PLAYER
+            GameLogic.getPlayer().draw(gc);*/
+            if (GameLogic.getCurrentMap() == GameLogic.townMap) {
+                for (IRenderable entity : RenderableHolder.townEntities) {
+                    if (!entity.isDestroyed()) {
+                        entity.draw(gc);
+                    }
+                }
+            } else if (GameLogic.getCurrentMap() == GameLogic.forestMap) {
+                for (IRenderable entity : RenderableHolder.forestEntities) {
+                    if (!entity.isDestroyed()) {
+                        entity.draw(gc);
+                    }
+                }
             }
         }
 
-        // PLAYER
-        GameLogic.getPlayer().draw(gc);*/
-        if (GameLogic.getCurrentMap() == GameLogic.townMap) {
-            for (IRenderable entity : RenderableHolder.townEntities) {
-                if (!entity.isDestroyed()) {
-                    entity.draw(gc);
-                }
-            }
-        } else if (GameLogic.getCurrentMap() == GameLogic.forestMap){
-             for (IRenderable entity : RenderableHolder.forestEntities) {
-                if (!entity.isDestroyed()) {
-                    entity.draw(gc);
-                }
-            }
-        }
     }
 
 

@@ -12,7 +12,7 @@ public class CrossRipperSlasher extends AttackMove{ //penetrate50% decHp20% Atk1
         setAllTarget(true);
     }
 
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
         setTarget(target);
         if (!this.getOwner().isDestroyed()) {
             //String text = this.toString();

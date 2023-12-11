@@ -2,11 +2,10 @@ package battleEntity.combatMove;
 
 import battleEntity.battleUnit.BaseUnit;
 
-public abstract class AttackMove extends BaseMove{
+public class AttackMove extends BaseMove{
     protected double percentDamage;
     public AttackMove(BaseUnit owner){
         super(owner);
-        setUsable(true);
     }
 
     @Override

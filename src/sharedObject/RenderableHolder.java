@@ -3,6 +3,7 @@ package sharedObject;
 import interfaces.IRenderable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.media.AudioClip;
 import logic.GameLogic;
 import worldObject.BaseObject;
@@ -30,6 +31,7 @@ public class RenderableHolder {
     public static ImageView mainMenuBackground;
     public static ImageView darkWojak;
     public static ImageView battleBackground;
+    public static Image unitImage;
     public static ArrayList<IRenderable> townEntities;
     public static ArrayList<IRenderable> battleEntities;
     public static ArrayList<IRenderable> forestEntities;
@@ -88,6 +90,7 @@ public class RenderableHolder {
         mainMenuBackground = new ImageView(new Image(getPath("menuImage/gameCover.png")));
         darkWojak = new ImageView(new Image(getPath("menuImage/creditImage1.jpg")));
         battleBackground = new ImageView(new Image(getPath("menuImage/forestBackground.png")));
+        unitImage = new Image("battleUnit/unitSprite.png");
     }
 
     public static ArrayList<IRenderable> getTownEntities() {
@@ -130,6 +133,8 @@ public class RenderableHolder {
         townEntities.add(new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5));
         townEntities.add(new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5));
         townEntities.add(new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5));
+        townEntities.add(new Warp(26,35));
+
     }
 
     public static void setForestEntities() {

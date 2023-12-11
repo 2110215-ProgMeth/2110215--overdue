@@ -4,11 +4,10 @@ import battleEntity.battleUnit.BaseUnit;
 
 public abstract class BaseMove {
     protected String name;
-    protected int mpConsume;
+    protected int mpConsume = 0;
     protected BaseUnit owner;
     protected BaseUnit target;
     protected String description;
-    protected boolean isUsable;
     private boolean allTarget = false;
     //constructor
     public BaseMove(BaseUnit owner){
@@ -37,13 +36,10 @@ public abstract class BaseMove {
         return target;
     }
 
-    public String getDecription() {
+    public String getDescription() {
         return this.description;
     }
 
-    public boolean isUsable() {
-        return this.isUsable;
-    }
     public boolean isAllTarget(){
         return allTarget;
     }
@@ -66,9 +62,9 @@ public abstract class BaseMove {
     public void setDescription(String description){
         this.description = description;
     }
-    public void setUsable(boolean usable) {
-        if (owner.getMp() < mpConsume) this.isUsable = false;
-        else this.isUsable = usable;
+    public boolean isUsable() {
+        if (owner.getMp() < mpConsume) return false;
+        else return true;
     }
 
     public void setAllTarget(boolean allTarget) {

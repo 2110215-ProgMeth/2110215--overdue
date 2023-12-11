@@ -38,4 +38,8 @@ public abstract class Buff {
     public BaseUnit getOwner() {
         return owner;
     }
+
+    public int getDefaultCount() {
+        return defaultCount;
+    }
 }

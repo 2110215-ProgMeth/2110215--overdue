@@ -11,13 +11,13 @@ public class BlessingOfGod extends SupportMove {
         setPercentHeal(0.35);
         setAllTarget(true);
     }
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
         if (!this.getOwner().isDestroyed()){
             for(BaseUnit ally : GameLogic.getAlliessUnits()){
                 if (!ally.isDestroyed()) {
                     int heal = (int) (ally.getBaseHp() * getPercentHeal() + 10);
                     ally.setHp(heal);
-                    ally.getBuffers().add(new Barrier("Divine Shield",ally,1));
+                    ally.getBuffers().add(new Barrier("Divine Shield",ally,2));
                     ally.getBuffers().add(new Temper("Blessed",ally,2,0.2));
                 }
             }

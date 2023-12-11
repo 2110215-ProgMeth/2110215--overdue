@@ -12,7 +12,7 @@ public class HolyLight extends AttackMove{
         setAllTarget(true);
     }
 
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
         if (!this.getOwner().isDestroyed()) {
             //String text = this.toString();
             getOwner().setMp(getOwner().getMp() - getMpConsume());

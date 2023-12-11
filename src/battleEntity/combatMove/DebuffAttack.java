@@ -10,7 +10,6 @@ public class DebuffAttack extends Buff{ //count = turn + 1
     }
     @Override
     public void performBuff(){
-        setCount(getCount() + 1);
         int boostAttack = (int) (getOwner().getBaseAttack() * reduce);
         getOwner().setAttack(getOwner().getAttack() - boostAttack);
     }

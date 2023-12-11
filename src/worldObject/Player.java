@@ -3,6 +3,7 @@ package worldObject;
 import control.InputUtility;
 import display.GameScreen;
 import display.ScreenUtil;
+import gui.BattleMenuController;
 import interfaces.IRenderable;
 import interfaces.Moveable;
 import items.*;
@@ -189,7 +190,7 @@ public class Player extends Entity implements Moveable {
                         GameLogic.setupGame();
                         break;
                     case "WARP_TO_TOWN":
-                        System.out.println("GO TO TOWN");
+                    //    System.out.println("GO TO TOWN");
                         GameLogic.getPlayer().setWorldX(25);
                         GameLogic.getPlayer().setWorldY(40);
                         RenderableHolder.getTownEntities().clear();
@@ -197,8 +198,19 @@ public class Player extends Entity implements Moveable {
                         GameLogic.setCurrentMap(GameLogic.townMap);
                         GameLogic.setupGame();
                         break;
+                    case "WARP_TO_BATTLE":
+                       System.out.println("WARP TO BATTLE");
+                        GameLogic.getPlayer().setWorldX(25); //แก้ด้วย
+                        GameLogic.getPlayer().setWorldY(10); //แก้ด้วย
+                        GameLogic.setGameState(GameLogic.battleState);
+                        GameLogic.stopMusic();
+                        GameLogic.playMusic(3);
+                        GameLogic.setMusicVolume(0.1);
+                        GameLogic.startBattle();
+                     //   GameLogic.battle();
+                        break;
                     case "Merchant":
-                        System.out.println("LET'S BUY !!!");
+                    //    System.out.println("LET'S BUY !!!");
                         if(InputUtility.getKeyPressed(KeyCode.J)){
                             System.out.println("TRADE !!!");
                             GameLogic.setGameState(GameLogic.buyState);

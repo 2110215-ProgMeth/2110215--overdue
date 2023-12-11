@@ -1,6 +1,7 @@
 package gui;
 
 import display.ScreenUtil;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,8 @@ public class RootPane extends Pane {
     private ShopMenuController shopMenuController;
     private Parent inventoryMenu;
     private InventoryMenuController inventoryMenuController;
+    private Parent battleMenu;
+    private BattleMenuController battleMenuController;
     private ImageView mainMenuBackground = RenderableHolder.mainMenuBackground;
 
     public RootPane() throws IOException {
@@ -34,6 +37,7 @@ public class RootPane extends Pane {
         initializeOptionMenu();
         initializeShopMenu();
         initializeInventoryMenu();
+      //  initializeBattleMenu();
 
         mainMenuBackground.setFitHeight(ScreenUtil.screenHeight);
         mainMenuBackground.setFitWidth(ScreenUtil.screenWidth);
@@ -81,6 +85,12 @@ public class RootPane extends Pane {
         inventoryMenuController = loader.getController();
     }
 
+    /*public void initializeBattleMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader((GameLogic.class.getResource(("/fxml/BattleMenu.fxml"))));
+        battleMenu = loader.load();
+        battleMenuController = loader.getController();
+    }*/
+
     public void switchToMainMenu() {
         if (this.getChildren().contains(this.creditMenu) || this.getChildren().contains(optionMenu)) {
             RenderableHolder.declineSound.play();
@@ -114,6 +124,10 @@ public class RootPane extends Pane {
 
     public Parent getInventoryMenu() {
         return this.inventoryMenu;
+    }
+
+    public Parent getBattleMenu() {
+        return this.battleMenu;
     }
 
     public CreditMenuController getCreditMenuController() {

@@ -1,6 +1,7 @@
 package battleEntity.battleUnit;
 
 import battleEntity.combatMove.BaseMove;
+import battleEntity.combatMove.DOT;
 import display.ScreenUtil;
 import interfaces.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,19 +27,22 @@ public abstract class BaseUnit implements IRenderable {
     // Array for storing moveSet
     protected BaseMove[] moveSet = new BaseMove[4];
     // Array for storing Buff
-    protected ArrayList<Buff> buffers;
+    protected ArrayList<Buff> buffers = new ArrayList<>();
+    // Array for storing Loop move
+    protected ArrayList<Integer> Loop = new ArrayList<>() ;
+    protected int currentLoop = 0 ;
     //for Animation
     protected WritableImage[] images;
     protected double x,y;
     protected int spriteCounter = 0 ;
-    protected int spriteNum = 0;
+    protected int spriteNum = 0 ;
     // constructor
     public BaseUnit(String name,int baseHp,int baseMp, int baseAttack,int baseDefense) {
         setName(name);
         setBaseHp(baseHp);
         setHp(baseHp);
         setBaseMp(baseMp);
-        setBaseMp(baseMp);
+        setMp(baseMp);
         setBaseAttack(baseAttack);
         setAttack(baseAttack);
         setBaseDefense(baseDefense);
@@ -62,6 +66,11 @@ public abstract class BaseUnit implements IRenderable {
 
     public String toString() {
         return this.name;
+    }
+    public void setStat(){
+        setHp(getBaseHp());
+        setMp(getBaseMp());
+        this.buffers = new ArrayList<>();
     }
 
     // getter & setter
@@ -170,8 +179,26 @@ public abstract class BaseUnit implements IRenderable {
         this.x = x;
         this.y = y;
     }
+
+    public int getCurrentLoop() {
+        return currentLoop;
+    }
+
+    public void setCurrentLoop(int currentLoop) {
+        this.currentLoop = currentLoop;
+    }
+
+    public BaseMove[] getMoveSet() {
+        return moveSet;
+    }
+
     public void update(){ //everyone always update alive
-        updateAnimation();
+        /*for (Buff buff : this.getBuffers()){
+            buff.setCount(buff.getCount() + 1);
+            if (buff instanceof DOT){
+                buff.performBuff();
+            }
+        }*/
         if (this.getHp() <= 0){
             this.setAlive(false);
         }
@@ -186,6 +213,10 @@ public abstract class BaseUnit implements IRenderable {
             }
             spriteCounter = 0;
         }
+    }
+    public int updateLoop(){
+        if (currentLoop == Loop.size()) currentLoop = 0;
+        return Loop.get(currentLoop++);
     }
     @Override
     public int getZ() {

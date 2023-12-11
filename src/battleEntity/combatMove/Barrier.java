@@ -8,7 +8,6 @@ public class Barrier extends Buff{
         performBuff();
     }
     public void performBuff(){
-        setCount(getCount() + 1);
         getOwner().setProtected(true);
     }
     public void destroyBuff(){

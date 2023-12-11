@@ -13,7 +13,7 @@ public class DarkHold extends AttackMove{
         setAllTarget(true);
     }
 
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
         if (!getOwner().isDestroyed()) {
             for (BaseUnit enemy : GameLogic.getEnemiesUnits()) {
                 if (!enemy.isDestroyed()) {

@@ -2,11 +2,16 @@ package battleEntity.battleUnit;
 
 import battleEntity.combatMove.*;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.WritableImage;
+import sharedObject.RenderableHolder;
 
 public class Assasssin extends BaseUnit {
 
     public Assasssin(String name, int baseHp, int baseMp, int baseAttack, int baseDefense) {
         super(name, baseHp, baseMp, baseAttack, baseDefense);
+        images = new WritableImage[1];
+        images[0] = new WritableImage(RenderableHolder.unitImage.getPixelReader(), 0, 832, 96, 96);
+        setMoveSet();
     }
 
 

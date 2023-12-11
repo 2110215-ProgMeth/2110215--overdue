@@ -10,7 +10,6 @@ public class DOT extends Buff{
     }
     @Override
     public void performBuff(){
-        setCount(getCount() + 1);
         int damage = (int) (getOwner().getBaseHp() * percentDamage);
         getOwner().setHp(getOwner().getHp() - damage);
     }

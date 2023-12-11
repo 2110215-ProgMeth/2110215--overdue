@@ -1,6 +1,7 @@
 package battleEntity.monster;
 
 import battleEntity.battleUnit.BaseUnit;
+import battleEntity.combatMove.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.Image;
 
@@ -17,11 +18,16 @@ public class Chimera extends BaseUnit {
         images[5] = new WritableImage(image.getPixelReader(),640,0,128,128);
         images[6] = new WritableImage(image.getPixelReader(),768,0,128,128);
         images[7] = new WritableImage(image.getPixelReader(),896,0,128,128);
+        setMoveSet();
+        Loop.add(0) ; Loop.add(1) ; Loop.add(0); Loop.add(0); Loop.add(2);
     }
     public void setMoveSet(){
-
-    }
-    public void update(){
-        updateAnimation();
+        moveSet = new BaseMove[3];
+        AttackMove basicAttack = new BasicAttack("Demon Claw",this);
+        AttackMove demonBite = new DemonBite(this);
+        AttackMove roarOfThunder = new RoarOfThunder(this);
+        moveSet[0] = basicAttack;
+        moveSet[1] = demonBite;
+        moveSet[2] = roarOfThunder;
     }
 }

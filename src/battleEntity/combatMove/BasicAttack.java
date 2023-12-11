@@ -7,7 +7,6 @@ public class BasicAttack extends AttackMove{
         super(owner);
         setName("BasicAttack");
         setMpConsume(0);
-        this.isUsable = true;
         setDescription("A normal attack. Deals small damage to enemy.");
     }
 

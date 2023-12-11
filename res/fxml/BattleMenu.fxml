@@ -1,98 +1,290 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BattleMenuController">
    <children>
       <ImageView fitHeight="624.0" fitWidth="1104.0" pickOnBounds="true">
          <image>
             <Image url="@../menuImage/forestBackground.png" />
          </image>
       </ImageView>
-      <HBox alignment="CENTER_LEFT" layoutY="473.0" prefHeight="80.0" prefWidth="461.0">
+      <ImageView fx:id="monster1" fitHeight="192.0" fitWidth="192.0" layoutX="147.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../monster/VenomousChimera1.png" />
+         </image></ImageView>
+      <ImageView fx:id="monster2" fitHeight="64.0" fitWidth="64.0" layoutX="379.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../monster/GreenNaga1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="monster3" fitHeight="64.0" fitWidth="64.0" layoutX="110.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../monster/GreenNaga1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="warrior" fitHeight="96.0" fitWidth="96.0" layoutX="758.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="assassin" fitHeight="96.0" fitWidth="96.0" layoutX="828.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="blackmage" fitHeight="96.0" fitWidth="96.0" layoutX="759.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="whitemage" fitHeight="96.0" fitWidth="96.0" layoutX="837.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox fx:id="battlePane" layoutX="217.0" layoutY="481.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="691.0" spacing="1.0">
          <children>
-            <StackPane prefHeight="100.0" prefWidth="400.0">
+            <Pane prefHeight="140.0" prefWidth="328.0">
                <children>
-                  <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#fafafa" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
-                  <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
-                  <VBox alignment="CENTER" prefHeight="130.0" prefWidth="230.0" spacing="15.0">
+                  <Rectangle arcHeight="20.0" arcWidth="20.0" height="140.0" opacity="0.9" stroke="WHITE" strokeType="INSIDE" strokeWidth="7.0" width="328.0">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Rectangle>
+                  <Text fx:id="run" fill="WHITE" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Run" textAlignment="CENTER" wrappingWidth="327.99999999999994">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="5.0" radius="2.0" width="5.0" />
+                     </effect>
+                  </Text>
+                  <Pane layoutX="2.0" layoutY="10.0" prefHeight="60.0" prefWidth="328.0">
                      <children>
-                        <Text fx:id="monster1Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="monster2Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="monster3Button" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                        <Text fx:id="instructionPane" fill="#eaeaea" layoutX="5.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER1 ATTACK" textAlignment="CENTER" wrappingWidth="319.0">
                            <font>
                               <Font name="Final Fantasy Regular" size="15.0" />
                            </font>
                         </Text>
                      </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </VBox>
+                  </Pane>
                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="400.0">
+            </Pane>
+            <Pane fx:id="movePane" prefHeight="140.0" prefWidth="344.0">
                <children>
-                  <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
-                  <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="15.0" StackPane.alignment="CENTER">
+                  <Rectangle arcHeight="20.0" arcWidth="20.0" height="140.0" opacity="0.9" stroke="WHITE" strokeType="INSIDE" strokeWidth="7.0" width="328.0">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Rectangle>
+                  <VBox alignment="CENTER" layoutX="5.0" layoutY="-6.0" prefHeight="150.0" prefWidth="321.0" spacing="10.0">
                      <children>
-                        <Text fx:id="fightButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Fight">
+                        <Text fx:id="move1Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE 1" textAlignment="CENTER" wrappingWidth="317.59999084472656">
                            <font>
                               <Font name="Final Fantasy Regular" size="15.0" />
                            </font>
+                           <effect>
+                              <DropShadow height="5.0" radius="2.0" width="5.0">
+                                 <color>
+                                    <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
                         </Text>
-                        <Text fx:id="SkillButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill">
+                        <Text fx:id="move2Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE 2" textAlignment="CENTER" wrappingWidth="319.2000274658203">
                            <font>
                               <Font name="Final Fantasy Regular" size="15.0" />
                            </font>
+                           <effect>
+                              <DropShadow height="5.0" radius="2.0" width="5.0">
+                                 <color>
+                                    <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
                         </Text>
-                        <Text fx:id="itemsButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+                        <Text fx:id="move3Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE 3" textAlignment="CENTER" wrappingWidth="320.00001525878906">
                            <font>
                               <Font name="Final Fantasy Regular" size="15.0" />
                            </font>
+                           <effect>
+                              <DropShadow height="5.0" radius="2.0" width="5.0">
+                                 <color>
+                                    <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
                         </Text>
-                        <Text fx:id="runButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Run">
+                        <Text fx:id="move4Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE 4" textAlignment="CENTER" wrappingWidth="318.39991760253906">
                            <font>
                               <Font name="Final Fantasy Regular" size="15.0" />
                            </font>
+                           <effect>
+                              <DropShadow height="5.0" radius="2.0" width="5.0">
+                                 <color>
+                                    <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
                         </Text>
                      </children>
                   </VBox>
                </children>
-            </StackPane>
+            </Pane>
          </children>
       </HBox>
+      <Pane fx:id="allySelectPane" layoutX="550.0" layoutY="340.0" prefHeight="130.0" prefWidth="319.0">
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="140.0" layoutX="-5.0" layoutY="-6.0" opacity="0.9" stroke="WHITE" strokeType="INSIDE" strokeWidth="7.0" width="328.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Rectangle>
+            <Text fx:id="allyTarget1" fill="WHITE" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior" textAlignment="CENTER" wrappingWidth="324.800048828125">
+               <font>
+                  <Font name="Final Fantasy Regular" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0">
+                     <color>
+                        <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="allyTarget2" fill="WHITE" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assassin" textAlignment="CENTER" wrappingWidth="325.5999755859375">
+               <font>
+                  <Font name="Final Fantasy Regular" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0">
+                     <color>
+                        <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="allyTarget3" fill="WHITE" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black Mage" textAlignment="CENTER" wrappingWidth="325.5999755859375">
+               <font>
+                  <Font name="Final Fantasy Regular" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0">
+                     <color>
+                        <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="allyTarget4" fill="WHITE" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White Mage" textAlignment="CENTER" wrappingWidth="325.5999755859375">
+               <font>
+                  <Font name="Final Fantasy Regular" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0">
+                     <color>
+                        <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="allyBack" fill="WHITE" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK" textAlignment="CENTER" wrappingWidth="321.0">
+               <font>
+                  <Font name="Final Fantasy Regular" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0">
+                     <color>
+                        <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="enemySelectPane" layoutX="217.0" layoutY="335.0" prefHeight="140.0" prefWidth="325.0">
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="140.0" opacity="0.9" stroke="WHITE" strokeType="INSIDE" strokeWidth="7.0" width="325.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Rectangle>
+            <VBox layoutY="18.0" prefHeight="140.0" prefWidth="325.0" spacing="10.0">
+               <children>
+                  <Text fx:id="enemyTarget1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="enemy1" textAlignment="CENTER" wrappingWidth="321.60003662109375">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="5.0" radius="2.0" width="5.0">
+                           <color>
+                              <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+                  <Text fx:id="enemyTarget2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="enemy2" textAlignment="CENTER" wrappingWidth="321.0">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="5.0" radius="2.0" width="5.0">
+                           <color>
+                              <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+                  <Text fx:id="enemyTarget3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="enemy3" textAlignment="CENTER" wrappingWidth="321.0">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="5.0" radius="2.0" width="5.0">
+                           <color>
+                              <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+                  <Text fx:id="enemyBack" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK" textAlignment="CENTER" wrappingWidth="321.0">
+                     <font>
+                        <Font name="Final Fantasy Regular" size="15.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="5.0" radius="2.0" width="5.0">
+                           <color>
+                              <Color red="0.11578947305679321" green="0.11321637779474258" blue="0.11321637779474258" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane fx:id="actionDisplayPane" layoutX="214.0" layoutY="164.0" prefHeight="149.0" prefWidth="656.0">
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="124.0" layoutY="13.0" opacity="0.9" stroke="WHITE" strokeType="INSIDE" strokeWidth="7.0" width="656.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Rectangle>
+            <Text fx:id="actionDisplayText" fill="WHITE" layoutX="10.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="649.6000366210938">
+               <font>
+                  <Font name="Final Fantasy Regular" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
       <StackPane layoutX="874.0" layoutY="474.0" prefHeight="150.0" prefWidth="230.0">
          <children>
             <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="230.0" StackPane.alignment="BOTTOM_LEFT" />
             <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="215.0" />
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
                <children>
-                  <Text fx:id="warriorStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char1">
+                  <Text fx:id="warriorStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior HP 6 MP 4">
                      <font>
                         <Font name="Final Fantasy Regular" size="15.0" />
                      </font>
                   </Text>
-                  <Text fx:id="assassinStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char2">
+                  <Text fx:id="assassinStatus" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Assassin HP 5 MP 3">
                      <font>
                         <Font name="Final Fantasy Regular" size="15.0" />
                      </font>
@@ -111,91 +303,29 @@
             </VBox>
          </children>
       </StackPane>
-      <StackPane fx:id="descriptionPane" layoutX="461.0" layoutY="474.0" prefHeight="150.0" prefWidth="413.0">
+      <StackPane layoutX="-2.0" layoutY="474.0" prefHeight="150.0" prefWidth="199.0">
          <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="413.0" StackPane.alignment="CENTER" />
-            <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="398.0" />
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <Text fx:id="mpCost" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MP cost ">
-                     <font>
-                        <Font name="Final Fantasy Regular" size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="moveDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
-                     <font>
-                        <Font name="Final Fantasy Regular" size="15.0" />
-                     </font>
-                  </Text>
-               </children>
-               <padding>
-                  <Insets bottom="35.0" />
-               </padding>
-            </VBox>
-         </children>
-      </StackPane>
-      <StackPane fx:id="skillPane" alignment="BOTTOM_CENTER" layoutX="410.0" layoutY="354.0" prefHeight="135.0" prefWidth="230.0">
-         <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="265.0" StackPane.alignment="BOTTOM_LEFT" />
-            <Rectangle arcHeight="25.0" arcWidth="25.0" height="120.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="250.0" StackPane.alignment="CENTER" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="150.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="220.0" StackPane.alignment="BOTTOM_LEFT" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="205.0" />
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
                <children>
-                  <Text fx:id="skillButton1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill1">
+                  <Text fx:id="enemy1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior">
                      <font>
                         <Font name="Final Fantasy Regular" size="15.0" />
                      </font>
                   </Text>
-                  <Text fx:id="skillButton2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill2">
+                  <Text fx:id="enemy2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Assassin">
                      <font>
                         <Font name="Final Fantasy Regular" size="15.0" />
                      </font>
                   </Text>
-                  <Text fx:id="skillButton3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill3">
-                     <font>
-                        <Font name="Final Fantasy Regular" size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="skillButton4" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill4">
+                  <Text fx:id="enemy3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Char3">
                      <font>
                         <Font name="Final Fantasy Regular" size="15.0" />
                      </font>
                   </Text>
                </children>
             </VBox>
-         </children>
-      </StackPane>
-      <StackPane fx:id="itemPane" alignment="BOTTOM_CENTER" layoutX="420.0" layoutY="364.0" prefHeight="135.0" prefWidth="230.0">
-         <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="WHITE" height="135.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="265.0" StackPane.alignment="BOTTOM_LEFT" />
-            <Rectangle arcHeight="25.0" arcWidth="25.0" height="120.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" width="250.0" StackPane.alignment="CENTER" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0" spacing="10.0">
-                     <children>
-                        <Text fx:id="hPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Health potion">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="mPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana potion">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="sPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Strength potion">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="dPotionButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Defense potion">
-                           <font>
-                              <Font name="Final Fantasy Regular" size="15.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
          </children>
       </StackPane>
    </children>

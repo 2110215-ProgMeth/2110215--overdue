@@ -11,7 +11,6 @@ public class Temper extends Buff {
     }
     @Override
     public void performBuff() {
-        setCount(getCount() + 1);
         int boostAttack = (int) (getOwner().getBaseAttack() * boost);
         getOwner().setAttack(getOwner().getAttack() + boostAttack);
     }

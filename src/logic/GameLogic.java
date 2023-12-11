@@ -1,12 +1,20 @@
 package logic;
 
-import battleEntity.battleUnit.BaseUnit;
+import battleEntity.battleUnit.*;
+import battleEntity.combatMove.AttackMove;
+import battleEntity.combatMove.BaseMove;
+import battleEntity.combatMove.Buff;
+import battleEntity.combatMove.DOT;
+import battleEntity.monster.*;
 import control.InputUtility;
 import display.GameScreen;
 import display.ScreenUtil;
 import font.FontManager;
 import gui.RootPane;
+import items.BaseItem;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import sharedObject.RenderableHolder;
@@ -21,6 +29,9 @@ import worldObject.npc.Man1Left;
 import worldObject.npc.Merchant;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.Random;
+
+import gui.BattleMenuController;
 
 public class GameLogic {
     //private static ArrayList<IRenderable> gameObjectContainer;
@@ -33,6 +44,10 @@ public class GameLogic {
     private static FontManager fontManager;
     private static BaseObject baseObjectTown[];
     private static BaseObject baseObjectForest[];
+    //****************** Try ******************//
+    private static Parent battleMenu;
+    private static BattleMenuController battleMenuController;
+    //*****************************************//
     private static Sound sound;
     private static Player player;
     private static int gameState;
@@ -45,8 +60,22 @@ public class GameLogic {
     public static final int townMap = 0;
     public static final int forestMap = 1;
     public static boolean threadActive = false;
-    public static ArrayList<BaseUnit> alliesUnits;
-    public static ArrayList<BaseUnit> enemiesUnits;
+    public static ArrayList<BaseUnit> alliesUnits = new ArrayList<BaseUnit>();
+    public static ArrayList<BaseUnit> enemiesUnits = new ArrayList<BaseUnit>();
+    //BattleUnit
+    public static Warrior warrior;
+    public static Assasssin assassin;
+    public static BlackMage blackMage;
+    public static WhiteMage whiteMage;
+    public static BaseUnit[] enemyUnit;
+    public static ArrayList<BaseMove> movesContainer;
+    //
+    public static int stateInBattle = 0;
+    static Thread thread;
+    private static final int delayDuration = 200;
+
+
+
     public GameLogic() throws IOException {
         tilemanager = new TileManager();
         fontManager = new FontManager();
@@ -54,7 +83,14 @@ public class GameLogic {
 
         playMusic(0);
         setGameState(GameLogic.townMap);
+        //set up character
         player = new Player(26, 28);
+        warrior = new Warrior("Warrior", 100, 100, 20, 20);
+        assassin = new Assasssin("Assassin", 80, 100, 25, 15);
+        blackMage = new BlackMage("Black Mage", 70, 120, 25, 12);
+        whiteMage = new WhiteMage("White Mage", 70, 120, 15, 12);
+        alliesUnits.add(warrior); alliesUnits.add(assassin); alliesUnits.add(blackMage); alliesUnits.add(whiteMage);
+        initializeBattleMenu();
         root = new RootPane();
         scene = new Scene(root);
         root.requestFocus();
@@ -96,6 +132,10 @@ public class GameLogic {
             RenderableHolder.getForestEntities().add(player);
             RenderableHolder.setForestEntities();
         }
+        /*warrior = new Warrior("Warrior", 100, 100, 20, 20);
+        assasssin = new Assasssin("Assassin", 80, 100, 25, 15);
+        blackMage = new BlackMage("BlackMage", 70, 120, 25, 12);
+        whiteMage = new WhiteMage("WhiteMage", 70, 120, 15, 12);*/
         setMusicVolume(0.2);
         getRoot().getChildren().clear();
         getRoot().getChildren().add(gameScreen);
@@ -111,6 +151,12 @@ public class GameLogic {
             gameThread.start();
         }
 
+    }
+
+    public static void initializeBattleMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader((GameLogic.class.getResource(("/fxml/BattleMenu.fxml"))));
+        battleMenu = loader.load();
+        battleMenuController = loader.getController();
     }
 
     public static void setBaseObjectTown() {
@@ -143,6 +189,8 @@ public class GameLogic {
         baseObjectTown[19] = new Man1Left(27.85, 25.5, 1, 1, 0.1, 0.5 ,0.8, 0.5);
         baseObjectTown[20] = new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5);
         baseObjectTown[21] = new Man1(38, 25, 1, 1, 0, 0.5, 1, 0.5);
+        baseObjectTown[22] = new Warp(26,35);
+        baseObjectTown[22].setName("WARP_TO_BATTLE");
     }
 
     /*protected static void addNewObject(Entity entity){
@@ -181,51 +229,228 @@ public class GameLogic {
             RenderableHolder.player2.update();
         }*/
         player.updateCoordinate();
+        if (GameLogic.getGameState() == GameLogic.battleState){
+            for (BaseUnit ally : alliesUnits){
+                ally.update();
+
+            }
+            for (BaseUnit enemy : enemiesUnits){
+                enemy.update();
+
+            }
+        }
+    }
+    public static boolean loseBattle(){
+        return alliesUnits.get(0).isDestroyed() && alliesUnits.get(1).isDestroyed() &&
+                alliesUnits.get(2).isDestroyed() && alliesUnits.get(3).isDestroyed() ;
+    }
+    public static boolean winBattle(){
+        return enemiesUnits.get(0).isDestroyed() && enemiesUnits.get(1).isDestroyed();
+    }
+    public static int chooseTarget(ArrayList<BaseUnit> enemy){
+        ArrayList<Integer> R = new ArrayList<>();
+        for(int i = 0 ; i < enemy.size() ; i++){
+            if (!getAlliessUnits().get(i).isDestroyed()){
+                R.add(i);
+            }
+        }
+        Random random = new Random();
+        int index = random.nextInt(R.size());
+        return index;
+    }
+    public static void battle() {
+        System.out.println("In battle");
+        switch (stateInBattle) {
+            case 0:
+                stateInBattle++;
+                System.out.println("CASE 0");
+                break;
+            case 1:
+                stateInBattle++;
+                System.out.println("CASE 1");
+                if (!getAlliessUnits().get(0).isDestroyed()) {
+                    updateBuff(getAlliessUnits().get(0));
+                    if (!getAlliessUnits().get(0).isDestroyed()) {
+                        battleMenuController.updateUserMovePane(getAlliessUnits().get(0));
+                    }
+                    DestroyedBuff(getAlliessUnits().get(0));
+                    break;
+                }
+                break;
+            case 2:
+                stateInBattle++;
+                System.out.println("CASE 2");
+                if (!getAlliessUnits().get(1).isDestroyed()) {
+                    updateBuff(getAlliessUnits().get(1));
+                    if (!getAlliessUnits().get(1).isDestroyed()) {
+                        battleMenuController.updateUserMovePane(getAlliessUnits().get(1));
+                    }
+                    DestroyedBuff(getAlliessUnits().get(0));
+                    break;
+                }
+                break;
+            case 3:
+                stateInBattle++;
+                if (!getAlliessUnits().get(2).isDestroyed()) {
+                    updateBuff(getAlliessUnits().get(2));
+                    System.out.println(getAlliessUnits().get(0));
+                    if (!getAlliessUnits().get(2).isDestroyed()) {
+                        battleMenuController.updateUserMovePane(getAlliessUnits().get(2));
+                    }
+                    DestroyedBuff(getAlliessUnits().get(2));
+                    break;
+                }
+                break;
+            case 4:
+                stateInBattle++;
+                if (!getAlliessUnits().get(3).isDestroyed()) {
+                    updateBuff(getAlliessUnits().get(3));
+                    if (!getAlliessUnits().get(3).isDestroyed()) {
+                        battleMenuController.updateUserMovePane(getAlliessUnits().get(3));
+                    }
+                    DestroyedBuff(getAlliessUnits().get(3));
+                    break;
+                }
+                break;
+            case 5:
+                stateInBattle = 0;
+                performEntitiesMove();
+                for (BaseUnit enemy : getEnemiesUnits()) {
+                    if (!enemy.isDestroyed()) {
+                        BaseMove move = enemy.getMoveSet()[enemy.getCurrentLoop()];
+                        if (move instanceof AttackMove) {
+                            int index = chooseTarget(getAlliessUnits());
+                            if (!getAlliessUnits().get(index).isProtected()) {
+                                move.setTarget(getAlliessUnits().get(index));
+                                movesContainer.add(move);
+                            }
+                        } else {
+                            int index = chooseTarget(getEnemiesUnits());
+                            move.setTarget(getEnemiesUnits().get(index));
+                            movesContainer.add(move);
+                        }
+                    }
+                }
+                thread = new Thread(() -> {
+                    performEntitiesMove();
+                    if (!loseBattle()) {
+                        battle();
+                    }
+                    if (winBattle()) {
+                        GameLogic.showTextInActionDisplayPane("You won the battle.");
+                        Platform.runLater(() -> {
+                            try {
+                                thread.sleep(2000);
+
+                                setVictoryState();
+                                exitBattle();
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    } else if (loseBattle()) {
+                        GameLogic.showTextInActionDisplayPane("You lost the battle.");
+                        Platform.runLater((() -> {
+                            try {
+                                thread.sleep(2000);
+                                exitBattle();
+                                setLoseState();
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }));
+                    } else {
+                        Platform.runLater(() -> {
+                            showBattlePane();
+                            battleMenuController.resetActionDisplayText();
+                        });
+
+                    }
+
+                });
+
+// ------------------------------------------------------thread----------
+                thread.start();
+                break;
+        }
+    }
+    public static void setLoseState() {
+        GameLogic.getPlayer().setWorldX(25);
+        GameLogic.getPlayer().setWorldY(25);
+        for(BaseUnit ally : getAlliessUnits()){
+            ally.setStat();
+        }
+    }
+    public static void setVictoryState(){
+        for(BaseUnit ally : getAlliessUnits()){
+            ally.setStat();
+        }
+    }
+    public static void showActionDisplayPane() {
+        battleMenuController.removeBattlePane();
+        battleMenuController.addActionDisplayPane();
+    }
+
+    public static void showTextInActionDisplayPane(String string) {
+        int sleepDuration = string.length() * 60 + delayDuration;
+        battleMenuController.showTextInDisplayPane(string);
+        sleepThread(sleepDuration);
+
+    }
+    public static void sleepThread(int delayDuration) {
+        try {
+            thread.sleep(delayDuration);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void performEntitiesMove() {
+        for (BaseMove eachMove : movesContainer) {
+            try {
+                thread.sleep(500);
+                eachMove.performEffect(eachMove.getTarget());
+                //battlePaneController.updateNameAndHp();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        movesContainer.clear();
+
+    }
+
+    public static void ItemUpdate(String item){
+        Player.getPlayerInventory().put(item,Player.getPlayerInventory().get(item)-1);
     }
 
     public static Player getPlayer() {
         return player;
     }
+    public static void showBattlePane() {
+        battleMenuController.removeActionDisplayPane();
+        battleMenuController.addBattlePane();
+    }
 
-    // initialize world object
-    /*public static void setTownObject() {
-        player = new Player(26,28);
-        addNewObject(player);
-        baseObject = new BaseObject[30];
-        baseObject[0] = new Guild(20,0,12,8,0,4,12,5);
-        baseObject[1] = new NormalTree(20,18.5, 4, 4, 1, 3.5, 2, 0.5);
-        baseObject[2] = new NormalTree(28,18.5, 4, 4, 1, 3.5, 2, 0.5);
-        baseObject[3] = new Statue(25.0,23.0,2,4,0,3,2,1);
-        baseObject[4] = new ChimneyHouse(13,18,6, 6, 0, 3.5, 6, 2.5);
-        baseObject[5] = new House(32,18,5,6,0,3.5,5,2.5);
-        baseObject[6] = new LongHouse(12,8,10.25, 6, 0, 4, 10.25, 2);
-        baseObject[7] = new TallHouse(32.5,4,6, 10, 0, 8, 6, 2);
-        baseObject[8] = new NormalTree(15,28.5, 4, 4, 1, 3.25, 2, 0.25);
-        baseObject[9] = new NormalTree(33,28.5, 4, 4, 1, 3.25, 2, 0.25);
-        baseObject[10] = new NormalTree(15,4, 4, 4, 1, 3.25, 2, 0.25);
-        baseObject[11] = new NormalTree(8,9, 4, 4, 1, 3.25, 2, 0.25);
-        baseObject[12] = new Warp(25,40);
-        baseObject[12].setName("WARP_TO_FOREST");
-        baseObject[13] = new Warp(26,40);
-        baseObject[13].setName("WARP_TO_FOREST");
-        baseObject[16] = new Warp(23,39);
-        baseObject[16].setName("WARP_TO_FOREST");
-        baseObject[17] = new Warp(24,39);
-        baseObject[17].setName("WARP_TO_FOREST");
-        baseObject[18] = new Warp(28,39);
-        baseObject[18].setName("WARP_TO_FOREST");
-        baseObject[19] = new Warp(27,39);
-        baseObject[19].setName("WARP_TO_FOREST");
-        baseObject[14] = new Merchant(20, 24, 1, 1, 0, 0.5, 1, 0.5);
-        baseObject[15] = new Man1Left(20, 26, 1, 1, 0, 0.5 ,1, 0.5);
-        baseObject[16] = new Lady(20, 30, 1, 1, 0, 0.5, 1, 0.5);
-
-        for(int i=0 ; i < baseObject.length ;i++){
-            if (baseObject[i] != null) {
-                addNewObject(baseObject[i]);
+    public static void updateBuff(BaseUnit owner){
+        for(Buff buff : owner.getBuffers()){
+            if (buff instanceof DOT){
+                buff.performBuff();;
+            }
+            buff.setCount(buff.getCount() + 1);
+        }
+    }
+    public static void DestroyedBuff(BaseUnit owner){
+        for(Buff buff : owner.getBuffers()){
+            if (buff.getCount() == buff.getDefaultCount()){
+                buff.destroyBuff();
+                owner.getBuffers().remove(buff);
             }
         }
-    }*/
+    }
 
     public static void setBaseObjectForest() {
         baseObjectForest = new BaseObject[20];
@@ -248,7 +473,7 @@ public class GameLogic {
                 addNewObject(baseObject[i]);
             }
         }*/
-    //}
+    //
 
     // collision checker
     public static void checkTile(Entity entity){
@@ -411,7 +636,6 @@ public class GameLogic {
                         if (entity.sprite.intersects( getBaseObject()[i].solidArea.getBoundsInLocal())) {
                             if ( getBaseObject()[i].isCollision()) {
                                 isfront = i;
-                                ;
                             }
                         }
                         break;
@@ -420,7 +644,6 @@ public class GameLogic {
                         if (entity.sprite.intersects( getBaseObject()[i].solidArea.getBoundsInLocal())) {
                             if ( getBaseObject()[i].isCollision()) {
                                 isfront = i;
-                                ;
                             }
                         }
                         break;
@@ -497,6 +720,17 @@ public class GameLogic {
         });
     }
 
+    public static void startBattle() {
+        Platform.runLater(() -> {
+            synchronized (gameThread) {
+                if (!getRoot().getChildren().contains(battleMenu)) {
+                    getRoot().getChildren().add(battleMenu);
+                }
+            }
+        });
+        battle();
+    }
+
     public static void closeShop() {
         Platform.runLater(() -> {
             synchronized (gameThread) {
@@ -521,6 +755,20 @@ public class GameLogic {
         setGameState(worldState);
     }
 
+    public static void exitBattle() {
+        Platform.runLater(() -> {
+            synchronized (gameThread) {
+                if (getRoot().getChildren().contains(GameLogic.battleMenu)) {
+                    getRoot().getChildren().remove(GameLogic.battleMenu);
+                }
+            }
+        });
+        setLoseState();
+        setGameState(worldState);
+        stopMusic();
+        playMusic(1);
+        setMusicVolume(0.2);
+    }
     public static Scene getScene() {
         return scene;
     }

@@ -15,7 +15,6 @@ public class BackStab extends AttackMove{
     public void performEffect(BaseUnit target) {
         setTarget(target);
         if (!this.getOwner().isDestroyed() && !this.getTarget().isDestroyed()) {
-            //String text = this.toString();
             int Damage = (int) getPercentDamage() * getOwner().getAttack() - (int) (getTarget().getDefense() * 0.5);
             getOwner().setMp(getOwner().getMp() - getMpConsume());
             getTarget().setHp(getTarget().getHp() - Damage);

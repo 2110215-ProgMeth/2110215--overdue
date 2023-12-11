@@ -2,22 +2,21 @@ package battleEntity.combatMove;
 
 import battleEntity.battleUnit.BaseUnit;
 import logic.GameLogic;
-import battleEntity.combatMove.DOT;
 
-public class Thundara extends AttackMove{
-    public Thundara(BaseUnit owner){
+public class Firaga extends AttackMove{
+    public Firaga(BaseUnit owner){
         super(owner);
-        setPercentDamage(1.5);
-        setMpConsume(25);
+        setPercentDamage(2);
+        setMpConsume(30);
         setAllTarget(true);
     }
 
-    public void performEffect() {
+    public void performEffect(BaseUnit target) {
         if (!getOwner().isDestroyed()) {
             for (BaseUnit enemy : GameLogic.getEnemiesUnits()) {
                 if (!enemy.isDestroyed()) {
-                    Buff shock = new DOT("Shock",enemy,2,0.1);
-                    enemy.getBuffers().add(shock);
+                    Buff burn = new DOT("Burn",enemy,2,0.25);
+                    enemy.getBuffers().add(burn);
                     int Damage = (int) (getPercentDamage() * getOwner().getAttack() - enemy.getDefense());
                     enemy.setHp(getTarget().getHp() - Damage);
                 }
