@@ -112,6 +112,11 @@ public class GameLogic {
         }
 
     }
+    public static void initializeBattlePane() {
+      //  battleMenuController.setUnitStatusOnMouseHover();
+        battleMenuController.switchToMovePane();
+        battleMenuController.initializeTargetSelectPane();
+    }
 
     // methods
     public static void setupGame() {
@@ -721,6 +726,7 @@ public class GameLogic {
     }
 
     public static void startBattle() {
+        stateInBattle = 0;
         Platform.runLater(() -> {
             synchronized (gameThread) {
                 if (!getRoot().getChildren().contains(battleMenu)) {
@@ -728,6 +734,7 @@ public class GameLogic {
                 }
             }
         });
+        GameLogic.initializeBattlePane();
         battle();
     }
 
@@ -763,6 +770,7 @@ public class GameLogic {
                 }
             }
         });
+        battleMenuController.updateUserMovePane(GameLogic.getAlliessUnits().get(0));
         setLoseState();
         setGameState(worldState);
         stopMusic();

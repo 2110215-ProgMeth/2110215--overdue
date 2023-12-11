@@ -116,8 +116,8 @@ public class BattleMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpBattle();
         initializePaneAndLayout();
-        initializeRunButton();
         initializeOnClicking();
+        initializeRunButton();
         initializeDefault();
     }
 
@@ -126,8 +126,6 @@ public class BattleMenuController implements Initializable {
             GameLogic.exitBattle();
         });
     }
-
-
 
     public void initializeDefault() {
        /* removeResultPane();
@@ -146,6 +144,7 @@ public class BattleMenuController implements Initializable {
         enemy1.setText(getEnemyUnit(0).getName());
         enemy2.setText(getEnemyUnit(1).getName());
         enemy3.setText(getEnemyUnit(2).getName());
+        updateUserMovePane(GameLogic.getAlliessUnits().get(0));
     }
     public static void setUpBattle(){
         BaseUnit[] enemyUnit = new BaseUnit[7];
@@ -233,14 +232,13 @@ public class BattleMenuController implements Initializable {
         }
 
     }
-
-
     public void updateUserMovePane(BaseUnit owner) {
         ArrayList<Text> buttons = new ArrayList<>();
         buttons.add(move1Text);
         buttons.add(move2Text);
         buttons.add(move3Text);
         buttons.add(move4Text);
+        instructionPane.setText(owner.toString() + "'s Turn");
         instructionPane.setText(owner.toString() + "'s Turn");
 
         for (Text eachMoveButton : buttons) {
@@ -249,15 +247,14 @@ public class BattleMenuController implements Initializable {
                     choseMove = owner.getMoveSet()[buttons.indexOf(eachMoveButton)];
                     switchToSelectPane();
                 }
-
             });
-            eachMoveButton.setText(owner.getMoveSet()[buttons.indexOf(eachMoveButton)].getName());
-
+            eachMoveButton.setText(owner.getMoveSet()[(buttons.indexOf(eachMoveButton))].getName());
         }
 
     }
 
-    public void switchToSelectPane() {
+
+     public void switchToSelectPane() {
         battlePane.getChildren().remove(battlePane.getChildren().size() - 1);
         if (choseMove instanceof AttackMove) {
             battlePane.getChildren().add(enemySelectPane);
